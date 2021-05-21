@@ -1,0 +1,10 @@
+Personal Account- 
+Name: John Doe
+Email ID: sb-y6ajz6212312@personal.example.com
+System Generated Password: #k4%x6Ms
+
+
+Business Account
+Name: John Doe
+Email ID: sb-3ierq6214823@business.example.com
+System Generated Password: tF/^O8F<

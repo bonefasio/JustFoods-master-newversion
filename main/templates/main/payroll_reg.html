@@ -1,0 +1,21 @@
+{% extends "main/layout.html" %}
+{% block content %}
+<div id="page" class="container" style="border:white">
+    <br class="row">
+        <p class="text-center text-justify"> Fill in the form to register for payroll payment option. </p> 
+        <div class="clearfix hidden-xs hidden-sm"> </div>
+        <form action="{% url 'main:payroll_reg' %}" method="post">
+            <div class="border form-group mx-auto" style="text-align: center;">
+                <label class="d-flex justify-content-center"></label>
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{ form }}
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" class="btn btn-primary " value="Submit">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
