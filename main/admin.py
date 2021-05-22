@@ -49,12 +49,9 @@ class ReviewsAdmin(admin.ModelAdmin):
     list_display = ('user', 'item', 'review', 'posted_on')
 
 
-class OnSiteLocationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address')
-
-
-class OffSiteLocationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address')
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'address', 'category')
+    list_filter = ('category', 'name')
 
 
 class MealSubscriptionAdmin(admin.ModelAdmin):
@@ -98,9 +95,7 @@ admin.site.register(OrderItems, OrderItemsAdmin)
 admin.site.register(Reviews, ReviewsAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Payroll, PayrollAdmin)
-admin.site.register(OnSiteLocation, OnSiteLocationAdmin)
-admin.site.register(OffSiteLocation, OffSiteLocationAdmin)
 admin.site.register(MealSubscription, MealSubscriptionAdmin)
 # custom meal register below
 admin.site.register(CustomMeal, CustomMealAdmin)
-admin.site.register(Location)
+admin.site.register(Location, LocationAdmin)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.db.models.fields import BooleanField
 from django.shortcuts import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -30,7 +31,6 @@ class Payroll(models.Model):
     account_balance = models.FloatField(null=True, blank=True, default=134.34)
     created_time = models.DateField(default=timezone.now)
     name = models.CharField(max_length=200, null=True)
-    # ordered_items = models.ForeignKey(OrderItems, on_delete=models.CASCADE)
     registered = models.BooleanField(default=False)
     employee_id = models.CharField(max_length=200, null=True)
     birth_date = models.DateTimeField(null=True)
@@ -127,29 +127,19 @@ class Reviews(models.Model):
         return self.review
 
 
-class OnSiteLocation(models.Model):
-    name = models.CharField(max_length=50)
-    address = models.CharField(max_length=80)
-
-    def __str__(self):
-        return "%s the place to deliver" % self.name
-
-
-class OffSiteLocation(models.Model):
-    name = models.CharField(max_length=50)
-    address = models.CharField(max_length=80)
-
-    def __str__(self):
-        return "%s the place to deliver" % self.name
-
-
 class Location(models.Model):
-    onsite = models.ForeignKey(OnSiteLocation, on_delete=models.CASCADE)
-    offsite = models.ForeignKey(OffSiteLocation, on_delete=models.CASCADE)
-    pickup_location = models.CharField(default='USP Cafeteria', max_length=255)
+    DELIVERY_LOCATION = (
+        ('OnSite', 'OnSite'),
+        ('OffSite', 'OffSite'),
+        ('Direct Pickup', 'Direct Pickup')
+    )
+    name = models.CharField(max_length=50, default='USP', blank=True)
+    address = models.CharField(max_length=80, blank=True)
+    category = models.CharField(
+        max_length=255, default='OnSite', choices=DELIVERY_LOCATION)
 
     def __str__(self):
-        return self.pickup_location
+        return "%s the place to deliver" % self.name
 
 
 class OrderItems(models.Model):
@@ -238,7 +228,7 @@ class MealSubscription(models.Model):
         auto_now=False, auto_now_add=False, null=True)
     delivery_mode = models.CharField(max_length=255, choices=DELIVERY_MODE)
     delivery_location = models.ForeignKey(
-        OnSiteLocation or OffSiteLocation, on_delete=models.CASCADE, null=True)
+        Location, on_delete=models.CASCADE, null=True)
     payment_method = models.CharField(
         max_length=255, choices=PAYMENT_METHOD, default='Credit')
     subscription_status = models.BooleanField(default=False)
