@@ -160,8 +160,8 @@ def order_delivery(request):
     total = bill.get("item__price__sum")
     count = number.get("quantity__sum")  # sum of quantity
     # count = OrderItems.objects.filter()
-    offsite = OffSiteLocation.objects.all()
-    onsite = OnSiteLocation.objects.all()
+    offsite = Location.objects.filter(category="OffSite")
+    onsite = Location.objects.filter(category="OnSite")
 
     if request.method == 'POST':
         payment_method = request.POST.get("payment_method")
@@ -173,33 +173,21 @@ def order_delivery(request):
 
         print(payment_method, delivery_date,  delivery_mode, location,
               onsite_delivery_location, offsite_delivery_location)
-        # string = "freeCodeCamp"
-        onsitelocation_string = onsite_delivery_location[0:7]
-        offsitelocation_string = offsite_delivery_location[0:7]
 
         if request.POST.get("delivery_mode") == 'pickup':
-            field_name = 'pickup_location'
-            obj = Location.objects.first()
-            field_object = Location._meta.get_field(field_name)
-            field_value = getattr(obj, field_object.attname)
+            pickup_location = 'USP Cafeteria'
             print('Pickup from Cafeteria')
             items.update(payment_method=payment_method, delivery_date=delivery_date,
-                         delivery_mode=delivery_mode, delivery_location=field_value)
+                         delivery_mode=delivery_mode)
 
-        if request.POST.get("delivery_mode") == 'Delivery' and request.POST.get("location") == 'onsite':
+        if request.POST.get("delivery_mode") == 'deliver' and request.POST.get("location") == 'onsite':
 
-            onsitelocation = OnSiteLocation.objects.filter(
-                name__contains=onsitelocation_string)
-            location = Location.objects.filter(onsite=onsitelocation)
             items.update(payment_method=payment_method, delivery_date=delivery_date,
                          delivery_mode=delivery_mode, delivery_location=location)
             print('Youre opting for onsite delivery')
 
-        if request.POST.get("delivery_mode") == 'Delivery' and request.POST.get("location") == 'offsite':
+        if request.POST.get("delivery_mode") == 'deliver' and request.POST.get("location") == 'offsite':
 
-            offsitelocation = OffSiteLocation.objects.filter(
-                name__contains=offsitelocation_string)
-            location = Location.objects.filter(onsite=offsitelocation)
             items.update(payment_method=payment_method, delivery_date=delivery_date,
                          delivery_mode=delivery_mode, delivery_location=location)
             print('Youre opting for offsite delivery')
