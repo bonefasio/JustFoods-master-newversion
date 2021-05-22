@@ -40,9 +40,11 @@ INSTALLED_APPS = [
 
     'main.apps.MainConfig',
     'accounts.apps.AccountsConfig',
+    'stripepayment.apps.AccountsConfig',
     # 'mealsubscription.apps.MealsubscriptionConfig',
     # 'restaurant.apps.RestaurantConfig',
     # 'delivery.apps.DeliveryConfig',
+
     'crispy_forms',
     'multiselectfield',
     'tempus_dominus',  # django forms timefield
@@ -145,4 +147,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  # gmail smtp configuration
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'lbonefasio@gmail.com'
-EMAIL_HOST_PASSWORD = 'koroivonu@2012'
+EMAIL_HOST_PASSWORD = ''''''
+
+STRIPE_PUBLIC_KEY = "pk_test_51ItkkfAh9WweYVQmO9kjfWLtr6t881R9uiTNBYYBIndEd8nsnItigeNRBD525fYtd5oiKkK42lGjOTgxvxN8cgkT009Nt74zo7"
+STRIPE_SECRET_KEY = "sk_test_51ItkkfAh9WweYVQmHWWyufzm8D3teuWlZMwopwIA5egeYnKEYldtFLudJVZDNtpZU0G3quJLk4PcPhn2t6IJJRqV00j8aMhhut"

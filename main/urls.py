@@ -73,5 +73,4 @@ urlpatterns = [
     path('item/new/', ItemCreateView.as_view(), name='item-create'),
     path('item-update/<slug>/', ItemUpdateView.as_view(), name='item-update'),
     path('item-delete/<slug>/', ItemDeleteView.as_view(), name='item-delete'),
-
 ]

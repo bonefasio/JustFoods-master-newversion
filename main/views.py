@@ -113,15 +113,12 @@ def get_cart_items(request):
         customer=customer, ordered=False, subscription_order=False)
     bill = ordered_items.aggregate(Sum('item__price'))
     number = ordered_items.aggregate(Sum('quantity'))
-    # pieces = cart_items.aggregate(Sum('item__pieces'))
     total = bill.get("item__price__sum")
     count = number.get("quantity__sum")
-    # total_pieces = pieces.get("item__pieces__sum")
     context = {
         'ordered_items': ordered_items,
         'total': total,
         'count': count,
-        # 'total_pieces': total_pieces
     }
     return render(request, 'main/cart.html', context)
 
