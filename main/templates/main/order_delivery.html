@@ -68,7 +68,7 @@
                         <div class="form-group">
                           <label for="inputState">Delivery Mode</label>
                             <select id="delivery_mode" class="form-control" name="delivery_mode">
-                              <option value="">-----</option>
+                              <option selected>-----</option>
                               <option value="pickup">Pickup</option>
                               <option value="deliver">Delivery</option>
                             </select>
@@ -80,8 +80,8 @@
 
                         <div class="form-group" id="location_hide" >
                           <label for="inputState">Choose Location</label>
-                            <select id="location" class="form-control" name="delivery_mode" >
-                              <option value="">-----</option>
+                            <select id="location" class="form-control" name="location" >
+                              <option selected>-----</option>
                               <option value="onsite">Onsite</option>
                               <option value="offsite">Offsite</option>
                             </select>
@@ -89,16 +89,16 @@
                         <div class="form-group locations" id="offsite">
                           <label for="inputState">Choose Offsite Location</label>
                             <select id="inputState" class="form-control" name="offsite_location" >
-                              <option value="">-----</option>
+                              <option selected>-----</option>
                               {% for offsite_location in offsite %}
-                              <option value="{{offsite_location}}">{{offsite_location}}</option>
+                              <option value="{{offsite_location.id}}"> {{offsite_location}} </option>
                               {% endfor %}
                             </select>
                         </div>
                         <div class="form-group locations" id="onsite">
                           <label for="inputState">Choose Onsite Location</label>
                             <select id="inputState" class="form-control" name="onsite_location">
-                              <option value="">-----</option>
+                              <option selected>-----</option>
                               {% for onsite_location in onsite %}
                               <option value="{{onsite_location}}">{{onsite_location}}</option>
                               {% endfor %}
@@ -136,7 +136,7 @@
       }
       else
       {
-        $("#business").hide();
+        $("#pickup_location").hide();
         $("#location_hide").show();
         $("#onsite").show();
         $("#offsite").show();

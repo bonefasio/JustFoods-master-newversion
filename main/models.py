@@ -146,6 +146,10 @@ class OffSiteLocation(models.Model):
 class Location(models.Model):
     onsite = models.ForeignKey(OnSiteLocation, on_delete=models.CASCADE)
     offsite = models.ForeignKey(OffSiteLocation, on_delete=models.CASCADE)
+    pickup_location = models.CharField(default='USP Cafeteria', max_length=255)
+
+    def __str__(self):
+        return self.pickup_location
 
 
 class OrderItems(models.Model):

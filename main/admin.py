@@ -11,7 +11,6 @@ class ItemAdmin(admin.ModelAdmin):
         ("Image", {'fields': ["image"]}),
         ("Description", {'fields': ["description"]}),
         ("Price", {'fields': ["price"]}),
-        # ("Pieces", {'fields': ["pieces"]}),
         ("Instructions", {'fields': ["instructions"]}),
         ("Labels", {'fields': ["labels"]}),
         ("Label Colour", {'fields': ["label_colour"]}),
@@ -42,7 +41,7 @@ class OrderItemsAdmin(admin.ModelAdmin):
 
     ]
     list_display = ('id', 'customer', 'item', 'quantity',
-                    'ordered', 'ordered_date', 'delivery_date', 'status', 'isPaid', 'paidAt', 'isDelivered', 'delivery_mode', 'subscription_order')
+                    'ordered', 'ordered_date', 'delivery_date', 'status', 'isPaid', 'paidAt', 'isDelivered', 'delivery_mode', 'delivery_location', 'subscription_order')
     list_filter = ('ordered', 'ordered_date', 'status')
 
 
@@ -52,6 +51,7 @@ class ReviewsAdmin(admin.ModelAdmin):
 
 class OnSiteLocationAdmin(admin.ModelAdmin):
     list_display = ('name', 'address')
+
 
 class OffSiteLocationAdmin(admin.ModelAdmin):
     list_display = ('name', 'address')
@@ -70,19 +70,21 @@ class MealSubscriptionAdmin(admin.ModelAdmin):
     list_display = ('time_ordered', 'item', 'customer', 'days_available',
                     'delivery_mode', 'payment_method', 'number_days')
 
-#custom meal code below
+# custom meal code below
+
+
 class CustomMealAdmin(admin.ModelAdmin):
     fieldsets = [
-        ("Custom Meal Name",{'fields':["custom_meal_name"]}),
-        ("Patron First Name",{'fields':["patron_first_name"]}),
-        ("Patron Last Name",{'fields':["patron_last_name"]}),
-        ("Patron Email Address",{'fields':["patron_email_address"]}),
-        ("Patron Phone Contact",{'fields':["patron_phone_contact"]}),
+        ("Custom Meal Name", {'fields': ["custom_meal_name"]}),
+        ("Patron First Name", {'fields': ["patron_first_name"]}),
+        ("Patron Last Name", {'fields': ["patron_last_name"]}),
+        ("Patron Email Address", {'fields': ["patron_email_address"]}),
+        ("Patron Phone Contact", {'fields': ["patron_phone_contact"]}),
         ("Meal Request Time", {'fields': ["meal_reqest_time"]}),
         ("Meal Request Date", {'fields': ["meal_reqest_date"]}),
         ("Order Quantity", {'fields': ["order_quantity"]}),
-        ("Custom Meal Receipe",{'fields':["custom_meal_receipe"]}),
-        ("Custom Meal Ingredients",{'fields':["custom_meal_ingredients"]}),
+        ("Custom Meal Receipe", {'fields': ["custom_meal_receipe"]}),
+        ("Custom Meal Ingredients", {'fields': ["custom_meal_ingredients"]}),
         ("Order Status", {'fields': ["request_order_status"]}),
         ("Custom Meal Price", {'fields': ["custom_meal_price"]}),
     ]
@@ -99,5 +101,6 @@ admin.site.register(Payroll, PayrollAdmin)
 admin.site.register(OnSiteLocation, OnSiteLocationAdmin)
 admin.site.register(OffSiteLocation, OffSiteLocationAdmin)
 admin.site.register(MealSubscription, MealSubscriptionAdmin)
-#custom meal register below
+# custom meal register below
 admin.site.register(CustomMeal, CustomMealAdmin)
+admin.site.register(Location)
