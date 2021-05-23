@@ -28,6 +28,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     #  path('mealsubscription/', include('mealsubscription.urls')),
     path('restaurant/', include('restaurant.urls')),
+    path('stripepayment/', include('stripepayment.urls')),
 ]
 
 if settings.DEBUG:

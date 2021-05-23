@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'main.apps.MainConfig',
     'accounts.apps.AccountsConfig',
-    'stripepayment.apps.AccountsConfig',
+    'stripepayment.apps.StripepaymentConfig',
     # 'mealsubscription.apps.MealsubscriptionConfig',
     # 'restaurant.apps.RestaurantConfig',
     # 'delivery.apps.DeliveryConfig',

@@ -1,0 +1,196 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+	<style type="text/css">
+		/**
+		 * The CSS shown here will not be introduced in the Quickstart guide, but shows
+		 * how you can use CSS to style your Element's container.
+		 */
+		.StripeElement {
+		  box-sizing: border-box;
+
+		  height: 40px;
+
+		  padding: 10px 12px;
+
+		  border: 1px solid transparent;
+		  border-radius: 4px;
+		  background-color: white;
+
+		  box-shadow: 0 1px 3px 0 #e6ebf1;
+		  -webkit-transition: box-shadow 150ms ease;
+		  transition: box-shadow 150ms ease;
+		}
+
+		.StripeElement--focus {
+		  box-shadow: 0 1px 3px 0 #cfd7df;
+		}
+
+		.StripeElement--invalid {
+		  border-color: #fa755a;
+		}
+
+		.StripeElement--webkit-autofill {
+		  background-color: #fefde5 !important;
+		}
+	</style>
+
+
+	<script src="https://js.stripe.com/v3/"></script>
+
+
+
+
+
+	<div class="cart">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 mt-1">
+					<h3 class="text-center">Active Orders</h3>
+					{% if items %}
+					<h4 class="text-center">Total Bill Amount: ${{ total }} for {{ count }} Dishes.</h4>
+					<div class="table-responsive">
+						<table class="table table-light">
+							<thead>
+							<tr>
+								<th scope="col">Ordered</th>
+								<th scope="col">Name</th>
+								<th scope="col">Description</th>
+								<th scope="col">Specification</th>
+								<th scope="col">Price</th>
+								<th scope="col">Order Status</th>
+								<th scope="col">Paid Status</th>
+							</tr>
+							</thead>
+							<tbody>
+								{% for item_active in items %}
+							<tr>
+								<td>{{ item_active.ordered_date }}</td>
+								<td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
+								<td>{{ item_active.item.description }}</td>
+								<td>{{ item_active.item.instructions }}</td>
+								<td>{{ item_active.item.price }}</td>
+								<td>{{ item_active.status }}</td>
+								<td>{{ item_active.isPaid }}</td>
+							</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot>
+							 <tr>
+							   <th id="total" colspan="4">Total :</th>
+							   <td><b>{{total}}</b></td>
+							 </tr>
+							</tfoot>
+					{% endif %}
+						</table>
+					  
+						 
+					</div>
+					<!-- Add form here -->
+				<form action="{% url 'charge' %}" method="post" id="payment-form">
+					{% csrf_token %}
+					<div class="form-field-6">
+						<input required type="text" name="email" placeholder="email...">
+					</div>
+
+					<div class="form-field-6">
+						<input required type="text" name="nickname" placeholder="Nickname...">
+					</div>
+
+				  <div class="form-row">
+				    <label for="card-element">
+				      Credit or debit card
+				    </label>
+				    <div id="card-element">
+				      <!-- A Stripe Element will be inserted here. -->
+				    </div>
+
+				    <!-- Used to display form errors. -->
+				    <div id="card-errors" role="alert"></div>
+				  </div>
+
+				  <div style="clear:left"></div>
+				  <hr>
+
+				 	<input  class="myButton" style="background-color:#10a195" type="submit" value="Submit Payment" name="">
+
+				</form>
+				   
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Create a Stripe client.
+		var stripe = Stripe('pk_test_51ItkkfAh9WweYVQmO9kjfWLtr6t881R9uiTNBYYBIndEd8nsnItigeNRBD525fYtd5oiKkK42lGjOTgxvxN8cgkT009Nt74zo7');
+
+		// Create an instance of Elements.
+		var elements = stripe.elements();
+
+		// Custom styling can be passed to options when creating an Element.
+		// (Note that this demo uses a wider set of styles than the guide below.)
+		var style = {
+		  base: {
+		    color: '#32325d',
+		    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+		    fontSmoothing: 'antialiased',
+		    fontSize: '16px',
+		    '::placeholder': {
+		      color: '#aab7c4'
+		    }
+		  },
+		  invalid: {
+		    color: '#fa755a',
+		    iconColor: '#fa755a'
+		  }
+		};
+
+		// Create an instance of the card Element.
+		var card = elements.create('card', {style: style});
+
+		// Add an instance of the card Element into the `card-element` <div>.
+		card.mount('#card-element');
+
+		// Handle real-time validation errors from the card Element.
+		card.addEventListener('change', function(event) {
+		  var displayError = document.getElementById('card-errors');
+		  if (event.error) {
+		    displayError.textContent = event.error.message;
+		  } else {
+		    displayError.textContent = '';
+		  }
+		});
+
+		// Handle form submission.
+		var form = document.getElementById('payment-form');
+		form.addEventListener('submit', function(event) {
+		  event.preventDefault();
+
+		  stripe.createToken(card).then(function(result) {
+		    if (result.error) {
+		      // Inform the user if there was an error.
+		      var errorElement = document.getElementById('card-errors');
+		      errorElement.textContent = result.error.message;
+		    } else {
+		      // Send the token to your server.
+		      stripeTokenHandler(result.token);
+		    }
+		  });
+		});
+
+		// Submit the form with the token ID.
+		function stripeTokenHandler(token) {
+		  // Insert the token ID into the form so it gets submitted to the server
+		  var form = document.getElementById('payment-form');
+		  var hiddenInput = document.createElement('input');
+		  hiddenInput.setAttribute('type', 'hidden');
+		  hiddenInput.setAttribute('name', 'stripeToken');
+		  hiddenInput.setAttribute('value', token.id);
+		  form.appendChild(hiddenInput);
+
+		  // Submit the form
+		  form.submit();
+		}
+	</script>
+
+{% endblock content %}
