@@ -1,12 +1,10 @@
-{% extends 'base/template.html' %}
-{% load static %}
+{% extends 'main/layout.html' %}
 {% block content %}
-	<div id="box">
-		<img id="succes-icon" src="{% static 'images/check.png' %}">
-		<h4>Thank you for your contribution of ${{amount}}!</h4>
-		<p>Your support helps me fulfill my dream of teaching aspiring developers around the world! You should receive a receipt to the email you provided shortly :)</p>
-		<hr>
-		<a class="myButton" href="{% url 'index' %}">&#x2190;Back to donation page</a>
-	</div>
+<section>
+    <p>
+      We appreciate your business! If you have any questions, please email
+      <a href="mailto:orders@example.com">orders@example.com</a>.
+    </p>
+  </section>
 
 {% endblock content %}

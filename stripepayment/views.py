@@ -15,8 +15,6 @@ def index(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
         customer=customer, ordered=True, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
-   # order_items = OrderItems.objects.filter(
-    # customer=customer, ordered=True, status="Delivered", isPaid=True).order_by('-ordered_date')  # delivered and paid orders
     bill = items.aggregate(Sum('item__price'))
     number = items.aggregate(Sum('quantity'))
     total = bill.get("item__price__sum")
@@ -24,12 +22,11 @@ def index(request):
 
     context = {
         'items': items,
-        # 'order_items': order_items,  # Delivered Items
         'total': total,
         'count': count
     }
 
-    return render(request, 'stripepayment/stripe.html', context)
+    return render(request, 'stripepayment/index.html', context)
 
 
 def charge(request):
@@ -42,7 +39,8 @@ def charge(request):
     number = items.aggregate(Sum('quantity'))
     total = bill.get("item__price__sum")
     count = number.get("quantity__sum")  # sum of quantity
-
+    total = round(total)
+    print(total)
     if request.method == 'POST':
         print('Data:', request.POST)
 
@@ -58,7 +56,7 @@ def charge(request):
             customer=customer,
             amount=total*100,
             currency='fjd',
-            description="Total Paid for Meal"
+            description="Total Paid for {} Dish".format(count)
         )
 
     return redirect(reverse('stripepayment:success'))
@@ -66,4 +64,4 @@ def charge(request):
 
 def successMsg(request):
 
-    return render(request, 'stripepayment/success.html', {'amount': amount})
+    return render(request, 'stripepayment/success.html')

@@ -1,4 +1,5 @@
-{% extends 'main/layout.html' %}
+{% extends 'stripepayment/template.html' %}
+{% load static %}
 {% block content %}
 	<style type="text/css">
 		/**
@@ -37,57 +38,20 @@
 
 	<script src="https://js.stripe.com/v3/"></script>
 
-
-
-
-
-	<div class="cart">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12 mt-1">
-					<h3 class="text-center">Active Orders</h3>
-					{% if items %}
-					<h4 class="text-center">Total Bill Amount: ${{ total }} for {{ count }} Dishes.</h4>
-					<div class="table-responsive">
-						<table class="table table-light">
-							<thead>
-							<tr>
-								<th scope="col">Ordered</th>
-								<th scope="col">Name</th>
-								<th scope="col">Description</th>
-								<th scope="col">Specification</th>
-								<th scope="col">Price</th>
-								<th scope="col">Order Status</th>
-								<th scope="col">Paid Status</th>
-							</tr>
-							</thead>
-							<tbody>
-								{% for item_active in items %}
-							<tr>
-								<td>{{ item_active.ordered_date }}</td>
-								<td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
-								<td>{{ item_active.item.description }}</td>
-								<td>{{ item_active.item.instructions }}</td>
-								<td>{{ item_active.item.price }}</td>
-								<td>{{ item_active.status }}</td>
-								<td>{{ item_active.isPaid }}</td>
-							</tr>
-								{% endfor %}
-							</tbody>
-							<tfoot>
-							 <tr>
-							   <th id="total" colspan="4">Total :</th>
-							   <td><b>{{total}}</b></td>
-							 </tr>
-							</tfoot>
-					{% endif %}
-						</table>
-					  
-						 
-					</div>
-					<!-- Add form here -->
-				<form action="{% url 'charge' %}" method="post" id="payment-form">
+	<div id="container">
+		<div class="column-6">
+			<div id="left-wrapper">
+				
+				<div id="left-wrapper-header">
+					<h3>Buy Your Favourite Meal from JustFoods?</h3>
+					<h5>Love the Taste</h5>
+				</div>
+				<div style="clear:left"></div>
+				<hr>
+				<!-- Add form here -->
+				<form action="{% url 'stripepayment:charge' %}" method="post" id="payment-form">
 					{% csrf_token %}
+
 					<div class="form-field-6">
 						<input required type="text" name="email" placeholder="email...">
 					</div>
@@ -114,11 +78,49 @@
 				 	<input  class="myButton" style="background-color:#10a195" type="submit" value="Submit Payment" name="">
 
 				</form>
-				   
-				</div>
+
+
 			</div>
 		</div>
-	</div>
+
+		<div class="column-6">
+			<div id="right-wrapper">
+					<h3 class="text-center">Active Orders</h3>
+					{% if items %}
+					<h4 class="text-center">Total Bill Amount: ${{ total }} for {{ count }} Dishes.</h4>
+					<div class="table-responsive">
+						<table class="table table-light">
+							<thead>
+							<tr>
+								<th scope="col">Name</th>
+								<th scope="col">Price</th>
+							</tr>
+							</thead>
+							<tbody>
+								{% for item_active in items %}
+							<tr>
+								<td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
+								<td>{{ item_active.item.price }}</td>
+							</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot>
+							 <tr>
+							   <th id="total" colspan="4">Total :</th>
+							   <td><b>{{total}}</b></td>
+							 </tr>
+							</tfoot>	
+						</table>					  
+					</div>				   
+					{% endif %}				
+			</div>
+		</div>
+</div>
+
+
+
+
+
 
 	<script>
 		// Create a Stripe client.
