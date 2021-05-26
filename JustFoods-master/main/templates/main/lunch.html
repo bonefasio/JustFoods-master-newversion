@@ -1,0 +1,23 @@
+{% extends "main/layout.html" %}
+{% block content %}
+
+{% for items in lunch %}
+<div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-2">
+        <img src="{{ items.item.image.url }}" class="rounded float-left" alt="...">
+      </div>
+      <div class="col-md-auto">
+       <p> {{ items.item.title }} </p>
+       <p> {{ items.item.description }} </p>
+       <p> {{ items.item.price }} </p>
+       <p> {{ items.item.instructions }} </p>
+      </div>
+     <!-- <div class="col col-lg-2">
+        3 of 3
+      </div> -->
+    </div>
+  
+</div>
+{% endfor %}
+{% endblock content %}

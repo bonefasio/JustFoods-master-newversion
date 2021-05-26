@@ -1,0 +1,93 @@
+{% extends "main/layout.html" %}
+{% block content %}
+
+<div class="cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mt-1">
+                <h3 class="text-center">Active Orders</h3>
+                {% if items %}
+                <h4 class="text-center">Total Bill Amount: ${{total}} for {{ count }} Dishes.</h4>
+                <div class="table-responsive">
+                    <table class="table table-light">
+                        <thead>
+                        <tr>
+                          <!--  <th scope="col">Ordered</th> -->
+                            <th scope="col">Name</th>
+                        <!--  <th scope="col">Description</th> -->
+                         <!-- <th scope="col">Specification</th> -->
+                            <th scope="col">Price</th>
+                        <!--- <th scope="col">Order Status</th> -->
+                        <!--- <th scope="col">Paid Status</th> -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item_active in items %}
+                        <tr>
+                         <!--<td>{{ item_active.ordered_date }}</td> --> 
+                            <td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
+                         <!--<td>{{ item_active.item.description }}</td> --> 
+                         <!--<td>{{ item_active.item.instructions }}</td> --> 
+                            <td>{{ item_active.item.price }}</td>
+                         <!-- <td>{{ item_active.status }}</td> --> 
+                         <!--   <td>{{ item_active.isPaid }}</td> --> 
+                            <td><a class="btn btn-danger" href="{% url 'main:remove-from-order' item_active.id %}">Delete</a></td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                         <tr>
+                           <th id="total" colspan="4">Total :</th>
+                           <td><b>{{total}}</b></td>
+                         </tr>
+                        </tfoot>
+                    </table>
+                     {% endif %}
+                   
+                       <div id="paypal-button-container"></div>
+
+                      
+                   
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AVC3L24VNuolYGFmqgvB8NbUGn52pnwaCU0xkR38Hx68HCPHVsicFQPNwvRX3yKzrxdkNcIf5JkgWhhg&currency=FJD&disable-funding=credit"></script>
+
+<script>
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        style:  {
+            color: 'gold',
+            shape: 'rect',
+        },
+
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '88.44'
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Show a success message to the buyer
+                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+</script>
+
+
+{% endblock content %}

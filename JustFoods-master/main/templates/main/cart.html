@@ -1,0 +1,53 @@
+{% extends "main/layout.html" %}
+{% block content %}
+<div class="cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 mt-5">
+                <h3 class="text-center">Your Cart</h3>
+                {% if ordered_items %}
+                <div class="table-responsive">
+                    <table class="table table-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Specification</th>
+                            <th scope="col">Price</th>
+                          <!--  <th scope="col">Total Pieces</th> -->
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in ordered_items %}
+                        <tr>
+                          <td>{{ order.item.title }} <span class="badge badge-{{ order.item.label_colour }}">{{ order.item.labels }}</span></td>
+                            <td>{{ order.item.description }}</td>
+                            <td>{{ order.item.instructions }}</td>
+                            <td>{{ order.item.price }}</td>
+                        
+                            <td><a class="btn btn-danger" href="{% url 'main:remove-from-cart' order.id %}">Delete</a></td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <h4 class="text-center">Sorry, your cart is empty..Please add items!!!</h4>
+                {% endif %}
+            </div>
+            <div class="col-sm-3 mt-5 mb-3">
+                <div class="content-section">
+                    <h3 class="text-center">Order Summary</h3>
+                      <ul class="list-group">
+                        <li class="list-group-item list-group-item-light text-center text-dark">Total: <b> {{ total }} </b></li>
+                        <li class="list-group-item list-group-item-light text-center text-dark">Number of Serve: <b> {{ count }} 🍽️</b></li>
+                        <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="{% url 'main:ordered' %}">Proceed To Checkout🤝</a></li>
+                        <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="/">Continue Buying✌️</a></li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

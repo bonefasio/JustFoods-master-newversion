@@ -1,0 +1,152 @@
+{% extends "main/layout.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mt-1">
+                <h3 class="text-center">Active Orders</h3>
+                {% if items %}
+                <h4 class="text-center">Total Bill Amount: ${{total}} for {{ count }} Dishes.</h4>
+                <div class="table-responsive">
+                    <table class="table table-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">Ordered</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Specification</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Order Status</th>
+                            <th scope="col">Paid Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item_active in items %}
+                        <tr>
+                            <td>{{ item_active.ordered_date }}</td>
+                            <td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
+                            <td>{{ item_active.item.description }}</td>
+                            <td>{{ item_active.item.instructions }}</td>
+                            <td>{{ item_active.item.price }}</td>
+                            <td>{{ item_active.status }}</td>
+                            <td>{{ item_active.isPaid }}</td>
+                            <td><a class="btn btn-danger" href="{% url 'main:remove-from-order' item_active.id %}">Delete</a></td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                         <tr>
+                           <th id="total" colspan="4">Total :</th>
+                           <td><b>{{total}}</b></td>
+                         </tr>
+                        </tfoot>
+                    </table>
+                     {% endif %}
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3"><h2>Fill in details for delivery !!</h2>  </div>
+                    </div>
+                       <br>
+                       <br>
+                       
+
+                       <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputState">Payment Method</label>
+                            <select id="inputState" class="form-control" name="payment_method">
+                              <option selected>Payroll</option>
+                              <option>Debit/Credit Card</option>
+                            </select>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="inputPassword4">Delivery Date</label>
+
+                            <input type="datetime-local" name="delivery_date" class="form-control" id="inputPassword4" placeholder="Delivery Date">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputState">Delivery Mode</label>
+                            <select id="delivery_mode" class="form-control" name="delivery_mode">
+                              <option selected>-----</option>
+                              <option value="pickup">Pickup</option>
+                              <option value="deliver">Deliver</option>
+                            </select>
+                        </div>
+
+                        <div style='display:none;' id='pickup_location'>Pick Up Menu from <b>USP Cafeteria</b> <br/>&nbsp;
+                          <br/>&nbsp;
+                        </div>
+
+                        <div class="form-group" id="location_hide" >
+                          <label for="inputState">Choose Location</label>
+                            <select id="location" class="form-control" name="location" >
+                              <option selected>-----</option>
+                              <option value="onsite">Onsite</option>
+                              <option value="offsite">Offsite</option>
+                            </select>
+                        </div>
+                        <div class="form-group locations" id="offsite">
+                          <label for="inputState">Choose Offsite Location</label>
+                            <select id="inputState" class="form-control" name="offsite_location" >
+                              <option selected>-----</option>
+                              {% for offsite_location in offsite %}
+                              <option value="{{offsite_location.id}}"> {{offsite_location}} </option>
+                              {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group locations" id="onsite">
+                          <label for="inputState">Choose Onsite Location</label>
+                            <select id="inputState" class="form-control" name="onsite_location">
+                              <option selected>-----</option>
+                              {% for onsite_location in onsite %}
+                              <option value="{{onsite_location.id}}">{{onsite_location}}</option>
+                              {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                          <button type="submit" class="btn btn-primary">Submit Details</button>
+                        </div>
+                      </form>
+                      
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+  $(function() {
+          $('#location').change(function(){
+              $('.locations').hide();
+              $('#' + $(this).val()).show();
+          });
+      });
+
+  $(document).ready(function(){
+    $('#delivery_mode').on('change', function() {
+      if ( this.value == 'pickup')
+      {
+        $("#pickup_location").show();
+        $("#location_hide").hide();
+        $("#onsite").hide();
+        $("#offsite").hide();
+      }
+      else
+      {
+        $("#pickup_location").hide();
+        $("#location_hide").show();
+        $("#onsite").show();
+        $("#offsite").show();
+      }
+    });
+  });
+</script>
+
+{% endblock content %}
+
+
+

@@ -1,0 +1,75 @@
+
+{% extends "main/layout.html" %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<!-- Food Subscription -->
+   
+         <div class="row">
+          <div class="col-md-6 offset-md-3"><h2>Fill in the forms to subscribe for this meal</h2>  </div>
+        </div>
+         <br>
+         <br>
+
+         <form method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}   
+            <div class="form-group">  
+            <div class="row">
+              <div class="col-md-6 offset-md-3 "> {{ form.days_available|as_crispy_field }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 offset-md-3">{{ form.time_field|as_crispy_field }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 offset-md-3">{{ form.payment_method|as_crispy_field }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 offset-md-3">{{ form.delivery_mode|as_crispy_field }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 offset-md-3">{{ form.delivery_location|as_crispy_field }}</div>
+            </div>
+           
+            <div class="d-flex justify-content-center">
+              <input type="submit" value="Save" class="btn btn-success">
+            </div>
+          </div>    
+        </form>
+      
+        <!--
+        <div id="page" class="container" style="border:white">
+          <br class="row">
+              <p class="text-center text-justify"> Fill in the form to register for payroll payment option. </p> 
+              <div class="clearfix hidden-xs hidden-sm"> </div>
+              <form action="{% url 'main:payroll_reg' %}" method="post">
+                  <div class="border form-group mx-auto" style="text-align: center;">
+                      <label class="d-flex justify-content-center"></label>
+                      <div class="form-group">
+                          {% csrf_token %}
+                          {{ form }}
+                          <div class="d-flex justify-content-center">
+                              <input type="submit" class="btn btn-primary " value="Submit">
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>  -->
+
+  {% for subscription in subscription %}
+  <div class="main-reviews card bg-success mb-3">
+    <div class="card-body">
+      <div class="user_details" style="display: flex; border-bottom: 1px solid rgb(31, 30, 30);">
+        <h3 class="mr-3">{{ subscription.user.username }} </h3>
+        <p class="mt-2">{{ subscription.time }}</p>
+        <p class="mt-2">{{ subscription.days }}</p>
+      </div>
+        <h4>{{ review.review }}</h4>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+<!--  End  Food Subscription -->
+{% endblock content %}
