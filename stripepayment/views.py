@@ -54,7 +54,7 @@ def charge(request):
 
         charge = stripe.Charge.create(
             customer=customer,
-            amount=total*100,
+            amount=total*100,  # total is multuplied by 100 as amount is in cents
             currency='fjd',
             description="Total Paid for {} Dish".format(count)
         )

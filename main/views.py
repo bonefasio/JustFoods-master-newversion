@@ -408,9 +408,28 @@ def delivery_details(request):
     return render(request, 'main/delivery_details.html', context)
 
 
+class BreakfastListView(LoginRequiredMixin, ListView):
+    model = Item
+    template_name = 'main/home.html'
+    context_object_name = 'menu_items'
+
+
+class DinnerListView(LoginRequiredMixin, ListView):
+    model = Item
+    template_name = 'main/home.html'
+    context_object_name = 'menu_items'
+
+
+class LunchListView(LoginRequiredMixin, ListView):
+    model = Item
+    template_name = 'main/home.html'
+    context_object_name = 'menu_items'
+
+
+'''
 @login_required
 def lunch(request):
-    lunch = OrderItems.objects.filter(item__meal_menu="Lunch")
+    lunch = OrderItems.objects.filter(meal_menu="Lunch")
 
     context = {
         'lunch': lunch,
@@ -420,7 +439,7 @@ def lunch(request):
 
 @login_required
 def dinner(request):
-    dinner = OrderItems.objects.filter(item__meal_menu="Dinner")
+    dinner = Items.objects.filter(meal_menu="Dinner")
 
     context = {
         'dinner': dinner,
@@ -430,12 +449,13 @@ def dinner(request):
 
 @login_required
 def breakfast(request):
-    breakfast = OrderItems.objects.filter(item__meal_menu="Breakfast")
+    breakfast = Items.objects.filter(meal_menu="Breakfast")
 
     context = {
         'breakfast': breakfast,
     }
     return render(request, 'main/breakfast.html', context)
+'''
 
 
 @login_required(login_url='/accounts/login/')

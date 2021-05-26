@@ -7,10 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
+    
     {# Include FontAwesome; required for icon display #}
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
 
-    {# Include Bootstrap 4 and jQuery #}
+    {# Include Bootstrap 4 and jQuery #} <!-- Time Form Field -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
@@ -21,14 +22,13 @@
    
 
     <!--Stripe-->
-    <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Inter&display=swap" rel="stylesheet">
+    
     
     <link rel="stylesheet" type="text/css" href="{% static 'main/styles.css' %}">
     {# Django Tempus Dominus assets are included in `{{ form.media }}` #}
     {{ form.media }}
     <title>JustFoods</title>
-   
-	
+   	
    
 </head>
 <body>
@@ -64,15 +64,17 @@
                         <li><a href="{% url 'main:cart' %}" class="mr-2 text-light">My Cart🛒</a></li>
                         <li><a href="{% url 'main:order_details' %}" class="mr-2 text-light">Your Orders</a></li>
                         <!-- 09/04 changes -->
-                        <li><div class="dropdown show dropdown-toggle-split dropdown-toggle"><a href="{% url 'main:order_details' %}" class="mr-2 text-light" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu Specials</a>
-                          <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-light" href="{% url 'main:breakfast' %}">Breakfast</a>
-                            <div class="dropdown-divider "></div>
-                            <a class="dropdown-item text-light" href="{% url 'main:lunch' %}">Lunch</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-light" href="{% url 'main:dinner' %}">Dinner</a>
-                          </div>
-                        </div>
+                        <li>
+                            <div class="dropdown show dropdown-toggle-split dropdown-toggle"><a href="{% url 'main:order_details' %}" class="mr-2 text-light" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu Specials</a>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item text-light" href="{% url 'main:breakfast' %}">Breakfast</a>
+                                <div class="dropdown-divider "></div>
+                                <a class="dropdown-item text-light" href="{% url 'main:lunch' %}">Lunch</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-light" href="{% url 'main:dinner' %}">Dinner</a>
+                            </div>
+                            </div>
+                        </li>
                         <!-- 09/04 changes end -->
                         <li>
                             <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">

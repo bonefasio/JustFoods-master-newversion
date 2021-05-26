@@ -1,7 +1,11 @@
 from django.urls import path, re_path
 from . import views
+from .views import *
 from .views import (
     MenuListView,
+    BreakfastListView,
+    DinnerListView,
+    LunchListView,
     menuDetail,
     add_to_cart,
     get_cart_items,
@@ -59,9 +63,9 @@ urlpatterns = [
          SubscriptionDeleteView.as_view(), name='remove-from-subscription'),
 
     # Specials
-    path('lunch/', views.lunch, name='lunch'),
-    path('dinner/', views.dinner, name='dinner'),
-    path('breakfast/', views.breakfast, name='breakfast'),
+    path('breakfast', BreakfastListView.as_view(), name='breakfast'),
+    path('lunch/', DinnerListView.as_view(), name='lunch'),
+    path('dinner/', LunchListView.as_view(), name='dinner'),
 
     # Cafeteria Staff Page
     path('admin_view/', views.admin_view, name='admin_view'),

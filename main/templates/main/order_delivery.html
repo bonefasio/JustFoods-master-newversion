@@ -55,7 +55,7 @@
                         <div class="form-row">
                           <div class="form-group col-md-6">
                             <label for="inputState">Payment Method</label>
-                            <select id="inputState" class="form-control" name="payment_method">
+                            <select id="inputState" class="form-control" name="payment_method" required>
                               <option selected>Payroll</option>
                               <option>Debit/Credit Card</option>
                             </select>
@@ -63,12 +63,12 @@
                           <div class="form-group col-md-6">
                             <label for="inputPassword4">Delivery Date</label>
 
-                            <input type="datetime-local" name="delivery_date" class="form-control" id="inputPassword4" placeholder="Delivery Date">
+                            <input type="datetime-local" name="delivery_date" class="form-control" id="inputPassword4" placeholder="Delivery Date" required>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="inputState">Delivery Mode</label>
-                            <select id="delivery_mode" class="form-control" name="delivery_mode">
+                            <select id="delivery_mode" class="form-control" name="delivery_mode" required>
                               <option selected>-----</option>
                               <option value="pickup">Pickup</option>
                               <option value="deliver">Deliver</option>
@@ -81,7 +81,7 @@
 
                         <div class="form-group" id="location_hide" >
                           <label for="inputState">Choose Location</label>
-                            <select id="location" class="form-control" name="location" >
+                            <select id="location" class="form-control" name="location" required>
                               <option selected>-----</option>
                               <option value="onsite">Onsite</option>
                               <option value="offsite">Offsite</option>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="form-group locations" id="offsite">
                           <label for="inputState">Choose Offsite Location</label>
-                            <select id="inputState" class="form-control" name="offsite_location" >
+                            <select id="inputState" class="form-control" name="offsite_location" required>
                               <option selected>-----</option>
                               {% for offsite_location in offsite %}
                               <option value="{{offsite_location.id}}"> {{offsite_location}} </option>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="form-group locations" id="onsite">
                           <label for="inputState">Choose Onsite Location</label>
-                            <select id="inputState" class="form-control" name="onsite_location">
+                            <select id="inputState" class="form-control" name="onsite_location" required>
                               <option selected>-----</option>
                               {% for onsite_location in onsite %}
                               <option value="{{onsite_location.id}}">{{onsite_location}}</option>
@@ -137,6 +137,7 @@
       }
       else
       {
+        $("#pickup_location").hide();
         $("#pickup_location").hide();
         $("#location_hide").show();
         $("#onsite").show();
