@@ -25,12 +25,12 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'user', 'date_created', 'phone', 'employee_id',
+    list_display = ('id','name', 'user', 'date_created', 'phone', 'employee_id',
                     'registered_payroll', 'customer_order_total')
 
 
 class PayrollAdmin(admin.ModelAdmin):
-    list_display = ('customer_acc', 'account_balance',
+    list_display = ('id','customer_acc', 'account_balance',
                     'created_time', 'registered')
 
 
@@ -46,7 +46,7 @@ class OrderItemsAdmin(admin.ModelAdmin):
 
 
 class ReviewsAdmin(admin.ModelAdmin):
-    list_display = ('user', 'item', 'review', 'posted_on')
+    list_display = ('id','user', 'item', 'review', 'posted_on')
 
 
 class LocationAdmin(admin.ModelAdmin):
@@ -63,13 +63,12 @@ class MealSubscriptionAdmin(admin.ModelAdmin):
         ("Delivery Method", {'fields': ["delivery_mode"]}),
         ("Location Deliver", {'fields': ["delivery_location"]}),
         ("Payment Method", {'fields': ["payment_method"]}),
+        ("Order Status", {'fields': ["status"]}),
     ]
-    list_display = ('time_ordered', 'item', 'customer', 'days_available',
-                    'delivery_mode', 'payment_method', 'number_days')
+    list_display = ('id','time_ordered', 'item', 'customer', 'days_available',
+                    'delivery_mode', 'payment_method', 'number_days','status')
 
 # custom meal code below
-
-
 class CustomMealAdmin(admin.ModelAdmin):
     fieldsets = [
         ("Custom Meal Name", {'fields': ["custom_meal_name"]}),
@@ -85,10 +84,20 @@ class CustomMealAdmin(admin.ModelAdmin):
         ("Order Status", {'fields': ["request_order_status"]}),
         ("Custom Meal Price", {'fields': ["custom_meal_price"]}),
     ]
-    list_display = ('custom_meal_name', 'patron_first_name', 'patron_last_name',
+    list_display = ('id','custom_meal_name', 'patron_first_name', 'patron_last_name',
                     'meal_reqest_time', 'meal_reqest_date', 'order_quantity', 'custom_meal_receipe',
                     'custom_meal_ingredients', 'request_order_status', 'custom_meal_price')
 
+class InventoryAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ("Item Name", {'fields': ["item_name"]}),
+        ("Item Purchase Date", {'fields': ["item_purchase_date"]}),
+        ("Item Purchase Expirydate", {'fields': ["item_purchase_expirydate"]}),
+        ("Item Quantity Available", {'fields': ["item_quantity_available"]}),
+        ("Item Purchase Price", {'fields': ["item_purchase_price"]}),
+    ]
+    list_display = ('id', 'item_name', 'item_purchase_date', 'item_purchase_expirydate',
+                    'item_quantity_available', 'item_purchase_price')
 
 admin.site.register(Item, ItemAdmin)
 admin.site.register(OrderItems, OrderItemsAdmin)
@@ -98,4 +107,6 @@ admin.site.register(Payroll, PayrollAdmin)
 admin.site.register(MealSubscription, MealSubscriptionAdmin)
 # custom meal register below
 admin.site.register(CustomMeal, CustomMealAdmin)
+# inventory meal
+admin.site.register(Inventory, InventoryAdmin)
 admin.site.register(Location, LocationAdmin)

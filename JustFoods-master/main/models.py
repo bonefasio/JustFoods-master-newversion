@@ -144,9 +144,12 @@ class Location(models.Model):
 
 class OrderItems(models.Model):
     ORDER_STATUS = (
-        ('Active', 'Active'),
-        ('Out for delivery', 'Out for delivery'),
-        ('Delivered', 'Delivered')
+        ('Incomplete', 'Incomplete'),
+        ('Accepted', 'Accepted'),
+        ('Prepared', 'Prepared'),
+        ('Pending Delivery', 'Pending Delivery'),
+        ('Delivered', 'Delivered'),
+        ('Canceled', 'Canceled')
     )
     PAYMENT_METHOD = (
         ('Payroll', 'Payroll'),
@@ -198,12 +201,18 @@ class OrderItems(models.Model):
 
 
 class MealSubscription(models.Model):
-
+    ORDER_STATUS = (
+        ('Incomplete', 'Incomplete'),
+        ('Accepted', 'Accepted'),
+        ('Prepared', 'Prepared'),
+        ('Pending Delivery', 'Pending Delivery'),
+        ('Delivered', 'Delivered'),
+        ('Canceled', 'Canceled')
+    )
     PAYMENT_METHOD = (
         ('Payroll', 'Payroll'),
         ('Credit', 'Credit')
     )
-
     DELIVERY_MODE = (
         ('Delivered (On Site Campus)', 'Delivered (On Site Campus)'),
         ('Delivered (Off Site Campus) *limited sites',
@@ -233,6 +242,8 @@ class MealSubscription(models.Model):
         max_length=255, choices=PAYMENT_METHOD, default='Credit')
     subscription_status = models.BooleanField(default=False)
     number_days = models.IntegerField(default=1)
+    status = models.CharField(
+        max_length=255, choices=ORDER_STATUS, default='Active')
 
     class Meta:
         verbose_name = 'Meal Subscription'
@@ -273,3 +284,19 @@ class CustomMeal(models.Model):
 
     def __str__(self):
         return self.custom_meal_name
+
+class Inventory(models.Model):
+    item_name = models.CharField(max_length=150)
+    item_purchase_date = models.DateTimeField(
+        auto_now_add=False, null=True, blank=True)
+    item_purchase_expirydate = models.DateTimeField(
+        auto_now_add=False, null=True, blank=True)
+    item_quantity_available = models.IntegerField(default=0)
+    item_purchase_price = models.FloatField(default=False)
+
+    class Meta:
+        verbose_name = 'Inventory'
+        verbose_name_plural = 'Inventory'
+
+    def __str__(self):
+        return self.item_name
