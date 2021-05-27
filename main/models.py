@@ -139,7 +139,7 @@ class Location(models.Model):
         max_length=255, default='OnSite', choices=DELIVERY_LOCATION)
 
     def __str__(self):
-        return "%s the place to deliver" % self.name
+        return "%s the %s location to deliver" % (self.name, self.category)
 
 
 class OrderItems(models.Model):

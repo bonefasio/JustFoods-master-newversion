@@ -43,9 +43,9 @@ class SubscriptionForm(forms.ModelForm):
 
     class Meta:
         model = MealSubscription
-        fields = ('days_available', 'time_field')
-        # fields = ('days_available', 'time_field', 'delivery_mode',
-        # 'payment_method', 'delivery_location')
+       # fields = ('days_available', 'time_field')
+        fields = ('days_available', 'time_field', 'delivery_mode',
+                  'payment_method', 'delivery_location')
 
 
 class OrderItemForm(forms.ModelForm):
