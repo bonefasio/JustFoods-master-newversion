@@ -18,6 +18,7 @@ class ItemAdmin(admin.ModelAdmin):
         ("Quantity", {'fields': ["quantity_available"]}),
         ("Menu Type", {'fields': ["meal_menu"]}),
         ("Subscription Status", {'fields': ["subcription_avail"]}),
+        ("Hide Menu", {'fields': ["hide_menu"]}),
 
     ]
     list_display = ('id', 'created_by', 'title', 'description',

@@ -81,6 +81,7 @@ class Item(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity_available = models.IntegerField(default=1)
     subcription_avail = models.BooleanField(default=False)
+    hide_menu = models.BooleanField(default=False)
 
     # restaurants = models.ForeignKey(Restaurant, on_delete = models.CASCADE,blank=True)
 
