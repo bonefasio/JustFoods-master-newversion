@@ -77,7 +77,6 @@ class CustomMealAdmin(admin.ModelAdmin):
         ("Patron Last Name", {'fields': ["patron_last_name"]}),
         ("Patron Email Address", {'fields': ["patron_email_address"]}),
         ("Patron Phone Contact", {'fields': ["patron_phone_contact"]}),
-        ("Meal Request Time", {'fields': ["meal_reqest_time"]}),
         ("Meal Request Date", {'fields': ["meal_reqest_date"]}),
         ("Order Quantity", {'fields': ["order_quantity"]}),
         ("Custom Meal Receipe", {'fields': ["custom_meal_receipe"]}),
@@ -85,8 +84,7 @@ class CustomMealAdmin(admin.ModelAdmin):
         ("Order Status", {'fields': ["request_order_status"]}),
         ("Custom Meal Price", {'fields': ["custom_meal_price"]}),
     ]
-    list_display = ('id','custom_meal_name', 'patron_first_name', 'patron_last_name',
-                    'meal_reqest_time', 'meal_reqest_date', 'order_quantity', 'custom_meal_receipe',
+    list_display = ('id','custom_meal_name', 'patron_first_name', 'patron_last_name', 'meal_reqest_date', 'order_quantity', 'custom_meal_receipe',
                     'custom_meal_ingredients', 'request_order_status', 'custom_meal_price')
 
 class InventoryAdmin(admin.ModelAdmin):
