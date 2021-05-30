@@ -103,8 +103,9 @@ class InventoryAdmin(admin.ModelAdmin):
 class MenuAdmin(admin.ModelAdmin):
     fieldsets = [
         ("Item To Show", {'fields': ["items"]}),
+        ("Description", {'fields': ["description"]}),
     ]
-    list_display = ('id', 'items')
+    list_display = ('id',  'description'),
 
 
 admin.site.register(Item, ItemAdmin)
@@ -116,4 +117,4 @@ admin.site.register(MealSubscription, MealSubscriptionAdmin)
 admin.site.register(CustomMeal, CustomMealAdmin)  # custom meal register below
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Inventory, InventoryAdmin)  # inventory meal
-admin.site.register(Menu, MenuAdmin)
+admin.site.register(Menu)
