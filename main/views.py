@@ -398,18 +398,16 @@ def lunch(request):
     items = menu.items.all()
     print(items)
     context = {
-        'lunch': lunch,
+        'items': items,
     }
     return render(request, 'main/lunch.html', context)
 
 
 @login_required
 def dinner(request):
-    menu = get_object_or_404(Menu, description="Breakfast")
-    #item = get_object_or_404(Item, slug=slug)
-
+    menu = get_object_or_404(Menu, description="Dinner")
+    # get all items in menu
     items = menu.items.all()
-    print(items)
     context = {
         'items': items,
     }
@@ -419,8 +417,7 @@ def dinner(request):
 @login_required
 def breakfast(request):
     menu = get_object_or_404(Menu, description="Breakfast")
-    #item = get_object_or_404(Item, slug=slug)
-
+    # get all items in menu
     items = menu.items.all()
     print(items)
 
