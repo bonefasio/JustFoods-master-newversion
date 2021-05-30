@@ -144,6 +144,7 @@ class CartDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
+'''
 @login_required
 def order_item(request):
     customer = request.user.customer
@@ -152,13 +153,16 @@ def order_item(request):
     order_items.update(ordered=True, ordered_date=ordered_date)
     messages.info(request, "Item Ordered")
     return redirect("main:order_delivery")
+'''
 
 
 @login_required
 def order_delivery(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
-        customer=customer, ordered=True, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
+        customer=customer, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
+    ordered_date = timezone.now()  # assign ordred date the current date
+    items.update(ordered=True, ordered_date=ordered_date)
    # order_items = OrderItems.objects.filter(
     # customer=customer, ordered=True, status="Delivered", isPaid=True).order_by('-ordered_date')  # delivered and paid orders
     bill = items.aggregate(Sum('item__price'))
