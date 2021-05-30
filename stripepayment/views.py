@@ -15,7 +15,7 @@ stripe.api_key = "sk_test_51ItkkfAh9WweYVQmHWWyufzm8D3teuWlZMwopwIA5egeYnKEYldtF
 def index(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
-        customer=customer, ordered=True, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
+        customer=customer, ordered=False, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
     bill = items.aggregate(Sum('item__price'))
     number = items.aggregate(Sum('quantity'))
     total = bill.get("item__price__sum")
@@ -33,12 +33,10 @@ def index(request):
 def charge(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
-        customer=customer, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
-   # order_items = OrderItems.objects.filter(
-    # customer=customer, ordered=True, status="Delivered", isPaid=True).order_by('-ordered_date')  # delivered and paid orders
+        customer=customer,  ordered=False, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
     bill = items.aggregate(Sum('item__price'))
     number = items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
+    total = bill.get("item__price__sum")  # order total
     count = number.get("quantity__sum")  # sum of quantity
     total = round(total)
     print(total)
@@ -57,14 +55,30 @@ def charge(request):
             currency='fjd',
             description="Total Paid for {} Dish".format(count)
         )
-        paidDate = timezone.now()
+
         ordered_date = timezone.now()  # assign ordred date the current date
         items.update(ordered=True, ordered_date=ordered_date, isPaid=True)
         messages.info(request, "Item Paid and Ordred")
 
-    return redirect(reverse('stripepayment:success'))
+    return redirect(reverse('main:payment_details'))
 
 
+'''
 def successMsg(request):
+    customer = request.user.customer
+    items = OrderItems.objects.filter(
+        customer=customer,  ordered=False, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
+    bill = items.aggregate(Sum('item__price'))
+    number = items.aggregate(Sum('quantity'))
+    total = bill.get("item__price__sum")  # order total
+    count = number.get("quantity__sum")  # sum of quantity
+    total = round(total)
+
+    context = {
+        'items': items,
+        'total': total,
+        'count': count
+    }
 
     return render(request, 'stripepayment/success.html')
+'''
