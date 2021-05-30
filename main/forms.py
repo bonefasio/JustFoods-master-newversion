@@ -10,13 +10,12 @@ class AddForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = ('created_by',
-        'title', 'image', 'description', 'price', 'pieces', 'instructions', 'labels', 'label_colour', 'slug')
-
+                  'title', 'image', 'description', 'price', 'pieces', 'instructions', 'labels', 'label_colour', 'slug')
 '''
 
 
 class PayrollRegistrationForm(forms.ModelForm):
-    employee_id = forms.CharField(required=True)
+    employee_id = forms.CharField(required=True, min_length=9, max_length=9)
     name = forms.CharField(required=True)
     birth_date = forms.DateTimeField(required=True)
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.fields import BooleanField
+from django.db.models.fields.related import ManyToManyField
 from django.shortcuts import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -29,7 +30,6 @@ class Payroll(models.Model):
     customer_acc = models.OneToOneField(
         Customer, on_delete=models.SET_NULL, null=True, blank=True)
     account_balance = models.FloatField(null=True, blank=True, default=134.34)
-    created_time = models.DateField(default=timezone.now)
     name = models.CharField(max_length=200, null=True)
     registered = models.BooleanField(default=False)
     employee_id = models.CharField(max_length=200, null=True)
@@ -56,11 +56,13 @@ class Item(models.Model):
         ('primary', 'primary'),
         ('info', 'info')
     )
+    '''
     MEAL_TYPE = (
         ('Lunch', 'Lunch'),
         ('Breakfast', 'Breakfast'),
         ('Dinner', 'Dinner')
     )
+    '''
     DELIVERY_CHOICE = (
         ('Pickup', 'Pickup'),
         ('Delivery Available', 'Delivery Available'),
@@ -77,16 +79,15 @@ class Item(models.Model):
     label_colour = models.CharField(
         max_length=15, choices=LABEL_COLOUR, blank=True)
     slug = models.SlugField(max_length=255, default="slug")
-    meal_menu = models.CharField(max_length=25, choices=MEAL_TYPE, blank=True)
+   # meal_menu = models.CharField(max_length=25, choices=MEAL_TYPE, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity_available = models.IntegerField(default=1)
     subcription_avail = models.BooleanField(default=False)
 
     # restaurants = models.ForeignKey(Restaurant, on_delete = models.CASCADE,blank=True)
-
     class Meta:
-        verbose_name = 'Food Menu'
-        verbose_name_plural = 'Food Menus'
+        verbose_name = 'Food Item'
+        verbose_name_plural = 'Food Items'
 
     def __str__(self):
         return self.title
@@ -110,6 +111,26 @@ class Item(models.Model):
         return reverse("main:item-update", kwargs={
             'slug': self.slug
         })
+
+
+class Menu(models.Model):
+    MENU_TYPE = (
+        ('Breakfast', 'Breakfast'),
+        ('Lunch', 'Lunch'),
+        ('Dinner', 'Dinner'),
+        ('Display', 'Display'),
+        ('Hide', 'Hide')
+    )
+    items = models.ManyToManyField(Item)
+    description = models.CharField(
+        max_length=25, choices=MENU_TYPE, blank=True)
+
+    class Meta:
+        verbose_name = 'Menu'
+        verbose_name_plural = 'Menus'
+
+    def __str__(self):
+        return self.description
 
 
 class Reviews(models.Model):
@@ -139,14 +160,17 @@ class Location(models.Model):
         max_length=255, default='OnSite', choices=DELIVERY_LOCATION)
 
     def __str__(self):
-        return "%s the %s location to deliver" % (self.name, self.category)
+        return "%s the place to deliver" % self.name
 
 
 class OrderItems(models.Model):
     ORDER_STATUS = (
-        ('Active', 'Active'),
-        ('Out for delivery', 'Out for delivery'),
-        ('Delivered', 'Delivered')
+        ('Incomplete', 'Incomplete'),
+        ('Accepted', 'Accepted'),
+        ('Prepared', 'Prepared'),
+        ('Pending Delivery', 'Pending Delivery'),
+        ('Delivered', 'Delivered'),
+        ('Canceled', 'Canceled')
     )
     PAYMENT_METHOD = (
         ('Payroll', 'Payroll'),
@@ -198,12 +222,18 @@ class OrderItems(models.Model):
 
 
 class MealSubscription(models.Model):
-
+    ORDER_STATUS = (
+        ('Incomplete', 'Incomplete'),
+        ('Accepted', 'Accepted'),
+        ('Prepared', 'Prepared'),
+        ('Pending Delivery', 'Pending Delivery'),
+        ('Delivered', 'Delivered'),
+        ('Canceled', 'Canceled')
+    )
     PAYMENT_METHOD = (
         ('Payroll', 'Payroll'),
         ('Credit', 'Credit')
     )
-
     DELIVERY_MODE = (
         ('Delivered (On Site Campus)', 'Delivered (On Site Campus)'),
         ('Delivered (Off Site Campus) *limited sites',
@@ -233,6 +263,8 @@ class MealSubscription(models.Model):
         max_length=255, choices=PAYMENT_METHOD, default='Credit')
     subscription_status = models.BooleanField(default=False)
     number_days = models.IntegerField(default=1)
+    status = models.CharField(
+        max_length=255, choices=ORDER_STATUS, default='Active')
 
     class Meta:
         verbose_name = 'Meal Subscription'
@@ -256,9 +288,7 @@ class CustomMeal(models.Model):
     patron_last_name = models.CharField(max_length=150)
     patron_email_address = models.CharField(max_length=50)
     patron_phone_contact = models.CharField(max_length=50)
-    meal_reqest_time = models.TimeField(
-        auto_now=False, auto_now_add=False, null=True)
-    meal_reqest_date = models.DateTimeField(
+    meal_request_date = models.DateTimeField(
         auto_now_add=False, null=True, blank=True)
     order_quantity = models.IntegerField(default=0)
     custom_meal_receipe = models.CharField(max_length=100)
@@ -273,3 +303,20 @@ class CustomMeal(models.Model):
 
     def __str__(self):
         return self.custom_meal_name
+
+
+class Inventory(models.Model):
+    item_name = models.CharField(max_length=150)
+    item_purchase_date = models.DateTimeField(
+        auto_now_add=False, null=True, blank=True)
+    item_purchase_expirydate = models.DateTimeField(
+        auto_now_add=False, null=True, blank=True)
+    item_quantity_available = models.IntegerField(default=0)
+    item_purchase_price = models.FloatField(default=False)
+
+    class Meta:
+        verbose_name = 'Inventory'
+        verbose_name_plural = 'Inventory'
+
+    def __str__(self):
+        return self.item_name

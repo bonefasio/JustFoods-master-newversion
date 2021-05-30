@@ -3,9 +3,6 @@ from . import views
 from .views import *
 from .views import (
     MenuListView,
-    BreakfastListView,
-    DinnerListView,
-    LunchListView,
     menuDetail,
     add_to_cart,
     get_cart_items,
@@ -50,7 +47,7 @@ urlpatterns = [
     path('payitem/', views.pay_item, name='payitems'),
     path('payment/', views.payment, name='payment-page'),
     path('payments/', views.payment_details, name='payment_details'),
-    path('payment_paypal/', views.payment_paypal, name='payment_paypal'),
+    #path('payment_paypal/', views.payment_paypal, name='payment_paypal'),
     # views for custom meal
     path('custom_meal/', views.custom_meal, name='custom_meal'),
     # views for delivery
@@ -63,9 +60,9 @@ urlpatterns = [
          SubscriptionDeleteView.as_view(), name='remove-from-subscription'),
 
     # Specials
-    path('breakfast', BreakfastListView.as_view(), name='breakfast'),
-    path('lunch/', DinnerListView.as_view(), name='lunch'),
-    path('dinner/', LunchListView.as_view(), name='dinner'),
+    path('breakfast', views.breakfast, name='breakfast'),
+    path('lunch/', views.lunch, name='lunch'),
+    path('dinner/', views.dinner, name='dinner'),
 
     # Cafeteria Staff Page
     path('admin_view/', views.admin_view, name='admin_view'),

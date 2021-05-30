@@ -28,6 +28,7 @@ class MenuListView(ListView):
 def menuDetail(request, slug):
     item = Item.objects.filter(slug=slug).first()
     #item = get_object_or_404(Item, slug=slug)
+    # getting the first 7 reviews
     reviews = Reviews.objects.filter(rslug=slug).order_by('-id')[:7]
     avail = int(item.quantity_available)
     loop_times = range(1, avail+1)
@@ -389,32 +390,13 @@ def delivery_details(request):
     return render(request, 'main/delivery_details.html', context)
 
 
-'''
-
-class BreakfastListView(LoginRequiredMixin, ListView):
-    model = Item
-    template_name = 'main/home.html'
-    context_object_name = 'menu_items'
-
-
-class DinnerListView(LoginRequiredMixin, ListView):
-    model = Item
-    template_name = 'main/home.html'
-    context_object_name = 'menu_items'
-
-
-class LunchListView(LoginRequiredMixin, ListView):
-    model = Item
-    template_name = 'main/home.html'
-    context_object_name = 'menu_items'
-
-'''
-
-
 @login_required
 def lunch(request):
-    lunch = Item.objects.filter(meal_menu="Lunch")
+    menu = get_object_or_404(Menu, description="Lunch")
+    #item = get_object_or_404(Item, slug=slug)
 
+    items = menu.items.all()
+    print(items)
     context = {
         'lunch': lunch,
     }
@@ -423,23 +405,27 @@ def lunch(request):
 
 @login_required
 def dinner(request):
-    menu = Menu.objects.filter(item__meal_menu="Dinner")
-   # dinner = Item.objects.filter(meal_menu="Dinner")
+    menu = get_object_or_404(Menu, description="Breakfast")
+    #item = get_object_or_404(Item, slug=slug)
 
+    items = menu.items.all()
+    print(items)
     context = {
-        'menu': menu,
+        'items': items,
     }
     return render(request, 'main/dinner.html', context)
 
 
 @login_required
 def breakfast(request):
-    breakfast = Item.objects.filter(meal_menu="Breakfast")
-    menu = Menu.objects.get(description="Display")
-    menu.item_set.all()
+    menu = get_object_or_404(Menu, description="Breakfast")
+    #item = get_object_or_404(Item, slug=slug)
+
+    items = menu.items.all()
+    print(items)
 
     context = {
-        'breakfast': breakfast,
+        'items': items,
     }
     return render(request, 'main/breakfast.html', context)
 
