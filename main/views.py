@@ -27,9 +27,17 @@ class MenuListView(ListView):
 
 def menuDetail(request, slug):
     item = Item.objects.filter(slug=slug).first()
+    #item = get_object_or_404(Item, slug=slug)
     reviews = Reviews.objects.filter(rslug=slug).order_by('-id')[:7]
     avail = int(item.quantity_available)
     loop_times = range(1, avail+1)
+    '''
+    if request.method == 'POST':
+        quantity = request.POST.get("quantity")
+        avail = avail - int(quantity)
+        item.update(quantity_available=avail)
+        loop_times = range(1, avail+1)
+    '''
     context = {
         'item': item,
         'reviews': reviews,
@@ -174,7 +182,6 @@ def order_delivery(request):
         print(onsite_delivery_location)
 
         if delivery_mode == 'pickup':
-            print('Pickup from Cafeteria')
             items.update(payment_method=payment_method, delivery_date=delivery_date,
                          delivery_mode=delivery_mode, delivery_location=pickup_location)
 
@@ -183,14 +190,14 @@ def order_delivery(request):
                 id=onsite_delivery_location)  # get onsite location
             items.update(payment_method=payment_method, delivery_date=delivery_date,
                          delivery_mode=delivery_mode, delivery_location=location_on)
-            print('Youre opting for onsite delivery')
+           # print('Youre opting for onsite delivery')
 
         if delivery_mode == 'deliver' and location == 'offsite':
             location_off = Location.objects.get(
                 id=offsite_delivery_location)  # get offsite location
             items.update(payment_method=payment_method, delivery_date=delivery_date,
                          delivery_mode=delivery_mode, delivery_location=location_off)
-            print('Youre opting for offsite delivery')
+           # print('Youre opting for offsite delivery')
 
         if request.POST.get("payment_method") == 'Debit/Credit Card':
             return redirect('stripepayment:index')
@@ -199,41 +206,15 @@ def order_delivery(request):
         # redirect to a new URL:
         return redirect('main:payment-page')
 
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = OrderItemForm()
-
     context = {
         'items': items,
         # 'order_items': order_items,  # Delivered Items
         'total': total,
         'count': count,
-        'form': form,
         'offsite': offsite,
         'onsite': onsite
     }
     return render(request, 'main/order_delivery.html', context)
-
-
-@login_required
-def payment_paypal(request):
-    customer = request.user.customer
-    items = OrderItems.objects.filter(
-        customer=customer, ordered=True, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
-   # order_items = OrderItems.objects.filter(
-    # customer=customer, ordered=True, status="Delivered", isPaid=True).order_by('-ordered_date')  # delivered and paid orders
-    bill = items.aggregate(Sum('item__price'))
-    number = items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
-    count = number.get("quantity__sum")  # sum of quantity
-
-    context = {
-        'items': items,
-        # 'order_items': order_items,  # Delivered Items
-        'total': total,
-        'count': count
-    }
-    return render(request, 'main/payment_paypal.html', context)
 
 
 @login_required
@@ -408,6 +389,8 @@ def delivery_details(request):
     return render(request, 'main/delivery_details.html', context)
 
 
+'''
+
 class BreakfastListView(LoginRequiredMixin, ListView):
     model = Item
     template_name = 'main/home.html'
@@ -425,11 +408,12 @@ class LunchListView(LoginRequiredMixin, ListView):
     template_name = 'main/home.html'
     context_object_name = 'menu_items'
 
-
 '''
+
+
 @login_required
 def lunch(request):
-    lunch = OrderItems.objects.filter(meal_menu="Lunch")
+    lunch = Item.objects.filter(meal_menu="Lunch")
 
     context = {
         'lunch': lunch,
@@ -439,23 +423,25 @@ def lunch(request):
 
 @login_required
 def dinner(request):
-    dinner = Items.objects.filter(meal_menu="Dinner")
+    menu = Menu.objects.filter(item__meal_menu="Dinner")
+   # dinner = Item.objects.filter(meal_menu="Dinner")
 
     context = {
-        'dinner': dinner,
+        'menu': menu,
     }
     return render(request, 'main/dinner.html', context)
 
 
 @login_required
 def breakfast(request):
-    breakfast = Items.objects.filter(meal_menu="Breakfast")
+    breakfast = Item.objects.filter(meal_menu="Breakfast")
+    menu = Menu.objects.get(description="Display")
+    menu.item_set.all()
 
     context = {
         'breakfast': breakfast,
     }
     return render(request, 'main/breakfast.html', context)
-'''
 
 
 @login_required(login_url='/accounts/login/')
@@ -670,8 +656,8 @@ def custom_meal(request):
         patron_last_name = request.POST.get("patron_last_name")
         patron_email_address = request.POST.get("patron_email_address")
         patron_phone_contact = request.POST.get("patron_phone_contact")
-        meal_reqest_time = request.POST.get("meal_reqest_time")
-        meal_reqest_date = request.POST.get("meal_reqest_date")
+       # meal_reqest_time = request.POST.get("meal_reqest_time")
+        meal_reqest_date = request.POST.get("meal_request_date")
         order_quantity = request.POST.get("order_quantity")
         custom_meal_receipe = request.POST.get("custom_meal_receipe")
         custom_meal_ingredients = request.POST.get("custom_meal_ingredients")
