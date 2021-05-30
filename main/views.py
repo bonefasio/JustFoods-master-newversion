@@ -144,25 +144,12 @@ class CartDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-'''
-@login_required
-def order_item(request):
-    customer = request.user.customer
-    order_items = OrderItems.objects.filter(customer=customer, ordered=False)
-    ordered_date = timezone.now()
-    order_items.update(ordered=True, ordered_date=ordered_date)
-    messages.info(request, "Item Ordered")
-    return redirect("main:order_delivery")
-'''
-
-
 @login_required
 def order_delivery(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
         customer=customer, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
-    ordered_date = timezone.now()  # assign ordred date the current date
-    items.update(ordered=True, ordered_date=ordered_date)
+
    # order_items = OrderItems.objects.filter(
     # customer=customer, ordered=True, status="Delivered", isPaid=True).order_by('-ordered_date')  # delivered and paid orders
     bill = items.aggregate(Sum('item__price'))
@@ -250,6 +237,10 @@ def payment(request):
         customer=customer, ordered=True, isPaid=False, status="Active").order_by('-ordered_date')  # not yet been delivered
     # order_items = OrderItems.objects.filter(
     #  customer=customer, ordered=True, status="Delivered", isPaid=False).order_by('-ordered_date')  # delivered and paid orders
+
+    ordered_date = timezone.now()  # assign ordred date the current date
+    items.update(ordered=True, ordered_date=ordered_date)
+
     bill = items.aggregate(Sum('item__price'))
     number = items.aggregate(Sum('quantity'))
     total = bill.get("item__price__sum")
@@ -312,7 +303,10 @@ def pay_item(request):
     paiditems = OrderItems.objects.filter(
         customer=request.user.customer, ordered=True, isPaid=False, status="Active").order_by('-ordered_date')
     paidDate = timezone.now()
-    paiditems.update(isPaid=True, paidAt=paidDate)
+    ordered_date = timezone.now()  # assign ordred date the current date
+    #items.update(ordered=True, ordered_date=ordered_date)
+    paiditems.update(isPaid=True, paidAt=paidDate,
+                     ordered=True, ordered_date=ordered_date)
    # order_items.update(ordered=True, ordered_date=ordered_date)
     messages.info(request, "Item Paid")
     return redirect("main:payment_details")

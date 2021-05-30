@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
+from django.contrib import messages
 from main.models import *
 from django.db.models import Sum
 
@@ -32,7 +33,7 @@ def index(request):
 def charge(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
-        customer=customer, ordered=True, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
+        customer=customer, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
    # order_items = OrderItems.objects.filter(
     # customer=customer, ordered=True, status="Delivered", isPaid=True).order_by('-ordered_date')  # delivered and paid orders
     bill = items.aggregate(Sum('item__price'))
@@ -43,9 +44,7 @@ def charge(request):
     print(total)
     if request.method == 'POST':
         print('Data:', request.POST)
-
-       # amount = int(request.POST['amount'])
-
+        # this code is taken from https://stripe.com/docs/
         customer = stripe.Customer.create(
             email=request.POST['email'],
             name=request.POST['nickname'],
@@ -58,6 +57,10 @@ def charge(request):
             currency='fjd',
             description="Total Paid for {} Dish".format(count)
         )
+        paidDate = timezone.now()
+        ordered_date = timezone.now()  # assign ordred date the current date
+        items.update(ordered=True, ordered_date=ordered_date, isPaid=True)
+        messages.info(request, "Item Paid and Ordred")
 
     return redirect(reverse('stripepayment:success'))
 
