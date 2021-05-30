@@ -61,24 +61,3 @@ def charge(request):
         messages.info(request, "Item Paid and Ordred")
 
     return redirect(reverse('main:payment_details'))
-
-
-'''
-def successMsg(request):
-    customer = request.user.customer
-    items = OrderItems.objects.filter(
-        customer=customer,  ordered=False, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
-    bill = items.aggregate(Sum('item__price'))
-    number = items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")  # order total
-    count = number.get("quantity__sum")  # sum of quantity
-    total = round(total)
-
-    context = {
-        'items': items,
-        'total': total,
-        'count': count
-    }
-
-    return render(request, 'stripepayment/success.html')
-'''
