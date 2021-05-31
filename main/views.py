@@ -430,7 +430,7 @@ def breakfast(request):
 @admin_only
 def admin_view(request):
     cart_items = OrderItems.objects.filter(
-        item__created_by=request.user, ordered=True, status="Delivered").order_by('-ordered_date')
+        ordered=True, status="Delivered").order_by('-ordered_date')
     context = {
         'cart_items': cart_items,
     }
@@ -440,7 +440,7 @@ def admin_view(request):
 @login_required(login_url='/accounts/login/')
 @admin_only
 def item_list(request):
-    items = Item.objects.filter(created_by=request.user)
+    items = Item.objects.all()
     context = {
         'items': items
     }
@@ -453,7 +453,7 @@ def update_status(request, pk):
     if request.method == 'POST':
         status = request.POST['status']
     cart_items = OrderItems.objects.filter(
-        item__created_by=request.user, ordered=True, status="Active", pk=pk)
+        ordered=True, status="Active", pk=pk)
     delivery_date = timezone.now()
     if status == 'Delivered':
         cart_items.update(
@@ -465,7 +465,7 @@ def update_status(request, pk):
 @admin_only
 def pending_orders(request):
     items = OrderItems.objects.filter(
-        item__created_by=request.user, ordered=True, isPaid=True, status="Active").order_by('-ordered_date')
+        ordered=True, isPaid=True, status="Active").order_by('-ordered_date')
     context = {
         'items': items,
     }
@@ -476,11 +476,11 @@ def pending_orders(request):
 @admin_only
 def admin_dashboard(request):
     cart_items = OrderItems.objects.filter(
-        item__created_by=request.user, ordered=True)
+        ordered=True)
     pending_total = OrderItems.objects.filter(
-        item__created_by=request.user, ordered=True, status="Active").count()
+        ordered=True, status="Active").count()
     completed_total = OrderItems.objects.filter(
-        item__created_by=request.user, ordered=True, status="Delivered").count()
+        ordered=True, status="Delivered").count()
     count1 = OrderItems.objects.filter(
         item__created_by=request.user, ordered=True, item="3").count()
     count2 = OrderItems.objects.filter(
@@ -506,7 +506,7 @@ def admin_dashboard(request):
 def order_delivery_details(request):
 
     cart_items = OrderItems.objects.filter(
-        item__created_by=request.user, ordered=True, status="Active", isPaid=True)
+        ordered=True, status="Active", isPaid=True)
     context = {
         'cart_items': cart_items
     }
@@ -659,7 +659,7 @@ def custom_meal(request):
         custom_meal = CustomMeal(custom_meal_name=custom_meal_name, patron_first_name=patron_first_name,
                                  patron_last_name=patron_last_name,
                                  patron_email_address=patron_email_address,
-                                 patron_phone_contact=patron_phone_contact, meal_reqest_time=meal_reqest_time,
+                                 patron_phone_contact=patron_phone_contact,
                                  meal_reqest_date=meal_reqest_date, order_quantity=order_quantity,
                                  custom_meal_receipe=custom_meal_receipe,
                                  custom_meal_ingredients=custom_meal_ingredients)

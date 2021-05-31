@@ -8,7 +8,7 @@ class TestUrls(SimpleTestCase):
 
     def test_menu_list(self):  # test home url
         url = reverse('main:home')
-        self.assertEquals(resolve(url).func.view_class,  MenuListView)
+        self.assertEquals(resolve(url).func, home)
 
     def test_dishest(self):  # test home dishes
         url = reverse('main:dishes', args=['some-slug'])
