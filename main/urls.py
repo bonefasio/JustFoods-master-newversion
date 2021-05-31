@@ -36,7 +36,6 @@ urlpatterns = [
          CartDeleteView.as_view(), name='remove-from-cart'),
 
     # orders urls path
-    # path('ordered/', views.order_item, name='ordered'),
     path('order_details/', views.order_details, name='order_details'),
     path('order_delivery/', views.order_delivery, name='order_delivery'),
     path('remove-from-order/<int:pk>/',

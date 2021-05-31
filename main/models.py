@@ -168,13 +168,13 @@ class OrderItems(models.Model):
         ('Incomplete', 'Incomplete'),
         ('Accepted', 'Accepted'),
         ('Prepared', 'Prepared'),
-        ('Pending Delivery', 'Pending Delivery'),
+        ('Out for Delivery', 'Out for Delivery'),
         ('Delivered', 'Delivered'),
         ('Canceled', 'Canceled')
     )
     PAYMENT_METHOD = (
         ('Payroll', 'Payroll'),
-        ('Credit', 'Credit')
+        ('Credit/Debit Card', 'Credit/Debit Card')
     )
     DELIVERY_MODE = (
         ('Delivered (On Site Campus)', 'Delivered (On Site Campus)'),

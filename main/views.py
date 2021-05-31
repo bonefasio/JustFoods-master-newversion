@@ -192,7 +192,7 @@ def order_delivery(request):
            # print('Youre opting for offsite delivery')
 
         if request.POST.get("payment_method") == 'Debit/Credit Card':
-            return redirect('stripepayment:index')
+            return redirect('stripepayment:index')  # redirect to stripe page
 
         messages.info(request, "Delivery details saved")
         # redirect to a new URL:
