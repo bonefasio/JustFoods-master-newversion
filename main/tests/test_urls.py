@@ -8,14 +8,13 @@ class TestUrls(SimpleTestCase):
 
     def test_menu_list(self):  # test home url
         url = reverse('main:home')
-        print(resolve(url))
         self.assertEquals(resolve(url).func.view_class,  MenuListView)
 
-    def test_menu_list(self):  # test home dishes
+    def test_dishest(self):  # test home dishes
         url = reverse('main:dishes', args=['some-slug'])
         self.assertEquals(resolve(url).func,  menuDetail)
 
-    def test_menu_list(self):  # test add to order
+    def test_add_order(self):  # test add to order
         url = reverse('main:add-to-order', args=['some-slug'])
         self.assertEquals(resolve(url).func,  add_to_cart)
 
