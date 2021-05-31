@@ -56,7 +56,13 @@ class Item(models.Model):
         ('primary', 'primary'),
         ('info', 'info')
     )
-
+    '''
+    MEAL_TYPE = (
+        ('Lunch', 'Lunch'),
+        ('Breakfast', 'Breakfast'),
+        ('Dinner', 'Dinner')
+    )
+    '''
     DELIVERY_CHOICE = (
         ('Pickup', 'Pickup'),
         ('Delivery Available', 'Delivery Available'),

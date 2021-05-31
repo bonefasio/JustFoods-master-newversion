@@ -651,7 +651,7 @@ def custom_meal(request):
         patron_email_address = request.POST.get("patron_email_address")
         patron_phone_contact = request.POST.get("patron_phone_contact")
        # meal_reqest_time = request.POST.get("meal_reqest_time")
-        meal_reqest_date = request.POST.get("meal_request_date")
+        meal_request_date = request.POST.get("meal_request_date")
         order_quantity = request.POST.get("order_quantity")
         custom_meal_receipe = request.POST.get("custom_meal_receipe")
         custom_meal_ingredients = request.POST.get("custom_meal_ingredients")
@@ -660,7 +660,7 @@ def custom_meal(request):
                                  patron_last_name=patron_last_name,
                                  patron_email_address=patron_email_address,
                                  patron_phone_contact=patron_phone_contact,
-                                 meal_reqest_date=meal_reqest_date, order_quantity=order_quantity,
+                                 meal_request_date=meal_request_date, order_quantity=order_quantity,
                                  custom_meal_receipe=custom_meal_receipe,
                                  custom_meal_ingredients=custom_meal_ingredients)
         custom_meal.save()
