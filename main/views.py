@@ -19,10 +19,16 @@ import datetime
 from datetime import timedelta
 
 
-class MenuListView(ListView):
-    model = Item
-    template_name = 'main/home.html'
-    context_object_name = 'menu_items'
+def home(request):
+    menu = get_object_or_404(Menu, description="Display")
+    # get all items in menu
+    items = menu.items.all()
+    print(items)
+
+    context = {
+        'items': items,
+    }
+    return render(request, 'main/home.html', context)
 
 
 def menuDetail(request, slug):
@@ -150,8 +156,6 @@ def order_delivery(request):
     items = OrderItems.objects.filter(
         customer=customer, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
 
-   # order_items = OrderItems.objects.filter(
-    # customer=customer, ordered=True, status="Delivered", isPaid=True).order_by('-ordered_date')  # delivered and paid orders
     bill = items.aggregate(Sum('item__price'))
     number = items.aggregate(Sum('quantity'))
     total = bill.get("item__price__sum")
@@ -200,7 +204,6 @@ def order_delivery(request):
 
     context = {
         'items': items,
-        # 'order_items': order_items,  # Delivered Items
         'total': total,
         'count': count,
         'offsite': offsite,
@@ -235,8 +238,6 @@ def payment(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
         customer=customer, ordered=True, isPaid=False, status="Active").order_by('-ordered_date')  # not yet been delivered
-    # order_items = OrderItems.objects.filter(
-    #  customer=customer, ordered=True, status="Delivered", isPaid=False).order_by('-ordered_date')  # delivered and paid orders
 
     ordered_date = timezone.now()  # assign ordred date the current date
     items.update(ordered=True, ordered_date=ordered_date)
@@ -464,7 +465,7 @@ def update_status(request, pk):
 @admin_only
 def pending_orders(request):
     items = OrderItems.objects.filter(
-        item__created_by=request.user, ordered=True, status="Active").order_by('-ordered_date')
+        item__created_by=request.user, ordered=True, isPaid=True, status="Active").order_by('-ordered_date')
     context = {
         'items': items,
     }
@@ -498,6 +499,18 @@ def admin_dashboard(request):
         'count3': count3,
     }
     return render(request, 'main/admin_dashboard.html', context)
+
+
+@login_required
+@admin_only
+def order_delivery_details(request):
+
+    cart_items = OrderItems.objects.filter(
+        item__created_by=request.user, ordered=True, status="Active", isPaid=True)
+    context = {
+        'cart_items': cart_items
+    }
+    return render(request, 'main/paid_delivery_details.html', context)
 
 
 @login_required(login_url='/accounts/login/')

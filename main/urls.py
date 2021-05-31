@@ -2,7 +2,6 @@ from django.urls import path, re_path
 from . import views
 from .views import *
 from .views import (
-    MenuListView,
     menuDetail,
     add_to_cart,
     get_cart_items,
@@ -26,7 +25,7 @@ app_name = "main"
 
 urlpatterns = [
     # Home and dish url
-    path('', MenuListView.as_view(), name='home'),
+    path('', views.home, name='home'),
     path('dishes/<slug>', views.menuDetail, name='dishes'),
 
     # cart urls
@@ -65,6 +64,9 @@ urlpatterns = [
     # Cafeteria Staff Page
     path('admin_view/', views.admin_view, name='admin_view'),
     path('pending_orders/', views.pending_orders, name='pending_orders'),
+    path('order_delivery_details/',
+         views.order_delivery_details, name='order_delivery_details'),
+
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('update_status/<int:pk>', views.update_status, name='update_status'),
     path('postReview', views.add_reviews, name='add_reviews'),

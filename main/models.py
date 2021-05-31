@@ -56,13 +56,7 @@ class Item(models.Model):
         ('primary', 'primary'),
         ('info', 'info')
     )
-    '''
-    MEAL_TYPE = (
-        ('Lunch', 'Lunch'),
-        ('Breakfast', 'Breakfast'),
-        ('Dinner', 'Dinner')
-    )
-    '''
+
     DELIVERY_CHOICE = (
         ('Pickup', 'Pickup'),
         ('Delivery Available', 'Delivery Available'),
@@ -79,7 +73,6 @@ class Item(models.Model):
     label_colour = models.CharField(
         max_length=15, choices=LABEL_COLOUR, blank=True)
     slug = models.SlugField(max_length=255, default="slug")
-   # meal_menu = models.CharField(max_length=25, choices=MEAL_TYPE, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity_available = models.IntegerField(default=1)
     subcription_avail = models.BooleanField(default=False)

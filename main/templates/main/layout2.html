@@ -54,7 +54,19 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'main:pending_orders' %}">
                 <i class="fa fa-bell"></i>
-                <span>Pending Orders</span>
+                <span>Pending Paid Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:order_delivery_details' %}">
+                <i class="fa fa-bell"></i>
+                <span>Delivery Details Orders </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:pending_orders' %}">
+                <i class="fa fa-bell"></i>
+                <span></span>
                 </a>
             </li>
             <hr class="sidebar-divider">
