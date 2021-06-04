@@ -25,7 +25,7 @@
             </a>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'main:admin_dashboard' %}">
+                <a class="nav-link" href="{% url 'staff:admin_dashboard' %}">
                 <i class="fa fa-bandcamp"></i>
                 <span>Dashboard</span></a>
             </li>
@@ -34,31 +34,31 @@
                Cafeteria Admin Interface
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'main:item-create' %}">
+                <a class="nav-link" href="{% url 'staff:item-create' %}">
                   <i class="fa fa-plus"></i>
                   <span>Add Products</span>
                 </a>
             </li>  
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'main:item_list' %}">
+                <a class="nav-link" href="{% url 'staff:item_list' %}">
                   <i class="fa fa-plus"></i>
                   <span>View Items</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'main:admin_view' %}">
+                <a class="nav-link" href="{% url 'staff:admin_view' %}">
                 <i class="fa fa-check"></i>
                 <span>Completed Orders</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'main:pending_orders' %}">
+                <a class="nav-link" href="{% url 'staff:pending_orders' %}">
                 <i class="fa fa-bell"></i>
                 <span>Pending Paid Orders</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'main:order_delivery_details' %}">
+                <a class="nav-link" href="{% url 'staff:order_delivery_details' %}">
                 <i class="fa fa-bell"></i>
                 <span>Delivery Details Orders </span>
                 </a>

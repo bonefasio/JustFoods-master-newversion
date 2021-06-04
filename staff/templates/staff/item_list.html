@@ -1,4 +1,4 @@
-{% extends "main/layout2.html" %}
+{% extends "staff/layout2.html" %}
 {% block content %}
 <div class="cart">
     <div class="row">
@@ -26,8 +26,8 @@
                         <td>{{ item.instructions }}</td>
                         <td>{{ item.price }}</td>
                     <!--    <td>{{ item.pieces }} pieces</td>  -->
-                        <td><a class="btn btn-success" href="{% url 'main:item-update' item.slug %}">Update</a></td>
-                        <td><a class="btn btn-danger" href="{% url 'main:item-delete' item.slug %}">Delete</a></td>
+                        <td><a class="btn btn-success" href="{% url 'staff:item-update' item.slug %}">Update</a></td>
+                        <td><a class="btn btn-danger" href="{% url 'staff:item-delete' item.slug %}">Delete</a></td>
                     </tr>
                         {% endfor %}
                     </tbody>

@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from main import views
-from main.views import *
+from staff import views
+from staff.views import *
 
 app_name = 'staff'
 

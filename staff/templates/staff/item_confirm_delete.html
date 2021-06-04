@@ -1,4 +1,4 @@
-{% extends "main/layout.html" %}
+{% extends "staff/layout.html" %}
 {% block content %}
     <div class="content-section container">
         <form method="POST">
@@ -9,7 +9,7 @@
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
-                <a class="btn btn-outline-secondary" href="{% url 'main:item_list' %}">Cancel</a>
+                <a class="btn btn-outline-secondary" href="{% url 'staff:item_list' %}">Cancel</a>
             </div>
         </form>
     </div>
