@@ -43,12 +43,15 @@ INSTALLED_APPS = [
     'stripepayment.apps.StripepaymentConfig',
     # 'mealsubscription.apps.MealsubscriptionConfig',
     # 'restaurant.apps.RestaurantConfig',
-    # 'delivery.apps.DeliveryConfig',
+    # 'delivery.apps.DeliveryConfig', StaffConfig
+    'delivery.apps.StaffConfig',
 
     'crispy_forms',
     'multiselectfield',
     'tempus_dominus',  # django forms timefield
     'django_static_fontawesome',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
