@@ -96,8 +96,8 @@
             <ul class="navbar-nav ml-auto">
                     <li><a href="{% url 'main:home' %}" class="mr-2 text-light">Home</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
                 {% if user.is_authenticated %}
-                    {% if request.user|has_group:"admin_owner" %}
-                        <li><a href="{% url 'main:admin_dashboard' %}" class="mr-2 text-light">DashBoard</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
+                    {% if request.user|has_group:"admin_owner" %} <!-- checks if user is assigned the admin_owner group -->
+                        <li><a href="{% url 'staff:admin_dashboard' %}" class="mr-2 text-light">DashBoard</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
                         <li>
                             <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
                                 {% csrf_token %}

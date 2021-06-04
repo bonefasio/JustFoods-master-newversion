@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 from .views import *
 from .views import (
@@ -9,13 +9,6 @@ from .views import (
     SubscriptionDeleteView,
     OrderDeleteView,
     order_details,
-    admin_view,
-    item_list,
-    pending_orders,
-    ItemCreateView,
-    ItemUpdateView,
-    ItemDeleteView,
-    update_status,
     add_reviews,
     order_delivery,
     payment,
@@ -34,21 +27,21 @@ urlpatterns = [
     path('remove-from-cart/<int:pk>/',
          CartDeleteView.as_view(), name='remove-from-cart'),
     path('postReview', views.add_reviews, name='add_reviews'),
-    # orders urls path
+    # orders and delivery urls path
     path('order_details/', views.order_details, name='order_details'),
     path('order_delivery/', views.order_delivery, name='order_delivery'),
     path('remove-from-order/<int:pk>/',
          OrderDeleteView.as_view(), name='remove-from-order'),
+    path('delivery_details/', views.delivery_details, name='delivery_details'),
+
     # views for payment
     path('payroll_registration/', views.payroll_reg, name='payroll_reg'),
     path('payitem/', views.pay_item, name='payitems'),
     path('payment/', views.payment, name='payment-page'),
     path('payments/', views.payment_details, name='payment_details'),
-    #path('payment_paypal/', views.payment_paypal, name='payment_paypal'),
+
     # views for custom meal
     path('custom_meal/', views.custom_meal, name='custom_meal'),
-    # views for delivery
-    path('delivery_details/', views.delivery_details, name='delivery_details'),
 
     # Meal Subscription
     path('subscriptionreg/<slug>', views.subscription_reg, name='subscription_reg'),

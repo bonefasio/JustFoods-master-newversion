@@ -298,7 +298,6 @@ def payment_details(request):
     cust_instance.save()
 
     # getting the payroll account balance
-
     account_balance_obj = payroll._meta.get_field(
         'account_balance')
     payroll_acc = account_balance_obj.value_from_object(payroll)

@@ -41,16 +41,12 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'accounts.apps.AccountsConfig',
     'stripepayment.apps.StripepaymentConfig',
-    # 'mealsubscription.apps.MealsubscriptionConfig',
-    # 'restaurant.apps.RestaurantConfig',
-    # 'delivery.apps.DeliveryConfig', StaffConfig
-    'delivery.apps.StaffConfig',
+    'staff.apps.StaffConfig',
 
     'crispy_forms',
     'multiselectfield',
     'tempus_dominus',  # django forms timefield
     'django_static_fontawesome',
-
     'rest_framework',
 ]
 

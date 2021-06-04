@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
-from .models import Item, OrderItems, Reviews, CustomMeal
+#from django.urls import reverse_lazy
+from main.models import *
 from django.contrib import messages
 from django.views.generic import (
     ListView,
@@ -15,9 +15,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from main.decorators import *
 from django.db.models import Sum
-from main.forms import PayrollRegistrationForm, SubscriptionForm, OrderItemForm
-import datetime
-from datetime import timedelta
+#from main.forms import PayrollRegistrationForm, SubscriptionForm, OrderItemForm
+#import datetime
+#from datetime import timedelta
 
 # Create your views here.
 
@@ -40,6 +40,8 @@ class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
+    template_name = 'staff/item_form.html'
+    success_url = 'staff/item_list'
     fields = ['title', 'image', 'description', 'price',
               'instructions', 'labels', 'label_colour', 'slug']
 
@@ -50,11 +52,12 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 
 class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Item
+    template_name = 'staff/item_confirm_delete.html'
     success_url = 'staff/item_list'
 
     def test_func(self):
         item = self.get_object()
-        if self.request.user.customer == item.created_by:
+        if self.request.user == item.created_by:
             return True
         return False
 
