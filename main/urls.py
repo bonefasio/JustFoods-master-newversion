@@ -6,7 +6,6 @@ from .views import (
     add_to_cart,
     get_cart_items,
     CartDeleteView,
-    SubscriptionDeleteView,
     OrderDeleteView,
     order_details,
     add_reviews,
@@ -41,30 +40,18 @@ urlpatterns = [
     path('payments/', views.payment_details, name='payment_details'),
 
     # views for custom meal
-    path('custom_meal/', views.custom_meal, name='custom_meal'),
+    #path('custom_meal/', views.custom_meal, name='custom_meal'),
 
     # Meal Subscription
-    path('subscriptionreg/<slug>', views.subscription_reg, name='subscription_reg'),
-    path('subscribing/<slug>', views.subscriptionDetail, name='subscribing'),
-    path('remove-from-subscription/<int:pk>/',
-         SubscriptionDeleteView.as_view(), name='remove-from-subscription'),
+    #path('subscriptionreg/<slug>', views.subscription_reg, name='subscription_reg'),
+    #path('subscribing/<slug>', views.subscriptionDetail, name='subscribing'),
+    # path('remove-from-subscription/<int:pk>/',
+    # SubscriptionDeleteView.as_view(), name='remove-from-subscription'),
 
     # Specials
     path('breakfast', views.breakfast, name='breakfast'),
     path('lunch/', views.lunch, name='lunch'),
     path('dinner/', views.dinner, name='dinner'),
 
-    # Cafeteria Staff Page
-    #path('admin_view/', views.admin_view, name='admin_view'),
-    #path('pending_orders/', views.pending_orders, name='pending_orders'),
-    # path('order_delivery_details/',
-    #    views.order_delivery_details, name='order_delivery_details'),
 
-    #path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
-    #path('update_status/<int:pk>', views.update_status, name='update_status'),
-
-    #path('item_list/', views.item_list, name='item_list'),
-    #path('item/new/', ItemCreateView.as_view(), name='item-create'),
-    #path('item-update/<slug>/', ItemUpdateView.as_view(), name='item-update'),
-    #path('item-delete/<slug>/', ItemDeleteView.as_view(), name='item-delete'),
 ]

@@ -12,7 +12,6 @@ urlpatterns = [
          views.order_delivery_details, name='order_delivery_details'),
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('update_status/<int:pk>', views.update_status, name='update_status'),
-    # path('postReview', views.add_reviews, name='add_reviews'),
     path('item_list/', views.item_list, name='item_list'),
     path('item/new/', ItemCreateView.as_view(), name='item-create'),
     path('item-update/<slug>/', ItemUpdateView.as_view(), name='item-update'),
