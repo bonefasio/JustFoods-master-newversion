@@ -28,7 +28,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
         submit = self.selenium.find_element_by_id('submit')
 
         username_input.send_keys('s11085260')
-        password_input.send_keys('koroivonu@2012')
+        password_input.send_keys('password')
 
         submit.send_keys(Keys.RETURN)
 
@@ -51,7 +51,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
         submit = driver.find_element_by_id('submit')
 
         user_name.send_keys('s11085260')
-        user_password.send_keys('koroivonu@2012')
+        user_password.send_keys('password')
 
         submit.send_keys(Keys.RETURN)
 
