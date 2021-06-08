@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'stripepayment.apps.StripepaymentConfig',
     'staff.apps.StaffConfig',
-
+    'mealsubscription.apps.MealsubscriptionConfig',
     'crispy_forms',
     'multiselectfield',
     'tempus_dominus',  # django forms timefield

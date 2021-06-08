@@ -36,7 +36,7 @@
                             <td>{{ order.isPaid}}</td>
                             <td>{{ order.delivery_mode}}</td>
                         
-                            <td><a class="btn btn-danger" href="{% url 'main:remove-from-subscription' order.id %}">Delete</a></td>
+                            <td><a class="btn btn-danger" href="{% url 'mealsubscription:remove-from-subscription' order.id %}">Delete</a></td>
                         </tr>
                             {% endfor %}
                         </tbody>
@@ -52,7 +52,7 @@
                       <ul class="list-group">
                         <li class="list-group-item list-group-item-light text-center text-dark">Total: <b> {{ total }} </b></li>
                         <li class="list-group-item list-group-item-light text-center text-dark">Number of Serve: <b> {{ count }} 🍽️</b></li>
-                        <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="#">Proceed To Checkout🤝</a></li>
+                       <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="#">Proceed To Checkout🤝</a></li> 
                         <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="/">Continue Buying✌️</a></li>
                       </ul>
                 </div>

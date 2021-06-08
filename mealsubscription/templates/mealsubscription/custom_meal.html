@@ -1,0 +1,65 @@
+{% extends "main/layout.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mt-1">
+                <h3 class="text-center">Order Your Custom Meal From JustFoods Cafeteria And Add Your Taste With Your Own Custom Ingredients And Receipe</h3>
+            </div>
+            <br>
+            <br>
+            <form class="col-sm-12 mt-1" method="POST">
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Custom Meal Name</label>
+                    <input class="form-control" name="custom_meal_name" type="text" placeholder="Enter Custom Meal Name">
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="exampleFormControlInput1">Patron First Name</label>
+                        <input type="text" name="patron_first_name" class="form-control" placeholder="Enter First name">
+                    </div>
+                    <div class="col">
+                        <label for="exampleFormControlInput1">Patron Last Name</label>
+                        <input type="text" name="patron_last_name" class="form-control" placeholder="Enter Last name">
+                    </div>
+                    <div class="col">
+                        <label for="exampleFormControlInput1">Patron Phone Contact</label>
+                        <input type="phone2numeric" name="patron_phone_contact" class="form-control" placeholder="Enter Phone Contact">
+                    </div>
+                    
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="exampleFormControlInput1">Patron Email Address</label>
+                        <input type="email" name="patron_email_address" class="form-control" placeholder="Enter Valid Email Address">
+                    </div>
+                    <div class="col">
+                        <label for="exampleFormControlInput1">Enter Meal Request Date</label>
+                        <input type="date" name="meal_request_date" class="form-control" placeholder="Request Delivery Date">
+                    </div>
+                   
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Number Of Serves To Order</label>
+                    <input type="text" name="order_quantity" class="form-control" placeholder="Enter # of Serves">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Enter Custom Meal Receipe</label>
+                    <input class="form-control" name="custom_meal_receipe" type="text" placeholder="Enter Custom Meal Receipes Here">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Enter Custom Meal Ingredients</label>
+                    <input class="form-control" name="custom_meal_ingredients" type="text" placeholder="Enter Custom Meal Ingredients Here">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
