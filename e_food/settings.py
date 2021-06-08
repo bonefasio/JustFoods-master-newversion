@@ -37,14 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    # Applications inside our project
     'main.apps.MainConfig',
     'accounts.apps.AccountsConfig',
     'stripepayment.apps.StripepaymentConfig',
     'staff.apps.StaffConfig',
     'mealsubscription.apps.MealsubscriptionConfig',
+    'mealmenu.apps.MealmenuConfig',
+
     'crispy_forms',
-    'multiselectfield',
+    'multiselectfield',  # multi select field used in django forms for meal subscription
     'tempus_dominus',  # django forms timefield
     'django_static_fontawesome',
     'rest_framework',

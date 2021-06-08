@@ -10,6 +10,4 @@ urlpatterns = [
     path('subscribing/<slug>', views.subscriptionDetail, name='subscribing'),
     path('remove-from-subscription/<int:pk>/',
          SubscriptionDeleteView.as_view(), name='remove-from-subscription'),
-    path('custom_meal/', views.custom_meal, name='custom_meal'),
-
 ]

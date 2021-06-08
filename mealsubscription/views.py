@@ -137,29 +137,3 @@ class SubscriptionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView
         return False
 
 # custom meal
-
-
-@login_required
-def custom_meal(request):
-    if request.method == "POST":
-        custom_meal_name = request.POST.get("custom_meal_name")
-        patron_first_name = request.POST.get("patron_first_name")
-        patron_last_name = request.POST.get("patron_last_name")
-        patron_email_address = request.POST.get("patron_email_address")
-        patron_phone_contact = request.POST.get("patron_phone_contact")
-        meal_request_date = request.POST.get("meal_request_date")
-        order_quantity = request.POST.get("order_quantity")
-        custom_meal_receipe = request.POST.get("custom_meal_receipe")
-        custom_meal_ingredients = request.POST.get("custom_meal_ingredients")
-
-        custom_meal = CustomMeal(custom_meal_name=custom_meal_name, patron_first_name=patron_first_name,
-                                 patron_last_name=patron_last_name,
-                                 patron_email_address=patron_email_address,
-                                 patron_phone_contact=patron_phone_contact,
-                                 meal_request_date=meal_request_date, order_quantity=order_quantity,
-                                 custom_meal_receipe=custom_meal_receipe,
-                                 custom_meal_ingredients=custom_meal_ingredients)
-        custom_meal.save()
-        messages.success(
-            request, "Custom Meal Request Sent, Kindly Wait For Cafeteria Response!!")
-    return render(request, 'mealsubscription/custom_meal.html')

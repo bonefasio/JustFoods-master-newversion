@@ -351,43 +351,6 @@ def delivery_details(request):
     return render(request, 'main/delivery_details.html', context)
 
 
-@login_required
-def lunch(request):
-    menu = get_object_or_404(Menu, description="Lunch")
-    #item = get_object_or_404(Item, slug=slug)
-
-    items = menu.items.all()
-    print(items)
-    context = {
-        'items': items,
-    }
-    return render(request, 'main/lunch.html', context)
-
-
-@login_required
-def dinner(request):
-    menu = get_object_or_404(Menu, description="Dinner")
-    # get all items in menu
-    items = menu.items.all()
-    context = {
-        'items': items,
-    }
-    return render(request, 'main/dinner.html', context)
-
-
-@login_required
-def breakfast(request):
-    menu = get_object_or_404(Menu, description="Breakfast")
-    # get all items in menu
-    items = menu.items.all()
-    print(items)
-
-    context = {
-        'items': items,
-    }
-    return render(request, 'main/breakfast.html', context)
-
-
 class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = OrderItems
     template_name = 'main/orderitems_confirm_delete.html'

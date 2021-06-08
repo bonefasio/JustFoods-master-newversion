@@ -2,18 +2,18 @@
 {% block content %}
 
 <div class="container">
-  <h1 style="color:rgb(0, 0, 0); text-align: center;">Our Dishes for Breakfast </h1>
+  <h1 style="color:rgb(0, 0, 0); text-align: center;">Our Dishes for Dinner </h1>
   <div class="row">
     {% for item in items %}
         <div class="col-sm-4">
             <div class="card mb-3" style="height: fit-content; overflow: auto;">
               <img src="{{ item.image.url }}" style="height: 200px;">
                 <div class="card-body text-center">
-                  <button class="btn btn-warning" hidden>By:{{ item.item.created_by }}</button>
+                  <button class="btn btn-warning" hidden>By:{{ item.created_by }}</button>
                   <h5 class="text-center"><a href="{% url 'main:dishes' item.slug %}">{{ item.title }} </a><span class="badge badge-{{ item.label_colour }}">{{ item.labels }}</span></h5>
                   
                   {% if item.subcription_avail == True %}
-                  <a href="{% url 'main:subscription_reg' item.slug %}"><p button class="btn btn-warning">Subscribe Now</button></p> </a>
+                  <a href="{% url 'mealsubscription:subscription_reg' item.slug %}"><p button class="btn btn-warning">Subscribe Now</button></p> </a>
                   {% else %}
                   <p button class="btn btn-warning">No Subscription</button></p>
                   {%endif%}        
@@ -25,4 +25,5 @@
     {% endfor %}
   </div>
 </div>
-  {% endblock content %}
+
+{% endblock content %}

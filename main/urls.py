@@ -38,14 +38,6 @@ urlpatterns = [
     path('payitem/', views.pay_item, name='payitems'),
     path('payment/', views.payment, name='payment-page'),
     path('payments/', views.payment_details, name='payment_details'),
-    # Specials
-    path('breakfast', views.breakfast, name='breakfast'),
-    path('lunch/', views.lunch, name='lunch'),
-    path('dinner/', views.dinner, name='dinner'),
-
-    # views for custom meal and meal subscriptions
-
-
 
 
 
