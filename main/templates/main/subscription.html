@@ -1,0 +1,63 @@
+{% extends "main/layout.html" %}
+{% block content %}
+<div class="cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 mt-5">
+                <h3 class="text-center">Your Subscription</h3>
+                {% if subscription_ordered_items %}
+                <div class="table-responsive">
+                    <table class="table table-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Specification</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Order Date</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Delivery Mode</th>
+                          <!--  <th scope="col">Total Pieces</th> -->
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in subscription_ordered_items %}
+                        <tr>
+                          <td>{{ order.item.title }} <span class="badge badge-{{ order.item.label_colour }}">{{ order.item.labels }}</span></td>
+                            <td>{{ order.item.description }}</td>
+                            <td>{{ order.item.instructions }}</td>
+                            <td>{{ order.item.price }}</td>
+                            <td>{{ order.ordered_date }}</td>
+                            <td>{{ order.payment_method}}</td>
+                            <td>{{ order.status}}</td>
+                            <td>{{ order.isPaid}}</td>
+                            <td>{{ order.delivery_mode}}</td>
+                        
+                            <td><a class="btn btn-danger" href="{% url 'main:remove-from-subscription' order.id %}">Delete</a></td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <h4 class="text-center">Sorry, you have not subscribe for any menu..Please subcribe for menu!!!</h4>
+                {% endif %}
+            </div>
+            <div class="col-sm-3 mt-5 mb-3">
+                <div class="content-section">
+                    <h3 class="text-center">Subscription Order Summary</h3>
+                      <ul class="list-group">
+                        <li class="list-group-item list-group-item-light text-center text-dark">Total: <b> {{ total }} </b></li>
+                        <li class="list-group-item list-group-item-light text-center text-dark">Number of Serve: <b> {{ count }} 🍽️</b></li>
+                        <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="#">Proceed To Checkout🤝</a></li>
+                        <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="/">Continue Buying✌️</a></li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -13,7 +13,7 @@
                   <h5 class="text-center"><a href="{% url 'main:dishes' item.slug %}">{{ item.title }} </a><span class="badge badge-{{ item.label_colour }}">{{ item.labels }}</span></h5>
                   
                   {% if item.subcription_avail == True %}
-                  <a href="{% url 'mealsubscription:subscription_reg' item.slug %}"><p button class="btn btn-warning">Subscribe Now</button></p> </a>
+                  <a href="{% url 'main:subscription_reg' item.slug %}"><p button class="btn btn-warning">Subscribe Now</button></p> </a>
                   {% else %}
                   <p button class="btn btn-warning">No Subscription</button></p>
                   {%endif%}        
