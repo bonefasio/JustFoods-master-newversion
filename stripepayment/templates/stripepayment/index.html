@@ -1,4 +1,4 @@
-{% extends 'stripepayment/template.html' %}
+{% extends 'stripepayment/template.html'%}
 {% load static %}
 {% block content %}
 	<style type="text/css">
@@ -38,7 +38,6 @@
 
 	<script src="https://js.stripe.com/v3/"></script>
 
-	
 	<div id="container">
 		<div class="row">
 			<div class="form-group mx-auto" style="text-align: center;">
@@ -73,7 +72,7 @@
 				 	<input  class="myButton" style="background-color:#10a195" type="submit" value="Submit Payment" name="">
 
 				</form>
-
+				<small>Return to <a href="{% url 'main:home' %}" class="mr-2 text-light">Home</a></small>
 
 			</div>
 		</div>

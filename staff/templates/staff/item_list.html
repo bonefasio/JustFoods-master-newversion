@@ -25,7 +25,6 @@
                         <td>{{ item.description }}</td>
                         <td>{{ item.instructions }}</td>
                         <td>{{ item.price }}</td>
-                    <!--    <td>{{ item.pieces }} pieces</td>  -->
                         <td><a class="btn btn-success" href="{% url 'staff:item-update' item.slug %}">Update</a></td>
                         <td><a class="btn btn-danger" href="{% url 'staff:item-delete' item.slug %}">Delete</a></td>
                     </tr>

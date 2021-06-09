@@ -46,33 +46,53 @@
                     <div class="row">
                         <div class="col-md-6 offset-md-3"><h2>Fill in details for delivery !!</h2>  </div>
                     </div>
-                       <br>
-                       <br>
-                       
-
-                       <form method="POST">
+                       <form class="col-sm-12 mt-1 needs-validation" method="POST" novalidate>
                         {% csrf_token %}
                         <div class="form-row">
-                          <div class="form-group col-md-6">
+                          <div class="col">
                             <label for="inputState">Payment Method</label>
                             <select id="inputState" class="form-control" name="payment_method" required>
                               <option selected>Payroll</option>
                               <option>Debit/Credit Card</option>
                             </select>
                           </div>
-                          <div class="form-group col-md-6">
-                            <label for="inputPassword4">Delivery Date</label>
+                          <div class="col">
+                            <label for="validationCustom01" class="form-label">Delivery Date</label>
 
-                            <input type="datetime-local" name="delivery_date" class="form-control" id="inputPassword4" placeholder="Delivery Date" required>
+                            <input type="date" name="delivery_date" class="form-control" id="inputPassword4" placeholder="Delivery Date" required>
+                            <div class="valid-feedback">
+                              Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                              Please enter the Correct Delivery Date.
+                            </div>
+                          </div>
+                          <div class="col">
+                            <label for="validationCustom02" class="form-label">Delivery Time</label>
+
+                            <input type="time" id="validationCustom02" name="delivery_time" class="form-control" placeholder="Request Delivery Time" min="05:00" max="21:30" required>
+                            <div class="valid-feedback">
+                              Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                              Please enter the Correct Delivery Time.
+                            </div>
+                            <small>Cafeteria opening hours are 5.00am to 9.30pm</small>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="inputState">Delivery Mode</label>
-                            <select id="delivery_mode" class="form-control" name="delivery_mode" required>
+                            <select id="delivery_mode" class="form-control" id="validationCustom03" name="delivery_mode" required>
                               <option selected>-----</option>
                               <option value="pickup">Pickup</option>
                               <option value="deliver">Deliver</option>
                             </select>
+                            <div class="valid-feedback">
+                              Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                              Please enter the Correct Delivery Mode.
+                            </div>
                         </div>
 
                         <div style='display:none;' id='pickup_location'>Pick Up Menu from <b>USP Cafeteria</b> <br/>&nbsp;
@@ -81,29 +101,47 @@
 
                         <div class="form-group" id="location_hide" >
                           <label for="inputState">Choose Location</label>
-                            <select id="location" class="form-control" name="location" required>
+                            <select id="location" id="validationCustom04" class="form-control" name="location" required>
                               <option selected>-----</option>
                               <option value="onsite">Onsite</option>
                               <option value="offsite">Offsite</option>
                             </select>
+                            <div class="valid-feedback">
+                              Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                              Please select Location for Delivery.
+                            </div>
                         </div>
                         <div class="form-group locations" id="offsite">
                           <label for="inputState">Choose Offsite Location</label>
-                            <select id="inputState" class="form-control" name="offsite_location" required>
+                            <select id="inputState" id="validationCustom05" class="form-control" name="offsite_location" required>
                               <option selected>-----</option>
                               {% for offsite_location in offsite %}
                               <option value="{{offsite_location.id}}"> {{offsite_location}} </option>
                               {% endfor %}
                             </select>
+                            <div class="valid-feedback">
+                              Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                              Please select Location for Delivery.
+                            </div>
                         </div>
                         <div class="form-group locations" id="onsite">
                           <label for="inputState">Choose Onsite Location</label>
-                            <select id="inputState" class="form-control" name="onsite_location" required>
+                            <select id="inputState" id="validationCustom06" class="form-control" name="onsite_location" required>
                               <option selected>-----</option>
                               {% for onsite_location in onsite %}
                               <option value="{{onsite_location.id}}">{{onsite_location}}</option>
                               {% endfor %}
                             </select>
+                            <div class="valid-feedback">
+                              Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                              Please select Location for Delivery.
+                            </div>
                         </div>
 
                         <div class="d-flex justify-content-center">
@@ -145,6 +183,44 @@
       }
     });
   });
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+            }, false)
+        })
+  })()
+
+  $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+    alert(maxDate);
+    $('#inputPassword4').attr('min', maxDate);
+  });
+
 </script>
 
 {% endblock content %}

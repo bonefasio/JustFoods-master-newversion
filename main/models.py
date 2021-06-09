@@ -288,6 +288,8 @@ class CustomMeal(models.Model):
     patron_email_address = models.CharField(max_length=50)
     patron_phone_contact = models.CharField(max_length=50)
     meal_request_date = models.DateTimeField(
+        auto_now_add=False, null=True)
+    meal_reqest_time = models.TimeField(
         auto_now_add=False, null=True, blank=True)
     order_quantity = models.IntegerField(default=0)
     custom_meal_receipe = models.CharField(max_length=100)

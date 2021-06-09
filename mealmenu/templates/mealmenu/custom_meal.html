@@ -9,51 +9,108 @@
             </div>
             <br>
             <br>
-            <form class="col-sm-12 mt-1" method="POST">
+            <form class="col-sm-12 mt-1 needs-validation" method="POST" novalidate>
             {% csrf_token %}
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Custom Meal Name</label>
-                    <input class="form-control" name="custom_meal_name" type="text" placeholder="Enter Custom Meal Name">
+                    <label for="validationCustom01" class="form-label">Custom Meal Name</label>
+                    <input class="form-control" id="validationCustom01" name="custom_meal_name" type="text" placeholder="Enter Custom Meal Name" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please enter the Custom Meal Name above.
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="col">
-                        <label for="exampleFormControlInput1">Patron First Name</label>
-                        <input type="text" name="patron_first_name" class="form-control" placeholder="Enter First name">
+                        <label for="validationCustom02" class="form-label">Patron First Name</label>
+                        <input type="text" id="validationCustom02" name="patron_first_name" class="form-control" placeholder="Enter First name" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your First Name above.
+                        </div>
                     </div>
                     <div class="col">
-                        <label for="exampleFormControlInput1">Patron Last Name</label>
-                        <input type="text" name="patron_last_name" class="form-control" placeholder="Enter Last name">
+                        <label for="validationCustom03" class="form-label">Patron Last Name</label>
+                        <input type="text" id="validationCustom03" name="patron_last_name" class="form-control" placeholder="Enter Last name" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your Last Name above.
+                        </div>
                     </div>
                     <div class="col">
-                        <label for="exampleFormControlInput1">Patron Phone Contact</label>
-                        <input type="phone2numeric" name="patron_phone_contact" class="form-control" placeholder="Enter Phone Contact">
-                    </div>
-                    
+                        <label for="validationCustom04" class="form-label">Patron Phone Contact</label>
+                        <input type="phone2numeric" id="validationCustom04" name="patron_phone_contact" class="form-control" placeholder="Enter Phone Contact" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your valid Phone Contact above.
+                        </div>
+                    </div>    
                 </div>
                 <br>
                 <div class="form-row">
                     <div class="col">
-                        <label for="exampleFormControlInput1">Patron Email Address</label>
-                        <input type="email" name="patron_email_address" class="form-control" placeholder="Enter Valid Email Address">
+                        <label for="validationCustom05" class="form-label">Patron Email Address</label>
+                        <input type="email" id="validationCustom05" name="patron_email_address" class="form-control" placeholder="Enter Valid Email Address" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your valid Email Address above.
+                        </div>
                     </div>
                     <div class="col">
-                        <label for="exampleFormControlInput1">Enter Meal Request Date</label>
-                        <input type="date" name="meal_request_date" class="form-control" placeholder="Request Delivery Date">
+                        <label for="validationCustom06" class="form-label">Enter Meal Request Date</label>
+                        <input type="date" id="validationCustom06" name="meal_request_date" class="form-control" placeholder="Request Delivery Date" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter Meal Request Order Date above.
+                        </div>
                     </div>
-                   
+                    <div class="col">
+                        <label for="validationCustom07" class="form-label">Enter Meal Request Time</label>
+                        <input type="time" id="validationCustom07" name="meal_request_time" class="form-control" placeholder="Request Delivery Time" min="08:00" max="21:30" required>
+                        <small>Request hours are 8am to 9.30pm</small>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter Meal Request Order Time above.
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Number Of Serves To Order</label>
-                    <input type="text" name="order_quantity" class="form-control" placeholder="Enter # of Serves">
+                    <label for="validationCustom08" class="form-label">Number Of Serves To Order</label>
+                    <input type="text" id="validationCustom08" name="order_quantity" class="form-control" placeholder="Enter # of Serves" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please enter the total number of serves you intend to order.
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Enter Custom Meal Receipe</label>
+                    <label class="form-label">Enter Custom Meal Receipe</label>
                     <input class="form-control" name="custom_meal_receipe" type="text" placeholder="Enter Custom Meal Receipes Here">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Enter Custom Meal Ingredients</label>
+                    <label class="form-label">Enter Custom Meal Ingredients</label>
                     <input class="form-control" name="custom_meal_ingredients" type="text" placeholder="Enter Custom Meal Ingredients Here">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary">Submit Request</button>
@@ -62,4 +119,42 @@
         </div>
     </div>
 </div>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+
+    $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+    alert(maxDate);
+    $('#validationCustom06').attr('min', maxDate);
+  });
+</script>
 {% endblock content %}
