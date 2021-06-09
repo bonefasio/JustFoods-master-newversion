@@ -30,6 +30,7 @@ urlpatterns = [
     path('stripepayment/', include('stripepayment.urls')),
     path('staff/', include('staff.urls')),
     path('mealmenu/', include('mealmenu.urls')),
+    path('payrollpayment/', include('payrollpayment.urls')),
 ]
 
 if settings.DEBUG:

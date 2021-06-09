@@ -1,8 +1,8 @@
 {% extends "main/layout.html" %}
 {% block content %}
-
+<div class="home bg-dark">
 <div class="container">
-  <h1 style="color:rgb(0, 0, 0); text-align: center;">Our Dishes for Breakfast </h1>
+  <h3 class="text-center text-light mb-2" style="color:rgb(255, 255, 255); text-align: center;">Our Tasty Breakfast Dishes </h3>
   <div class="row">
     {% for item in items %}
         <div class="col-sm-4">
@@ -15,8 +15,7 @@
                   {% if item.subcription_avail == True %}
                   <a href="{% url 'mealsubscription:subscription_reg' item.slug %}"><p button class="btn btn-warning">Subscribe Now</button></p> </a>
                   {% else %}
-                  <p button class="btn btn-warning">No Subscr
-                    iption</button></p>
+                  <p button class="btn btn-warning">No Subscription</button></p>
                   {%endif%}        
                   <h5 class="text-center">$ {{ item.price }}</h5>
                   <a href="{% url 'main:dishes' item.slug %}" class="btn btn-info text-center py-3">Order Now</a>
@@ -26,4 +25,5 @@
     {% endfor %}
   </div>
 </div>
-  {% endblock content %}
+</div>
+{% endblock content %}
