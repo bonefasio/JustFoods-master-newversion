@@ -163,7 +163,7 @@ def order_delivery(request):
 
         messages.info(request, "Delivery details saved")
         # redirect to a new URL:
-        return redirect('main:payment-page')
+        return redirect('payrollpayment:payment-page')
 
     context = {
         'items': items,

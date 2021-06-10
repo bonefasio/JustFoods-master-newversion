@@ -143,6 +143,6 @@ def payment_details(request):
         'cust_total': cust_total,
         'count': count,
         'items': items,
-        'payroll_acc': payroll_acc,
+        'payroll_acc': payroll_acc
     }
     return render(request, 'payrollpayment/payment_details.html', context)
