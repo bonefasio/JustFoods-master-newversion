@@ -78,7 +78,6 @@ def success(request):
     context = {
         'items': items,
         'total': total,
-        'count': count
-    }
+        'count': count}
 
     return render(request, 'stripepayment/success.html', context)
