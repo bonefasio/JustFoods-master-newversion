@@ -8,4 +8,5 @@ urlpatterns = [
     # stripe payment urls
     path('stripe/', views.index, name="index"),
     path('charge/', views.charge, name="charge"),
+    path('success/', views.success, name="pay-success"),
 ]

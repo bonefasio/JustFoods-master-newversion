@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
+#from django.urls import reverse_lazy
 from main.models import Item, OrderItems, Reviews
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+#from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from main.decorators import *
 from django.db.models import Sum
 from main.forms import PayrollRegistrationForm
@@ -46,7 +46,6 @@ def payroll_reg(request):
             messages.info(request, "Registered for payroll")
             # redirect to a new URL:
             return redirect('payrollpayment:payitems')
-            # return HttpResponseRedirect('Registered for payroll')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -75,7 +74,7 @@ def pay_item(request):
 def payment(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
-        customer=customer, ordered=True, isPaid=False, status="Active").order_by('-ordered_date')  # not yet been delivered
+        customer=customer, isPaid=False, status="Active").order_by('-ordered_date')  # not yet been delivered
 
     ordered_date = timezone.now()  # assign ordred date the current date
     items.update(ordered=True, ordered_date=ordered_date)
@@ -137,7 +136,7 @@ def payment_details(request):
 
     else:
         messages.info(request, "You have not registered for payroll payment")
-        return redirect("main:order_details")
+        return redirect("orders:order_details")
 
     context = {
         'cust_total': cust_total,

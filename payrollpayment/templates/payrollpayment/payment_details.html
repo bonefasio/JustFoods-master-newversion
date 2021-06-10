@@ -35,7 +35,7 @@
                             <td>{{ order.item.ordered_date }}</td>
                             <td>{{ order.item.isDelivered }}</td> -->
                         
-                            <!--<td><a class="btn btn-danger" href="{% url 'main:remove-from-cart' order.id %}">Request Delivery</a></td>  -->
+                            <!--<td><a class="btn btn-danger" href="{% url 'orders:remove-from-cart' order.id %}">Request Delivery</a></td>  -->
                         </tr>
                             {% endfor %}
                         </tbody>
@@ -52,7 +52,7 @@
                         <li class="list-group-item list-group-item-light text-center text-dark">Customer Order Total: <b>{{ cust_total }}</b></li>
                         <li class="list-group-item list-group-item-light text-center text-dark">Number of Serve: <b>{{ count }} </b>🍽️</li>
                         <li class="list-group-item list-group-item-light text-center text-dark">Payroll Account Balance: <b> {{ payroll_acc }} </b></li>
-                        <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="{% url 'main:delivery_details' %}">Delivery Details🚚</a></li>
+                        <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="{% url 'orders:delivery_details' %}">Delivery Details🚚</a></li>
                         <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="/">Continue Buying✌️</a></li>
                       </ul>
                 </div>

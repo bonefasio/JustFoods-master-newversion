@@ -40,7 +40,7 @@
                             <td>{{ order.delivery_location.address }}</td> 
                         
                         
-                            <!--<td><a class="btn btn-danger" href="{% url 'main:remove-from-cart' order.id %}">Print Delivery Details</a></td>  -->
+                            <!--<td><a class="btn btn-danger" href="{% url 'orders:remove-from-cart' order.id %}">Print Delivery Details</a></td>  -->
                         </tr>
                             {% endfor %}
                         </tbody>
@@ -55,7 +55,7 @@
                     <h3 class="text-center">Order Delivery Summary</h3>
                       <ul class="list-group">
                         <li class="list-group-item list-group-item-light text-center text-dark">Customer Order Total: <b> {{ total }} </b></li>
-                        <li class="list-group-item list-group-item-light text-center text-dark">Number of Serve: <b> {{ count }}🍽️ </b>b></li>
+                        <li class="list-group-item list-group-item-light text-center text-dark">Number of Serve: <b> {{ count }}🍽️ </b></li>
                         <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="{% url 'orders:order_details' %}">View Order Summary</a></li> 
                         <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="/">Continue Buying✌️</a></li>
                       </ul>

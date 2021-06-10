@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from main.models import *
 from django.db.models import Sum
-
+from django.contrib.auth.decorators import login_required
 import stripe
 
 stripe.api_key = "sk_test_51ItkkfAh9WweYVQmHWWyufzm8D3teuWlZMwopwIA5egeYnKEYldtFLudJVZDNtpZU0G3quJLk4PcPhn2t6IJJRqV00j8aMhhut"
@@ -12,6 +12,7 @@ stripe.api_key = "sk_test_51ItkkfAh9WweYVQmHWWyufzm8D3teuWlZMwopwIA5egeYnKEYldtF
 # Create your views here.
 
 
+@login_required
 def index(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
@@ -30,6 +31,7 @@ def index(request):
     return render(request, 'stripepayment/index.html', context)
 
 
+@login_required
 def charge(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
@@ -60,4 +62,23 @@ def charge(request):
         items.update(ordered=True, ordered_date=ordered_date, isPaid=True)
         messages.info(request, "Item Paid and Ordred")
 
-    return redirect(reverse('main:payment_details'))
+    return redirect(reverse('stripepayment:pay-success'))
+
+
+@login_required
+def success(request):
+    customer = request.user.customer
+    items = OrderItems.objects.filter(
+        customer=customer, ordered=True, status="Active", isPaid=True).order_by('-ordered_date')  # not yet been delivered
+    bill = items.aggregate(Sum('item__price'))
+    number = items.aggregate(Sum('quantity'))
+    total = bill.get("item__price__sum")
+    count = number.get("quantity__sum")  # sum of quantity
+
+    context = {
+        'items': items,
+        'total': total,
+        'count': count
+    }
+
+    return render(request, 'stripepayment/success.html', context)
