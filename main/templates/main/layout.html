@@ -268,8 +268,8 @@
                             </form>
                         </li>
                     {% else %}
-                        <li><a href="{% url 'main:cart' %}" class="mr-2 text-light" hidden>My Cart🛒</a></li>
-                        <li><a href="{% url 'main:order_details' %}" class="mr-2 text-light">Order History</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
+                        <li><a href="{% url 'orders:cart' %}" class="mr-2 text-light" hidden>My Cart🛒</a></li>
+                        <li><a href="{% url 'orders:order_details' %}" class="mr-2 text-light">Order History</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
                         <!-- 09/04 changes -->
                         <li>
                             <div class="dropdown mr-2 text-light">

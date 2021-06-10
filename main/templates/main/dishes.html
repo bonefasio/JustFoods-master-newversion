@@ -36,7 +36,7 @@
             </form> -->
             </div>
             <br>
-            <a href="{% url 'main:add-to-order' item.slug %}" class="btn btn-primary btn-md my-0 p">Add to Order</a>
+            <a href="{% url 'orders:add-to-order' item.slug %}" class="btn btn-primary btn-md my-0 p">Add to Order</a>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
   <div class="container">
     <h1 class="text-center">Reviews</h1>
 
-    <form action="{% url 'main:add_reviews' %}" method="POST" class="mb-3">
+    <form action="{% url 'orders:add_reviews' %}" method="POST" class="mb-3">
       {% csrf_token %}
       <div class="row">
         <div class="col-sm-11">

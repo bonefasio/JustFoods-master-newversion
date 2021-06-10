@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'mealsubscription.apps.MealsubscriptionConfig',
     'mealmenu.apps.MealmenuConfig',
     'payrollpayment.apps.PayrollpaymentConfig',
+    'orders.apps.OrdersConfig',
 
     'crispy_forms',
     'multiselectfield',  # multi select field used in django forms for meal subscription
