@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from main.decorators import *
 from django.db.models import Sum
-from main.forms import PayrollRegistrationForm, SubscriptionForm, OrderItemForm
+#from main.forms import PayrollRegistrationForm, SubscriptionForm, OrderItemForm
 import datetime
 from datetime import timedelta
 
@@ -97,19 +97,28 @@ def order_delivery(request):
     pickup_location = Location.objects.get(
         category="Direct Pickup")  # direct pickup location
 
-    if request.method == 'POST':
+    if request.method == 'POST':  # collecting data from html forms
         payment_method = request.POST.get("payment_method")
         delivery_date = request.POST.get("delivery_date")
+        delivery_time = request.POST.get("delivery_time")
         delivery_mode = request.POST.get("delivery_mode")
         location = request.POST.get("location")
         onsite_delivery_location = request.POST.get("onsite_location")
         offsite_delivery_location = request.POST.get("offsite_location")
+        # combining date and time
+        delivery_date_modified = datetime.datetime.strptime(
+            str(delivery_date), "%Y-%m-%d").date()
+        delivery_time_modified = datetime.datetime.strptime(
+            str(delivery_time), "%H:%M").time()
 
-        print('Location')
-        print(onsite_delivery_location)
+        delivery_date_time = datetime.datetime.combine(
+            delivery_date_modified, delivery_time_modified)
+
+        print('Delivery date : ')
+        print(delivery_date_time)
 
         if delivery_mode == 'pickup':
-            items.update(payment_method=payment_method, delivery_date=delivery_date,
+            items.update(payment_method=payment_method, delivery_date=delivery_date_time,
                          delivery_mode=delivery_mode, delivery_location=pickup_location)
 
         if delivery_mode == 'deliver' and location == 'onsite':

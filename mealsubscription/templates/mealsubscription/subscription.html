@@ -19,6 +19,7 @@
                             <th scope="col">Status</th>
                             <th scope="col">Payment</th>
                             <th scope="col">Delivery Mode</th>
+                            <th scope="col">Quantity </th>
                           <!--  <th scope="col">Total Pieces</th> -->
                             <th scope="col"></th>
                         </tr>
@@ -35,6 +36,7 @@
                             <td>{{ order.status}}</td>
                             <td>{{ order.isPaid}}</td>
                             <td>{{ order.delivery_mode}}</td>
+                            <td>{{ order.quantity}}</td>
                         
                             <td><a class="btn btn-danger" href="{% url 'mealsubscription:remove-from-subscription' order.id %}">Delete</a></td>
                         </tr>

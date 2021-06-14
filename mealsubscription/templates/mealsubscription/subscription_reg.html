@@ -1,74 +1,287 @@
 {% extends "main/layout.html" %}
 {% block content %}
 
-{% load crispy_forms_tags %}
-
-<!-- Food Subscription -->
-   
-         <div class="row">
-          <div class="col-md-6 offset-md-3"><h2>Fill in the forms to subscribe for this meal</h2>  </div>
-        </div>
-         <br>
-         <br>
-
-         <form method="POST" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}   
-            <div class="form-group">  
-            <div class="row">
-              <div class="col-md-6 offset-md-3 "> {{ form.days_available|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 offset-md-3">{{ form.time_field|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 offset-md-3">{{ form.payment_method|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 offset-md-3">{{ form.delivery_mode|as_crispy_field }}</div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 offset-md-3">{{ form.delivery_location|as_crispy_field }}</div>
-            </div>
-           
-            <div class="d-flex justify-content-center">
-              <input type="submit" value="Save" class="btn btn-success">
-            </div>
-          </div>    
-        </form>
-      
-        <!--
-        <div id="page" class="container" style="border:white">
-          <br class="row">
-              <p class="text-center text-justify"> Fill in the form to register for payroll payment option. </p> 
-              <div class="clearfix hidden-xs hidden-sm"> </div>
-              <form action="{% url 'payrollpayment:payroll_reg' %}" method="post">
-                  <div class="border form-group mx-auto" style="text-align: center;">
-                      <label class="d-flex justify-content-center"></label>
-                      <div class="form-group">
-                          {% csrf_token %}
-                          {{ form }}
-                          <div class="d-flex justify-content-center">
-                              <input type="submit" class="btn btn-primary " value="Submit">
-                          </div>
-                      </div>
+<div class="cart">
+  <div class="container">
+      <div class="row">
+          <div class="col-sm-12 mt-1">
+              <h3 class="text-center">Fill Meal Subscription Details {{ item.title }}</h3>
+            <form class="col-sm-12 mt-1 needs-validation" method="POST" novalidate>
+                {% csrf_token %}
+              <div class="text-center table-responsive">
+                <table class="table table-light col-sm-12 mt-1">
+                  <thead>
+                    <th scope="col" class="col-sm-1 mt-1">Subscription</th>
+                    <th scope="col" class="col-sm-1 mt-1">Check Days</th>
+                    <th scope="col" class="col-sm-1 mt-1">Serves Per Day</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Monday</td>
+                      <td><input class="col-sm-1 mt-1 form-check-input" type="checkbox" value="Monday" name="Monday" aria-label="Checkbox for following text input" id="myCheck1" onclick="change1()"></td>
+                      <td><input type="number" id="quantity1" style="display:none" name="quantity1"></td>
+                    </tr>
+                    <tr>
+                      <td>Tuesday</td>
+                      <td><input class="col-sm-1 mt-1 form-check-input" type="checkbox" value="Tuesday" name="Tuesday" aria-label="Checkbox for following text input" id="myCheck2" onclick="change2()"></td>
+                      <td><input type="number" id="quantity2" style="display:none" name="quantity2"></td>
+                    </tr>
+                    <tr>
+                      <td>Wednesday</td>
+                      <td><input class="col-sm-1 mt-1 form-check-input" type="checkbox" value="Wednesday" name="Wednesday" aria-label="Checkbox for following text input" id="myCheck3" onclick="change3()"></td>
+                      <td><input type="number" id="quantity3" style="display:none" name="quantity3"></td>
+                    </tr>
+                    <tr>
+                      <td>Thursday</td>
+                      <td><input class="col-sm-1 mt-1 form-check-input" type="checkbox" value="Thursday" name="Thursday" aria-label="Checkbox for following text input" id="myCheck4" onclick="change4()"></td>
+                      <td><input type="number" id="quantity4" style="display:none" name="quantity4"></td>
+                    </tr>
+                    <tr>
+                      <td>Friday</td>
+                      <td><input class="col-sm-1 mt-1 form-check-input" type="checkbox" value="Friday" name="Friday" aria-label="Checkbox for following text input" id="myCheck5" onclick="change5()"></td>
+                      <td><input type="number" id="quantity5" style="display:none" name="quantity5"></td>
+                    </tr>
+                    <tr>
+                      <td>Saturday</td>
+                      <td><input class="col-sm-1 mt-1 form-check-input" type="checkbox" value="Saturday" name="Saturday" aria-label="Checkbox for following text input" id="myCheck6" onclick="change6()"></td>
+                      <td><input type="number" id="quantity6" style="display:none" name="quantity6"></td>
+                    </tr>
+                    <tr>
+                      <td>Sunday</td>
+                      <td><input class="col-sm-1 mt-1 form-check-input" type="checkbox" value="Sunday" name="Sunday" aria-label="Checkbox for following text input" id="myCheck7" onclick="change7()"></td>
+                      <td><input type="number" id="quantity7" style="display:none" name="quantity7"></td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+              
+                <div class="form-row">
+                  <div class="col">
+                    <label for="inputState">Payment Method</label>
+                    <select id="inputState" class="form-control" name="payment_method" required>
+                      <option selected>Payroll</option>
+                      <option>Debit/Credit Card</option>
+                    </select>
                   </div>
+                  <div class="col">
+                    <label for="validationCustom02" class="form-label">Delivery Time</label>
+                    <input type="time" id="validationCustom02" name="delivery_time" class="form-control" placeholder="Request Delivery Time" min="07:00" max="21:30" required>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter the Correct Delivery Time.
+                    </div>
+                    <small>Subscription hours are 7.00am to 9.30pm</small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputState">Delivery Mode</label>
+                    <select id="delivery_mode" class="form-control" id="validationCustom03" name="delivery_mode" required>
+                      <option selected>-----</option>
+                      <option value="pickup">Pickup</option>
+                      <option value="deliver">Deliver</option>
+                    </select>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter the Correct Delivery Mode.
+                    </div>
+                </div>
+
+                <div style='display:none;' id='pickup_location'>Pick Up Menu from <b>USP Cafeteria</b> <br/>&nbsp;
+                  <br/>&nbsp;
+                </div>
+
+                <div class="form-group" id="location_hide" >
+                  <label for="inputState">Choose Location</label>
+                    <select id="location" id="validationCustom04" class="form-control" name="location" required>
+                      <option selected>-----</option>
+                      <option value="onsite">Onsite</option>
+                      <option value="offsite">Offsite</option>
+                    </select>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Please select Location for Delivery.
+                    </div>
+                </div>
+                <div class="form-group locations" id="offsite">
+                  <label for="inputState">Choose Offsite Location</label>
+                    <select id="inputState" id="validationCustom05" class="form-control" name="offsite_location" required>
+                      <option selected>-----</option>
+                      {% for offsite_location in offsite %}
+                      <option value="{{offsite_location.id}}"> {{offsite_location}} </option>
+                      {% endfor %}
+                    </select>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Please select Location for Delivery.
+                    </div>
+                </div>
+                <div class="form-group locations" id="onsite">
+                  <label for="inputState">Choose Onsite Location</label>
+                    <select id="inputState" id="validationCustom06" class="form-control" name="onsite_location" required>
+                      <option selected>-----</option>
+                      {% for onsite_location in onsite %}
+                      <option value="{{onsite_location.id}}">{{onsite_location}}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Please select Location for Delivery.
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn btn-primary">Submit Details</button>  
+                </div>
+                <br><br><br>
               </form>
           </div>
-      </div>  -->
-
-  {% for subscription in subscription %}
-  <div class="main-reviews card bg-success mb-3">
-    <div class="card-body">
-      <div class="user_details" style="display: flex; border-bottom: 1px solid rgb(31, 30, 30);">
-        <h3 class="mr-3">{{ subscription.user.username }} </h3>
-        <p class="mt-2">{{ subscription.time }}</p>
-        <p class="mt-2">{{ subscription.days }}</p>
       </div>
-        <h4>{{ review.review }}</h4>
-    </div>
   </div>
-  {% endfor %}
-
 </div>
-<!--  End  Food Subscription -->
+<script>
+      function change1() {
+      var checkBox = document.getElementById("myCheck1");
+      var number = document.getElementById("quantity1");
+      if (checkBox.checked == true){
+        number.style.display = "";
+      } else {
+        number.style.display = "none";
+      }
+      }
+
+      function change2() {
+      var checkBox = document.getElementById("myCheck2");
+      var number = document.getElementById("quantity2");
+      if (checkBox.checked == true){
+        number.style.display = "";
+      } else {
+        number.style.display = "none";
+      }
+      }
+
+      function change3() {
+      var checkBox = document.getElementById("myCheck3");
+      var number = document.getElementById("quantity3");
+      if (checkBox.checked == true){
+        number.style.display = "";
+      } else {
+        number.style.display = "none";
+      }
+      }
+
+      function change4() {
+      var checkBox = document.getElementById("myCheck4");
+      var number = document.getElementById("quantity4");
+      if (checkBox.checked == true){
+        number.style.display = "";
+      } else {
+        number.style.display = "none";
+      }
+      }
+
+      function change5() {
+      var checkBox = document.getElementById("myCheck5");
+      var number = document.getElementById("quantity5");
+      if (checkBox.checked == true){
+        number.style.display = "";
+      } else {
+        number.style.display = "none";
+      }
+      }
+
+      function change6() {
+      var checkBox = document.getElementById("myCheck6");
+      var number = document.getElementById("quantity6");
+      if (checkBox.checked == true){
+        number.style.display = "";
+      } else {
+        number.style.display = "none";
+      }
+      }
+
+      function change7() {
+      var checkBox = document.getElementById("myCheck7");
+      var number = document.getElementById("quantity7");
+      if (checkBox.checked == true){
+        number.style.display = "";
+      } else {
+        number.style.display = "none";
+      }
+      }
+
+      $(function() {
+        $('#location').change(function(){
+          $('.locations').hide();
+          $('#' + $(this).val()).show();
+        });
+      });
+
+      $(document).ready(function(){
+        $('#delivery_mode').on('change', function() {
+          if ( this.value == 'pickup')
+          {
+            $("#pickup_location").show();
+            $("#location_hide").hide();
+            $("#onsite").hide();
+            $("#offsite").hide();
+          }
+          else
+          {
+            $("#pickup_location").hide();
+            $("#location_hide").show();
+            $("#onsite").show();
+            $("#offsite").show();
+          }
+        });
+      });
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+                }, false)
+            })
+      })()
+
+      $(function(){
+        var dtToday = new Date();
+        
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+            day = '0' + day.toString();
+        
+        var maxDate = year + '-' + month + '-' + day;
+        alert(maxDate);
+        $('#inputPassword4').attr('min', maxDate);
+      });
+
+</script>
 {% endblock content %}
