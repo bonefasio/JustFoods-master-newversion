@@ -11,7 +11,7 @@ router.register('mealsubscriptions', MealSubscriptionsViewSet)
 router.register('orders', OrderItemsViewSet, basename='orders')
 router.register('locations', LocationViewSet)
 router.register('payrolls', PayrollViewSet)
-router.register('payrolls', MenuViewSet)
+router.register('menus', MenuViewSet)
 
 
 urlpatterns = [
