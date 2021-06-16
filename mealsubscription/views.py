@@ -52,17 +52,16 @@ def subscription_reg(request, slug):
     customer = request.user.customer
     item = Item.objects.filter(slug=slug, subcription_avail=True).first()
 
-    # count = OrderItems.objects.filter()
     offsite = Location.objects.filter(category="OffSite")  # offsite locations
     onsite = Location.objects.filter(category="OnSite")  # onsite locations
-    # direct pickup location
     pickup_location = Location.objects.get(
-        category="Direct Pickup")
+        category="Direct Pickup")  # direct pickup location
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         subscribe_date = timezone.now()  # getting current date
-        day_subscribed = {}  # create a dictionary to store quantity and weekday interger number
+        # create a dictionary to store weekday as key and quantity interger number as value
+        day_subscribed = {}
         if 'Monday' in request.POST and 'quantity1' in request.POST:
             quantity1 = request.POST.get("quantity1")
             day_subscribed[0] = quantity1
@@ -107,8 +106,8 @@ def subscription_reg(request, slug):
             str(subscribe_date.date()), "%Y-%m-%d").date()  # getting todays date
 
         ordered_dates_dict = {}  # dictionary to store order dates and quantity
-
-        for key, value in day_subscribed.items():  # iterating through each keys which contains a list of weekdays
+        # iterating through each keys which contains a list of weekdays and values which holds the quantity
+        for key, value in day_subscribed.items():
             if key >= day:  # checks if weekdays in list is greater than eq to todays weekday
                 # getting todays date till Sunday since this is a weekly subscription
                 ordered_dates_modified = ordered_dates + \
@@ -116,17 +115,14 @@ def subscription_reg(request, slug):
                 day_ordered = datetime.datetime.strftime(
                     ordered_dates_modified, '%Y-%m-%d')
                 # assignin the dictionary a key of dates ordered and the quantity values of day_subscribed dictionary
-                #ordered_dates_dict[day_ordered] = day_subscribed[key]
                 ordered_dates_dict[day_ordered] = value
-                print("1. Day subscribed: ")
-                print(ordered_dates_dict.keys())
-                print("\n Quantity")
-                print(value)
 
+        # converting time string type to time type
         delivery_time_modified = datetime.datetime.strptime(
-            str(delivery_time), "%H:%M").time()  # converting time string type to time type
-        print("2. Day subscribed: ")
-        print(ordered_dates_dict.keys())
+            str(delivery_time), "%H:%M").time()
+        print(ordered_dates_dict)
+        print(item.title)
+        print(offsite.name)
 
         for ordered_dates in ordered_dates_dict:  # loop through the dates for the days chosen
             # assigning quantity to the key at the dates
@@ -158,7 +154,7 @@ def subscription_reg(request, slug):
 
         if delivery_mode == 'deliver' and location == 'onsite':
             location_on = Location.objects.get(
-                id=int(onsite_delivery_location))  # get onsite location
+                id=onsite_delivery_location)  # get onsite location
             items.update(payment_method=payment_method,
                          delivery_mode=delivery_mode, delivery_location=location_on)
             subscription.update(delivery_mode=delivery_mode,
@@ -182,11 +178,8 @@ def subscription_reg(request, slug):
         # redirect to a new URL:
         return redirect(f"/mealsubscription/subscribing/{item.slug}")
 
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = SubscriptionForm()
-
-    print(item.title)
+    # print(item.title)
+    # print(offsite.name)
     context = {
         'item': item,
         'offsite': offsite,

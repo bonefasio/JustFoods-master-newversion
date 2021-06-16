@@ -4,10 +4,15 @@ certifi==2020.12.5
 chardet==4.0.0
 Django==3.1.7
 django-crispy-forms==1.11.2
+django-filter==2.4.0
 django-multiselectfield==0.1.12
+django-restframework==0.0.1
 django-static-fontawesome==5.14.0.0
 django-tempus-dominus==5.1.2.13
+djangorestframework==3.12.4
 idna==2.10
+importlib-metadata==4.5.0
+Markdown==3.3.4
 Pillow==8.1.2
 psycopg2==2.8.6
 pycodestyle==2.7.0
@@ -19,3 +24,4 @@ stripe==2.57.0
 toml==0.10.2
 typing-extensions==3.10.0.0
 urllib3==1.26.4
+zipp==3.4.1

@@ -112,9 +112,9 @@
                 <div class="form-group locations" id="offsite">
                   <label for="inputState">Choose Offsite Location</label>
                     <select id="inputState" id="validationCustom05" class="form-control" name="offsite_location" required>
-                      <option selected>-----</option>
+                      <option value="0" selected>-----</option>
                       {% for offsite_location in offsite %}
-                      <option value="{{offsite_location.id}}"> {{offsite_location}} </option>
+                      <option value="{{ offsite_location.id }}"> {{ offsite_location }} </option>
                       {% endfor %}
                     </select>
                     <div class="valid-feedback">
@@ -127,9 +127,9 @@
                 <div class="form-group locations" id="onsite">
                   <label for="inputState">Choose Onsite Location</label>
                     <select id="inputState" id="validationCustom06" class="form-control" name="onsite_location" required>
-                      <option selected>-----</option>
+                      <option value="0" selected>-----</option>
                       {% for onsite_location in onsite %}
-                      <option value="{{onsite_location.id}}">{{onsite_location}}</option>
+                      <option value="{{ onsite_location.id }}">{{onsite_location}}</option>
                       {% endfor %}
                     </select>
                     <div class="valid-feedback">

@@ -51,7 +51,9 @@ INSTALLED_APPS = [
     'multiselectfield',  # multi select field used in django forms for meal subscription
     'tempus_dominus',  # django forms timefield
     'django_static_fontawesome',
+
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -97,6 +99,16 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
+}
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 # Password validation

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+#from django.urls import reverse_lazy
 from .models import Item, Reviews
 from django.contrib.auth.decorators import login_required
 from .decorators import *
