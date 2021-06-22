@@ -122,7 +122,7 @@ def subscription_reg(request, slug):
             str(delivery_time), "%H:%M").time()
         print(ordered_dates_dict)
         print(item.title)
-        print(offsite.name)
+        # print(offsite.name)
 
         for ordered_dates in ordered_dates_dict:  # loop through the dates for the days chosen
             # assigning quantity to the key at the dates

@@ -220,7 +220,7 @@ class OrderItems(models.Model):
         })
 
 
-class MealSubscription(models.Model):
+class MealSubscription(models.Model): 
     ORDER_STATUS = (
         ('Incomplete', 'Incomplete'),
         ('Accepted', 'Accepted'),
