@@ -1,11 +1,7 @@
 from django.shortcuts import render
-from django.shortcuts import render, get_object_or_404, redirect
-#from django.urls import reverse_lazy
 from main.models import *
 from django.contrib import messages
 from django.views.generic import (
-    ListView,
-    DetailView,
     CreateView,
     UpdateView,
     DeleteView,
@@ -15,9 +11,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from main.decorators import *
 from django.db.models import Sum
-#from main.forms import PayrollRegistrationForm, SubscriptionForm, OrderItemForm
-#import datetime
-#from datetime import timedelta
 
 # Create your views here.
 
@@ -84,7 +77,7 @@ def pending_orders(request):
     return render(request, 'staff/pending_orders.html', context)
 
 
-@login_required
+@login_required(login_url='/accounts/login/')
 @admin_only
 def order_delivery_details(request):
 

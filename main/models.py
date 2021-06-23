@@ -1,11 +1,8 @@
 from django.db import models
 from django.conf import settings
-from django.db.models.fields import BooleanField
-from django.db.models.fields.related import ManyToManyField
 from django.shortcuts import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
-import datetime
 from multiselectfield import MultiSelectField
 
 
@@ -90,7 +87,6 @@ class Restaurant(models.Model):
     place = models.OneToOneField(
         Place, on_delete=models.CASCADE, null=True, blank=True)
     menu_available = models.ManyToManyField(Item)
-    #serves_hot_dogs = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s restaurant" % self.place.name

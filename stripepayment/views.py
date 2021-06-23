@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import JsonResponse
+#from django.http import JsonResponse
 from django.contrib import messages
 from main.models import *
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 import stripe
 
+# stripe secret key for my stripe account
 stripe.api_key = "sk_test_51ItkkfAh9WweYVQmHWWyufzm8D3teuWlZMwopwIA5egeYnKEYldtFLudJVZDNtpZU0G3quJLk4PcPhn2t6IJJRqV00j8aMhhut"
 
 # Create your views here.
