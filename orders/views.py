@@ -55,16 +55,19 @@ def add_to_cart(request, slug):
 @login_required
 def get_cart_items(request):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     ordered_items = OrderItems.objects.filter(
         customer=customer, ordered=False, subscription_order=False)
     bill = ordered_items.aggregate(Sum('item__price'))
     number = ordered_items.aggregate(Sum('quantity'))
     total = bill.get("item__price__sum")
     count = number.get("quantity__sum")
+
     context = {
         'ordered_items': ordered_items,
         'total': total,
         'count': count,
+        'restaurants': restaurants,
     }
     return render(request, 'orders/cart.html', context)
 
@@ -73,6 +76,13 @@ class CartDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = OrderItems
     template_name = 'orders/cartitems_confirm_delete.html'
     success_url = '/orders/cart'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the restaurants
+        context['restaurants'] = Restaurant.objects.all()
+        return context
 
     def test_func(self):
         cart = self.get_object()
@@ -84,6 +94,7 @@ class CartDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required
 def order_delivery(request):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     items = OrderItems.objects.filter(
         customer=customer, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
 
@@ -147,7 +158,8 @@ def order_delivery(request):
         'total': total,
         'count': count,
         'offsite': offsite,
-        'onsite': onsite
+        'onsite': onsite,
+        'restaurants': restaurants,
     }
     return render(request, 'orders/order_delivery.html', context)
 
@@ -156,6 +168,13 @@ class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = OrderItems
     template_name = 'orders/orderitems_confirm_delete.html'
     success_url = '/orders/order_delivery'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the restaurants
+        context['restaurants'] = Restaurant.objects.all()
+        return context
 
     def test_func(self):
         subscribing = self.get_object()
@@ -167,6 +186,7 @@ class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required
 def order_details(request):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     items = OrderItems.objects.filter(
         customer=customer, ordered=True, status="Active").order_by('-ordered_date')  # not yet been delivered
     order_items = OrderItems.objects.filter(
@@ -180,7 +200,8 @@ def order_details(request):
         'items': items,
         'order_items': order_items,  # Delivered Items
         'total': total,
-        'count': count
+        'count': count,
+        'restaurants': restaurants,
     }
     return render(request, 'orders/order_details.html', context)
 
@@ -188,6 +209,7 @@ def order_details(request):
 @login_required
 def delivery_details(request):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     # items = OrderItems.objects.filter(
     # customer=customer, ordered=True, status="Active").order_by('-ordered_date')
     order_items = OrderItems.objects.filter(
@@ -201,6 +223,7 @@ def delivery_details(request):
         # 'items': items,
         'order_items': order_items,  # Delivered Items
         'total': total,
-        'count': count
+        'count': count,
+        'restaurants': restaurants,
     }
     return render(request, 'orders/delivery_details.html', context)

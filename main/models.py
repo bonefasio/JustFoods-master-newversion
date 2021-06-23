@@ -9,40 +9,6 @@ import datetime
 from multiselectfield import MultiSelectField
 
 
-class Customer(models.Model):
-    user = models.OneToOneField(
-        User, null=True, blank=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, null=True)
-    phone = models.CharField(max_length=200, null=True)
-    # email = models.CharField(max_length=200, null=True)
-    # profile_pic = models.ImageField(default="profile1.png", null=False, blank=False)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    customer_order_total = models.FloatField(
-        null=True, blank=True, default=12.3)
-    employee_id = models.CharField(max_length=50, default=12.3)
-    registered_payroll = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name
-
-
-class Payroll(models.Model):
-    customer_acc = models.OneToOneField(
-        Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    account_balance = models.FloatField(null=True, blank=True, default=134.34)
-    name = models.CharField(max_length=200, null=True)
-    registered = models.BooleanField(default=False)
-    employee_id = models.CharField(max_length=200, null=True)
-    birth_date = models.DateTimeField(null=True)
-
-    class Meta:
-        verbose_name = 'Payroll'
-    '''
-    def __str__(self):
-        return self.customer_acc.name
-    '''
-
-
 class Item(models.Model):
     LABELS = (
         ('BestSeller', 'BestSeller'),
@@ -110,6 +76,58 @@ class Item(models.Model):
         return reverse("main:item-update", kwargs={
             'slug': self.slug
         })
+
+
+class Place(models.Model):
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=80)
+
+    def __str__(self):
+        return "%s restaurant" % self.name
+
+
+class Restaurant(models.Model):
+    place = models.OneToOneField(
+        Place, on_delete=models.CASCADE, null=True, blank=True)
+    menu_available = models.ManyToManyField(Item)
+    #serves_hot_dogs = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "%s restaurant" % self.place.name
+
+
+class Customer(models.Model):
+    user = models.OneToOneField(
+        User, null=True, blank=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
+    # email = models.CharField(max_length=200, null=True)
+    # profile_pic = models.ImageField(default="profile1.png", null=False, blank=False)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    customer_order_total = models.FloatField(
+        null=True, blank=True, default=12.3)
+    employee_id = models.CharField(max_length=50, default=12.3)
+    registered_payroll = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+
+class Payroll(models.Model):
+    customer_acc = models.OneToOneField(
+        Customer, on_delete=models.SET_NULL, null=True, blank=True)
+    account_balance = models.FloatField(null=True, blank=True, default=134.34)
+    name = models.CharField(max_length=200, null=True)
+    registered = models.BooleanField(default=False)
+    employee_id = models.CharField(max_length=200, null=True)
+    birth_date = models.DateTimeField(null=True)
+
+    class Meta:
+        verbose_name = 'Payroll'
+    '''
+    def __str__(self):
+        return self.customer_acc.name
+    '''
 
 
 class Menu(models.Model):
@@ -220,7 +238,7 @@ class OrderItems(models.Model):
         })
 
 
-class MealSubscription(models.Model): 
+class MealSubscription(models.Model):
     ORDER_STATUS = (
         ('Incomplete', 'Incomplete'),
         ('Accepted', 'Accepted'),

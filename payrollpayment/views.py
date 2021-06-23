@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
-#from django.urls import reverse_lazy
+# from django.urls import reverse_lazy
 from main.models import Item, OrderItems, Reviews
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-#from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+# from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from main.decorators import *
 from django.db.models import Sum
 from main.forms import PayrollRegistrationForm
@@ -15,6 +15,7 @@ from main.forms import PayrollRegistrationForm
 
 @login_required
 def payroll_reg(request):
+    restaurants = Restaurant.objects.all()
     payroll = Payroll.objects.filter(
         customer_acc=request.user.customer)
     cust_instance = Customer.objects.filter(user=request.user)
@@ -51,18 +52,24 @@ def payroll_reg(request):
     else:
         form = PayrollRegistrationForm()
 
-    return render(request, 'payrollpayment/payroll_reg.html', {'form': form})
+    context = {
+        'form': form,
+        'restaurants': restaurants,
+    }
+
+    return render(request, 'payrollpayment/payroll_reg.html', context)
 
 
 @login_required
 def pay_item(request):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     # collect all paid ordered items
     paiditems = OrderItems.objects.filter(
         customer=request.user.customer, ordered=True, isPaid=False, status="Active").order_by('-ordered_date')
     paidDate = timezone.now()
     ordered_date = timezone.now()  # assign ordred date the current date
-    #items.update(ordered=True, ordered_date=ordered_date)
+    # items.update(ordered=True, ordered_date=ordered_date)
     paiditems.update(isPaid=True, paidAt=paidDate,
                      ordered=True, ordered_date=ordered_date)
    # order_items.update(ordered=True, ordered_date=ordered_date)
@@ -73,6 +80,7 @@ def pay_item(request):
 @login_required
 def payment(request):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     items = OrderItems.objects.filter(
         customer=customer, isPaid=False, status="Active").order_by('-ordered_date')  # not yet been delivered
 
@@ -88,14 +96,15 @@ def payment(request):
         'items': items,
         # 'order_items': order_items,  # Delivered Items
         'total': total,
-        'count': count
+        'count': count,
+        'restaurants': restaurants,
     }
     return render(request, 'payrollpayment/payment.html', context)
 
 
 @login_required
 def payment_details(request):
-
+    restaurants = Restaurant.objects.all()
     payroll = Payroll.objects.filter(
         registered=True, customer_acc=request.user.customer).first()
     cust_instance = Customer.objects.filter(
@@ -142,6 +151,7 @@ def payment_details(request):
         'cust_total': cust_total,
         'count': count,
         'items': items,
-        'payroll_acc': payroll_acc
+        'payroll_acc': payroll_acc,
+        'restaurants': restaurants,
     }
     return render(request, 'payrollpayment/payment_details.html', context)

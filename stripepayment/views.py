@@ -15,6 +15,7 @@ stripe.api_key = "sk_test_51ItkkfAh9WweYVQmHWWyufzm8D3teuWlZMwopwIA5egeYnKEYldtF
 @login_required
 def index(request):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     items = OrderItems.objects.filter(
         customer=customer, ordered=False, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
     bill = items.aggregate(Sum('item__price'))
@@ -25,7 +26,8 @@ def index(request):
     context = {
         'items': items,
         'total': total,
-        'count': count
+        'count': count,
+        'restaurants': restaurants,
     }
 
     return render(request, 'stripepayment/index.html', context)
@@ -68,6 +70,7 @@ def charge(request):
 @login_required
 def success(request):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     items = OrderItems.objects.filter(
         customer=customer, ordered=True, status="Active", isPaid=True).order_by('-ordered_date')  # not yet been delivered
     bill = items.aggregate(Sum('item__price'))
@@ -78,6 +81,8 @@ def success(request):
     context = {
         'items': items,
         'total': total,
-        'count': count}
+        'count': count,
+        'restaurants': restaurants,
+    }
 
     return render(request, 'stripepayment/success.html', context)

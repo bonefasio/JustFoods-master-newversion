@@ -8,4 +8,5 @@ urlpatterns = [
     # Home and dish url
     path('', views.home, name='home'),
     path('dishes/<slug>', views.menuDetail, name='dishes'),
+    path('restaurant/<int:id>', views.restaurant, name='restaurant'),
 ]

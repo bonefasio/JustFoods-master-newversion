@@ -24,6 +24,7 @@ from datetime import timedelta
 @login_required(login_url='/accounts/login/')
 def subscriptionDetail(request, slug):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     item = Item.objects.filter(slug=slug, subcription_avail=True).first()
     subscription_ordered_items = OrderItems.objects.filter(
         item=item, customer=customer, subscription_order=True)
@@ -42,7 +43,7 @@ def subscriptionDetail(request, slug):
         'subscription_ordered_items': subscription_ordered_items,
         'total': total,
         'count': count,
-
+        'restaurants': restaurants,
     }
     return render(request, 'mealsubscription/subscription.html', context)
 
@@ -50,6 +51,7 @@ def subscriptionDetail(request, slug):
 @login_required(login_url='/accounts/login/')
 def subscription_reg(request, slug):
     customer = request.user.customer
+    restaurants = Restaurant.objects.all()
     item = Item.objects.filter(slug=slug, subcription_avail=True).first()
 
     offsite = Location.objects.filter(category="OffSite")  # offsite locations
@@ -183,7 +185,8 @@ def subscription_reg(request, slug):
     context = {
         'item': item,
         'offsite': offsite,
-        'onsite': onsite
+        'onsite': onsite,
+        'restaurants': restaurants,
     }
     return render(request, 'mealsubscription/subscription_reg.html', {'context': context})
 
@@ -195,6 +198,13 @@ class SubscriptionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView
     def get_success_url(self, *args, **kwargs):
         item_slug = self.object.item.slug
         return reverse_lazy('mealsubscription:subscribing', kwargs={'slug': item_slug})
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['restaurants'] = Restaurant.objects.all()
+        return context
 
     def test_func(self):
         subscribing = self.get_object()

@@ -23,6 +23,14 @@ class ItemAdmin(admin.ModelAdmin):
                     'price', 'labels', 'quantity_available')
 
 
+class PlaceAdmin(admin.ModelAdmin):
+    list_display = ('name', 'address')
+
+
+class RestaurantAdmin(admin.ModelAdmin):
+    list_display = ('id', 'place')
+
+
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('name', 'user', 'date_created', 'phone', 'employee_id',
                     'registered_payroll', 'customer_order_total')
@@ -109,6 +117,8 @@ class MenuAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Item, ItemAdmin)
+admin.site.register(Place, PlaceAdmin)
+admin.site.register(Restaurant, RestaurantAdmin)
 admin.site.register(OrderItems, OrderItemsAdmin)
 admin.site.register(Reviews, ReviewsAdmin)
 admin.site.register(Customer, CustomerAdmin)

@@ -268,7 +268,18 @@
                             </form>
                         </li>
                     {% else %}
-                        <li><a href="{% url 'orders:cart' %}" class="mr-2 text-light" hidden>My Cart🛒</a></li>
+                        <li>
+                          <div class="dropdown mr-2 text-light">
+                              <button onclick="myFunction()" class="dropbtn mr-2 text-light">Restaurants</button><i class="w3-container fa fa-spinner w3-spin" style="font-size:14px"></i>
+                                  <div id="myDropdown" class="dropdown-content">
+                                  {% for restaurant in restaurants %}
+                                    {% if forloop.counter < 6 %} <!-- showing the first 5 restaurants -->
+                                        <a href="{% url 'main:restaurant' restaurant.id %}" class="mr-2 text-light">{{ restaurant.place.name }}</a>  
+                                    {% endif %}
+                                  {% endfor %}
+                                  </div>
+                          </div>
+                        </li>
                         <li><a href="{% url 'orders:order_details' %}" class="mr-2 text-light">Order History</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
                         <!-- 09/04 changes -->
                         <li>
@@ -282,7 +293,7 @@
                                     </div>
                             </div>
                         </li>
-                        <!-- 09/04 changes end -->
+                       
                         <li>
                             <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
                                 {% csrf_token %}
@@ -321,15 +332,14 @@
           </div>
 
           <div class="col-xs-6 col-md-3">
-            <h6>Resturants Near Me</h6>
-            <ul class="footer-links">
-              <li><a target="_blank" href="https://pizzaking.com.fj/wishbone/">WishBone</a></li>
-              <li><a target="_blank" href="https://chickenexpressfiji.com/">Chicken Express</a></li>
-              <li><a target="_blank" href="https://grills.com.fj/">Grills</a></li>
-              <li><a target="_blank" href="https://www.facebook.com/Fire-N-Ice-Restaurant-Bar-249271205142196/">Fire & Ice</a></li>
-              <li><a target="_blank" href="https://www.facebook.com/The-Lunchbox-2048284415399146/">Lunch Box</a></li>
-              <li><a target="_blank" href="https://mcdonaldsfiji.com/">Mac Donalds</a></li>
-            </ul>
+            <h6>Restaurants Near Me</h6>
+            {% for restaurant in restaurants %}
+              {% if forloop.counter < 6 %} <!-- showing the first 5 restaurant in the footer -->
+                <ul class="footer-links">
+                  <li><a target="_blank" href="{% url 'main:restaurant' restaurant.id %}">{{ restaurant.place.name }}</a></li>
+                </ul>
+              {% endif %}
+            {% endfor %}
           </div>
 
           <div class="col-xs-6 col-md-3">

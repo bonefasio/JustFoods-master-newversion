@@ -12,11 +12,13 @@ from django.db.models import Sum
 
 @login_required
 def lunch(request):
+    restaurants = Restaurant.objects.all()
     menu = get_object_or_404(Menu, description="Lunch")
     items = menu.items.all()
 
     context = {
         'items': items,
+        'restaurants': restaurants,
     }
     return render(request, 'mealmenu/lunch.html', context)
 
@@ -24,11 +26,13 @@ def lunch(request):
 @login_required
 def dinner(request):
     menu = get_object_or_404(Menu, description="Dinner")
+    restaurants = Restaurant.objects.all()
     # get all items in menu
     items = menu.items.all()
 
     context = {
         'items': items,
+        'restaurants': restaurants,
     }
     return render(request, 'mealmenu/dinner.html', context)
 
@@ -36,17 +40,21 @@ def dinner(request):
 @login_required
 def breakfast(request):
     menu = get_object_or_404(Menu, description="Breakfast")
+    restaurants = Restaurant.objects.all()
     # get all items in menu
     items = menu.items.all()
 
     context = {
         'items': items,
+        'restaurants': restaurants,
     }
     return render(request, 'mealmenu/breakfast.html', context)
 
 
 @login_required
 def custom_meal(request):
+    restaurants = Restaurant.objects.all()
+
     if request.method == "POST":
         custom_meal_name = request.POST.get("custom_meal_name")
         patron_first_name = request.POST.get("patron_first_name")
@@ -69,4 +77,8 @@ def custom_meal(request):
         custom_meal.save()
         messages.success(
             request, "Custom Meal Request Sent, Kindly Wait For Cafeteria Response!!")
-    return render(request, 'mealmenu/custom_meal.html')
+
+    context = {
+        'restaurants': restaurants,
+    }
+    return render(request, 'mealmenu/custom_meal.html', context)
