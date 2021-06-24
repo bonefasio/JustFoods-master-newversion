@@ -29,36 +29,6 @@ def home(request):
 
 
 @login_required(login_url='/accounts/login/')
-def menuDetail(request, slug):
-    item = Item.objects.filter(slug=slug).first()
-    restaurants = Restaurant.objects.all()
-    # getting the first 7 reviews
-    reviews = Reviews.objects.filter(rslug=slug).order_by('-id')[:7]
-    avail = int(item.quantity_available)
-    loop_times = range(1, avail+1)
-
-    if request.method == 'POST':
-        quantity = request.POST.get("quantity")
-        avail = avail - int(quantity)
-        item.quantity_available = avail  # updating quantity values
-        loop_times = range(1, avail+1)
-
-        messages.info(
-            request, "You can now place your order {} meal".format(item.title))
-        # redirect to a new URL:
-        return redirect(f"/orders/add-to-order/{item.slug}")
-        # redirect        # <a href="{% url 'orders:add-to-order' item.slug %}"
-
-    context = {
-        'item': item,
-        'restaurants': restaurants,
-        'reviews': reviews,
-        'loop_times': loop_times,
-    }
-    return render(request, 'main/dishes.html', context)
-
-
-@login_required(login_url='/accounts/login/')
 def restaurant(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
     restaurants = Restaurant.objects.all()

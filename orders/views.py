@@ -15,12 +15,53 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from main.decorators import *
 from django.db.models import Sum
-#from main.forms import PayrollRegistrationForm, SubscriptionForm, OrderItemForm
+# from main.forms import PayrollRegistrationForm, SubscriptionForm, OrderItemForm
 import datetime
 from datetime import timedelta
 
 
 # Create your views here.
+@login_required(login_url='/accounts/login/')
+def menuDetail(request, slug):
+    customer = request.user.customer
+    item = Item.objects.filter(slug=slug).first()
+    restaurants = Restaurant.objects.all()
+    # getting the first 7 reviews
+    reviews = Reviews.objects.filter(rslug=slug).order_by('-id')[:7]
+    avail_item = int(item.quantity_available)
+    loop_times = range(1, avail_item+1)
+
+    ordered_date = timezone.now()
+
+    if request.method == 'POST':
+        quantity = request.POST.get("quantity")
+        quantity = int(quantity)  # casting quantity to int
+        avail = avail_item - int(quantity)
+        item.quantity_available = avail  # updating quantity values
+        loop_times = range(1, avail+1)
+        print(quantity)
+        order_item = OrderItems.objects.create(
+            item=item,
+            customer=customer,
+            ordered=False,
+            quantity=quantity,
+            ordered_date=ordered_date,
+            subscription_order=False
+        )
+        order_item.save()
+
+        messages.info(request, "Added to Order!!Continue Shopping!!")
+        return redirect("orders:cart")
+
+    context = {
+        'item': item,
+        'restaurants': restaurants,
+        'reviews': reviews,
+        'loop_times': loop_times,
+    }
+    return render(request, 'orders/dishes.html', context)
+
+
 @login_required
 def add_reviews(request):
     if request.method == "POST":
@@ -35,6 +76,7 @@ def add_reviews(request):
     return redirect(f"/dishes/{item.slug}")
 
 
+'''
 @login_required
 def add_to_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
@@ -50,6 +92,8 @@ def add_to_cart(request, slug):
     order_item.save()
     messages.info(request, "Added to Cart!!Continue Shopping!!")
     return redirect("orders:cart")
+
+'''
 
 
 @login_required

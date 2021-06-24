@@ -36,8 +36,7 @@ def subscriptionDetail(request, slug):
         totals = orders.get_total
         total_list.append(totals)
 
-    # Iterate each element in list
-    # and add them in variable total
+    # Iterate each element in list and add them in variable total
     for ele in range(0, len(total_list)):
         total = total + total_list[ele]
 
