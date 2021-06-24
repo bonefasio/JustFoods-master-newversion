@@ -41,13 +41,7 @@ def menuDetail(request, slug):
         loop_times = range(1, avail+1)
         print(quantity)
         order_item = OrderItems.objects.create(
-            item=item,
-            customer=customer,
-            ordered=False,
-            quantity=quantity,
-            ordered_date=ordered_date,
-            subscription_order=False
-        )
+            item=item, customer=customer, ordered=False, quantity=quantity, ordered_date=ordered_date, subscription_order=False)
         order_item.save()
 
         messages.info(request, "Added to Order!!Continue Shopping!!")
@@ -76,36 +70,25 @@ def add_reviews(request):
     return redirect(f"/dishes/{item.slug}")
 
 
-'''
-@login_required
-def add_to_cart(request, slug):
-    item = get_object_or_404(Item, slug=slug)
-    customer = request.user.customer
-    ordered_date = timezone.now()
-    order_item = OrderItems.objects.create(
-        item=item,
-        customer=customer,
-        ordered=False,
-        ordered_date=ordered_date,
-        subscription_order=False
-    )
-    order_item.save()
-    messages.info(request, "Added to Cart!!Continue Shopping!!")
-    return redirect("orders:cart")
-
-'''
-
-
 @login_required
 def get_cart_items(request):
     customer = request.user.customer
     restaurants = Restaurant.objects.all()
     ordered_items = OrderItems.objects.filter(
         customer=customer, ordered=False, subscription_order=False)
-    bill = ordered_items.aggregate(Sum('item__price'))
+
+    total = 0
+    total_list = []  # list of total of each subscription order
+    for orders in ordered_items:
+        totals = orders.get_total
+        total_list.append(totals)
+
+    # Iterate each element in list and add them in variable total
+    for ele in range(0, len(total_list)):
+        total = total + total_list[ele]
+
     number = ordered_items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
-    count = number.get("quantity__sum")
+    count = number.get("quantity__sum")  # sum of quantity
 
     context = {
         'ordered_items': ordered_items,
@@ -142,11 +125,19 @@ def order_delivery(request):
     items = OrderItems.objects.filter(
         customer=customer, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
 
-    bill = items.aggregate(Sum('item__price'))
+    total = 0
+    total_list = []  # list of total of each subscription order
+    for orders in items:
+        totals = orders.get_total
+        total_list.append(totals)
+
+    # Iterate each element in list and add them in variable total
+    for ele in range(0, len(total_list)):
+        total = total + total_list[ele]
+
     number = items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
     count = number.get("quantity__sum")  # sum of quantity
-    # count = OrderItems.objects.filter()
+
     offsite = Location.objects.filter(category="OffSite")  # offsite locations
     onsite = Location.objects.filter(category="OnSite")  # onsite locations
     pickup_location = Location.objects.get(

@@ -63,10 +63,9 @@ def payroll_reg(request):
 @login_required
 def pay_item(request):
     customer = request.user.customer
-    restaurants = Restaurant.objects.all()
     # collect all paid ordered items
     paiditems = OrderItems.objects.filter(
-        customer=request.user.customer, ordered=True, isPaid=False, status="Active").order_by('-ordered_date')
+        customer=customer, ordered=True, isPaid=False, status="Active").order_by('-ordered_date')
     paidDate = timezone.now()
     ordered_date = timezone.now()  # assign ordred date the current date
     # items.update(ordered=True, ordered_date=ordered_date)
@@ -87,9 +86,17 @@ def payment(request):
     ordered_date = timezone.now()  # assign ordred date the current date
     items.update(ordered=True, ordered_date=ordered_date)
 
-    bill = items.aggregate(Sum('item__price'))
+    total = 0
+    total_list = []  # list of total of each subscription order
+    for orders in items:
+        totals = orders.get_total
+        total_list.append(totals)
+
+    # Iterate each element in list and add them in variable total
+    for ele in range(0, len(total_list)):
+        total = total + total_list[ele]
+
     number = items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
     count = number.get("quantity__sum")  # sum of quantity
     # count = OrderItems.objects.filter()
     context = {
@@ -112,12 +119,19 @@ def payment_details(request):
     # collects items that are paid
     items = OrderItems.objects.filter(
         customer=request.user.customer, ordered=True, isPaid=True, status="Active").order_by('-ordered_date')
-    # delivered_items = OrderItems.objects.filter(
-    # customer=request.user.customer, ordered=True, status="Delivered").order_by('-ordered_date')
-    bill = items.aggregate(Sum('item__price'))
+
+    total = 0
+    total_list = []  # list of total of each subscription order
+    for orders in items:
+        totals = orders.get_total
+        total_list.append(totals)
+
+    # Iterate each element in list and add them in variable total
+    for ele in range(0, len(total_list)):
+        total = total + total_list[ele]
+
     number = items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
-    count = number.get("quantity__sum")
+    count = number.get("quantity__sum")  # sum of quantity
 
     # updating customer total order
     cust_instance.customer_order_total = total

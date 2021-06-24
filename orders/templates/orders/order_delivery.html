@@ -12,30 +12,30 @@
                     <table class="table table-light">
                         <thead>
                         <tr>
-                            <th scope="col">Ordered</th>
+                            <!--<th scope="col">Ordered</th> -->
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Specification</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Price</th>
                             <th scope="col">Order Status</th>
                             <th scope="col">Paid Status</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
                             {% for item_active in items %}
                         <tr>
-                            <td>{{ item_active.ordered_date }}</td>
+                            <!--<td>{{ item_active.ordered_date }}</td> -->
                             <td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
                             <td>{{ item_active.item.description }}</td>
-                            <td>{{ item_active.item.instructions }}</td>
-                            <td>{{ item_active.item.price }}</td>
+                            <td>{{ item_active.quantity }}</td>
+                            <td>{{ item_active.get_total }}</td>
                             <td>{{ item_active.status }}</td>
                             {% if item_active.isPaid == True %}
                             <td> Paid </td>
                             {% else %}
                             <td> Not Paid </td>
-                            {% endif %}
-                            
+                            {% endif %}                            
                             <td><a class="btn btn-danger" href="{% url 'orders:remove-from-order' item_active.id %}">Delete</a></td>
                         </tr>
                             {% endfor %}
@@ -44,6 +44,8 @@
                          <tr>
                            <th id="total" colspan="4">Total :</th>
                            <td><b>{{total}}</b></td>
+                           <th scope="col"></th>
+                           <th scope="col"></th>
                          </tr>
                         </tfoot>
                     </table>

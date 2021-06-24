@@ -7,7 +7,6 @@ app_name = "orders"
 urlpatterns = [
     # cart urls
     path('dishes/<slug>', views.menuDetail, name='dishes'),
-    #path('add-to-order/<slug>/', views.add_to_cart, name='add-to-order'),
     path('cart/', views.get_cart_items, name='cart'),
     path('remove-from-cart/<int:pk>/',
          CartDeleteView.as_view(), name='remove-from-cart'),
