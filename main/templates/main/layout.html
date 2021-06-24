@@ -260,7 +260,7 @@
                     <li><a href="{% url 'main:home' %}" class="mr-2 text-light">Home</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
                 {% if user.is_authenticated %}
                     {% if request.user|has_group:"admin_owner" %}
-                        <li><a href="{% url 'staff:admin_dashboard' %}" class="mr-2 text-light">DashBoard</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
+                        <li><a href="{% url 'main:admin_dashboard' %}" class="mr-2 text-light">DashBoard</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
                         <li>
                             <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
                                 {% csrf_token %}
@@ -283,17 +283,16 @@
                         <li><a href="{% url 'orders:order_details' %}" class="mr-2 text-light">Order History</a><i class="mr-2 text-light w3-container fa fa-spinner w3-spin" style="font-size:14px"></i></li>
                         <!-- 09/04 changes -->
                         <li>
-                            <div class="dropdown mr-2 text-light">
-                                <button onclick="myFunction()" class="dropbtn mr-2 text-light">Meal Menu</button><i class="w3-container fa fa-spinner w3-spin" style="font-size:14px"></i>
-                                    <div id="myDropdown" class="dropdown-content">
-                                        <a href="{% url 'mealmenu:breakfast' %}" class="mr-2 text-light">Breakfast</a>
-                                        <a href="{% url 'mealmenu:lunch' %}" class="mr-2 text-light">Lunch</a>
-                                        <a href="{% url 'mealmenu:dinner' %}" class="mr-2 text-light">Dinner</a>
-                                        <a href="{% url 'mealmenu:custom_meal' %}" class="mr-2 text-light">Request Custom Meal</a>
-                                    </div>
-                            </div>
-                        </li>
-                       
+                          <div class="dropdown mr-2 text-light">
+                              <button onclick="myFunction2()" class="dropbtn mr-2 text-light">Meal Menu</button><i class="w3-container fa fa-spinner w3-spin" style="font-size:14px"></i>
+                                  <div id="myDropdown2" class="dropdown-content">
+                                      <a href="{% url 'mealmenu:breakfast' %}" class="mr-2 text-light">Breakfast</a>
+                                      <a href="{% url 'mealmenu:lunch' %}" class="mr-2 text-light">Lunch</a>
+                                      <a href="{% url 'mealmenu:dinner' %}" class="mr-2 text-light">Dinner</a>
+                                      <a href="{% url 'mealmenu:custom_meal' %}" class="mr-2 text-light">Request Custom Meal</a>
+                                  </div>
+                          </div>
+                        </li> 
                         <li>
                             <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
                                 {% csrf_token %}
@@ -377,7 +376,9 @@ toggle between hiding and showing the dropdown content */
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
-
+function myFunction2() {
+  document.getElementById("myDropdown2").classList.toggle("show");
+}
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {

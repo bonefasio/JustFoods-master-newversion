@@ -3,6 +3,7 @@ from .models import Item, Reviews
 from django.contrib.auth.decorators import login_required
 from .decorators import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 
 
 def home(request):
@@ -35,13 +36,19 @@ def menuDetail(request, slug):
     reviews = Reviews.objects.filter(rslug=slug).order_by('-id')[:7]
     avail = int(item.quantity_available)
     loop_times = range(1, avail+1)
-    '''
+
     if request.method == 'POST':
         quantity = request.POST.get("quantity")
         avail = avail - int(quantity)
-        item.update(quantity_available=avail)
+        item.quantity_available = avail  # updating quantity values
         loop_times = range(1, avail+1)
-    '''
+
+        messages.info(
+            request, "You can now place your order {} meal".format(item.title))
+        # redirect to a new URL:
+        return redirect(f"/orders/add-to-order/{item.slug}")
+        # redirect        # <a href="{% url 'orders:add-to-order' item.slug %}"
+
     context = {
         'item': item,
         'restaurants': restaurants,

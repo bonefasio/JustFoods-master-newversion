@@ -46,7 +46,6 @@ class Item(models.Model):
     quantity_available = models.IntegerField(default=1)
     subcription_avail = models.BooleanField(default=False)
 
-    # restaurants = models.ForeignKey(Restaurant, on_delete = models.CASCADE,blank=True)
     class Meta:
         verbose_name = 'Food Item'
         verbose_name_plural = 'Food Items'
@@ -220,18 +219,27 @@ class OrderItems(models.Model):
         verbose_name = 'Food Order Item'
         verbose_name_plural = 'Food Order Items'
 
+    @property
     def __str__(self):
+
         return self.status
 
+    @property
     def get_remove_from_order_url(self):  # get_remove_from_cart_url
         return reverse("main:remove-from-order", kwargs={  # remove-from-cart
             'pk': self.pk
         })
 
+    @property
     def update_status_url(self):
         return reverse("main:update_status", kwargs={
             'pk': self.pk
         })
+
+    @property
+    def get_total(self):
+        total = self.item.price * self.quantity
+        return total
 
 
 class MealSubscription(models.Model):

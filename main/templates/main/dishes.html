@@ -23,7 +23,7 @@
               <h4>{{ item.instructions }}</h4>
 
               <!-- For selecting quantity-->
-            <!--
+            
             <form class="col-sm-12 mt-1" method="POST">
             {% csrf_token %}
               <select class="mdb-select md-form" name="quantity">
@@ -31,12 +31,12 @@
                  {% for i in loop_times %}
                  <option value="{{ i }}">{{ i }}</option>
                   {% endfor %}
-              </select>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form> -->
+              </select> <br> <br>
+              <button type="submit" class="btn btn-primary">Add to Order</button>
+            </form> 
             </div>
             <br>
-            <a href="{% url 'orders:add-to-order' item.slug %}" class="btn btn-primary btn-md my-0 p">Add to Order</a>
+            <!--<a href="{% url 'orders:add-to-order' item.slug %}" class="btn btn-primary btn-md my-0 p">Add to Order</a> -->
           </div>
         </div>
       </div>

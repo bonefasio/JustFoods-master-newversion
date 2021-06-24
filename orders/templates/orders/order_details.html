@@ -29,7 +29,12 @@
                             <td>{{ item_active.item.instructions }}</td>
                             <td>{{ item_active.item.price }}</td>
                             <td>{{ item_active.status }}</td>
-                            <td>{{ item_active.isPaid }}</td>
+                            <!--<td>{{ item_active.isPaid }}</td> -->
+                            {% if item_active.isPaid == True %}
+                            <td> Paid </td>
+                            {% else %}
+                            <td> Not Paid </td>
+                            {% endif %}
                         </tr>
                             {% endfor %}
                         </tbody>
@@ -42,7 +47,6 @@
 
                     </table>
                   
-                <!-- <button type="button" name="button" > <a href="{% url 'payrollpayment:payroll_reg' %}"> Proceed to Payment </a> </button> -->  
                 </div>
                 {% else %}
                 <h4 class="text-center">Sorry, you have not ordered any item yet!!!</h4>

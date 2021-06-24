@@ -14,7 +14,6 @@
                             <th scope="col">Description</th>
                             <th scope="col">Specification</th>
                             <th scope="col">Price</th>
-                          <!--  <th scope="col">Total Pieces</th> -->
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -24,8 +23,7 @@
                           <td>{{ order.item.title }} <span class="badge badge-{{ order.item.label_colour }}">{{ order.item.labels }}</span></td>
                             <td>{{ order.item.description }}</td>
                             <td>{{ order.item.instructions }}</td>
-                            <td>{{ order.item.price }}</td>
-                        
+                            <td>{{ order.item.price }}</td>                      
                             <td><a class="btn btn-danger" href="{% url 'orders:remove-from-cart' order.id %}">Delete</a></td>
                         </tr>
                             {% endfor %}

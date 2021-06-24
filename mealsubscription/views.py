@@ -16,8 +16,9 @@ from django.views.generic import (
 )
 from main.decorators import *
 from django.db.models import Sum
-from main.forms import SubscriptionForm
+#from main.forms import SubscriptionForm
 from datetime import timedelta
+import datetime
 # Create your views here.
 
 
@@ -29,15 +30,20 @@ def subscriptionDetail(request, slug):
     subscription_ordered_items = OrderItems.objects.filter(
         item=item, customer=customer, subscription_order=True)
 
-    bill = subscription_ordered_items.aggregate(Sum('item__price'))
-    number = subscription_ordered_items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
-    count = number.get("quantity__sum")  # sum of quantity
-    # avail = int(item.quantity_available)
-    # days = int(subscription.days_available)
+    total = 0
+    total_list = []  # list of total of each subscription order
+    for orders in subscription_ordered_items:
+        totals = orders.get_total
+        total_list.append(totals)
 
-    # loop_times_avail = range(1, avail+1)
-    # loop_times_days = range(1, avail+1)
+    # Iterate each element in list
+    # and add them in variable total
+    for ele in range(0, len(total_list)):
+        total = total + total_list[ele]
+
+    number = subscription_ordered_items.aggregate(Sum('quantity'))
+    count = number.get("quantity__sum")  # sum of quantity
+
     context = {
         'item': item,
         'subscription_ordered_items': subscription_ordered_items,
@@ -202,7 +208,7 @@ class SubscriptionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
+        # Add in a QuerySet of all the restaurants
         context['restaurants'] = Restaurant.objects.all()
         return context
 

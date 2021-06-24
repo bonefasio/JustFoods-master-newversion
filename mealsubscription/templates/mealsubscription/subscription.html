@@ -20,6 +20,7 @@
                             <th scope="col">Payment</th>
                             <th scope="col">Delivery Mode</th>
                             <th scope="col">Quantity </th>
+                            <th scope="col">Total </th>
                           <!--  <th scope="col">Total Pieces</th> -->
                             <th scope="col"></th>
                         </tr>
@@ -34,9 +35,14 @@
                             <td>{{ order.ordered_date }}</td>
                             <td>{{ order.payment_method}}</td>
                             <td>{{ order.status}}</td>
-                            <td>{{ order.isPaid}}</td>
+                            {% if order.isPaid == True %}
+                            <td> Paid </td>
+                            {% else %}
+                            <td> Not Paid </td>
+                            {% endif %}
                             <td>{{ order.delivery_mode}}</td>
                             <td>{{ order.quantity}}</td>
+                            <td>${{ order.get_total }}</td>
                         
                             <td><a class="btn btn-danger" href="{% url 'mealsubscription:remove-from-subscription' order.id %}">Delete</a></td>
                         </tr>
