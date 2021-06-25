@@ -71,6 +71,7 @@ def admin_view(request):
 def pending_orders(request):
     items = OrderItems.objects.filter(
         ordered=True, isPaid=True, status="Active").order_by('-ordered_date')
+    
     context = {
         'items': items,
     }

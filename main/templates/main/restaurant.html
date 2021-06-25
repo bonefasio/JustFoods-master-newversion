@@ -10,7 +10,7 @@
               <img src="{{ item.image.url }}" style="height: 200px;">
                 <div class="card-body text-center">
                   <button class="btn btn-warning" hidden>By:{{ item.created_by }}</button>
-                  <h5 class="text-center"><a href="{% url 'main:dishes' item.slug %}">{{ item.title }} </a><span class="badge badge-{{ item.label_colour }}">{{ item.labels }}</span></h5>
+                  <h5 class="text-center"><a href="{% url 'orders:dishes' item.slug %}">{{ item.title }} </a><span class="badge badge-{{ item.label_colour }}">{{ item.labels }}</span></h5>
                   
                   {% if item.subcription_avail == True %}
                   <a href="{% url 'mealsubscription:subscription_reg' item.slug %}"><p button class="btn btn-warning">Subscribe Now</button></p> </a>
@@ -18,7 +18,7 @@
                   <p button class="btn btn-warning">No Subscription</button></p>
                   {%endif%}        
                   <h5 class="text-center">$ {{ item.price }}</h5>
-                  <a href="{% url 'main:dishes' item.slug %}" class="btn btn-info text-center py-3">Order Now</a>
+                  <a href="{% url 'orders:dishes' item.slug %}" class="btn btn-info text-center py-3">Order Now</a>
                 </div>
             </div>
         </div>

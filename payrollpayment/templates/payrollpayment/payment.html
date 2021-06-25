@@ -27,7 +27,7 @@
                             <td>{{ item_active.item.title }} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
                             <td>{{ item_active.item.description }}</td>
                             <td>{{ item_active.quantity }}</td>
-                            <td>{{ item_active.get_total }}</td>
+                            <td>{{ item_active.item.price }}</td>
                             <td>{{ item_active.status }}</td>
                             {% if item_active.isPaid == True %}
                             <td> Paid </td>

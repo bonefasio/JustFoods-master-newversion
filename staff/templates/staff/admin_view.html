@@ -15,9 +15,8 @@
                             <th scope="col">User Email</th>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Specification</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Price</th>
-                            <!--<th scope="col">Total Pieces</th> -->
                             <th scope="col">Status</th>
                             <th scope="col">Delivery Date</th>
                         </tr>
@@ -30,9 +29,8 @@
                             <td>{{ cart.customer.user.email }}</td>
                             <td>{{ cart.item.title }} <span class="badge badge-{{ cart.item.label_colour }}">{{ cart.item.labels }}</span></td>
                             <td>{{ cart.item.description }}</td>
-                            <td>{{ cart.item.instructions }}</td>
-                            <td>{{ cart.item.price }}</td>
-                           <!--<td>{{ cart.item.pieces }} pieces</td>--> 
+                            <td>{{ cart.quantity }}</td>
+                            <td>{{ cart.get_total}}</td>
                             <td>{{ cart.status }}</td>
                             <td>{{ cart.delivery_date }}</td>
                         </tr>

@@ -10,11 +10,11 @@
                     <table class="table table-light">
                         <thead>
                         <tr>
-                            <th scope="col">Ordered</th>
+                           <!-- <th scope="col">Ordered</th>-->
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Total Price</th>
                             <th scope="col">Paid Date</th>
                            <!-- <th scope="col">Customer Name</th>
                             <th scope="col">Email</th>                           
@@ -26,7 +26,7 @@
                         <tbody>
                             {% for order in items %}
                         <tr>
-                            <td>{{ item_active.ordered_date }}</td>
+                           <!-- <td>{{ item_active.ordered_date }}</td> -->
                             <td>{{ order.item.title }} <span class="badge badge-{{ order.item.label_colour }}">{{ order.item.labels }}</span></td>
                             <td>{{ order.item.description }}</td>
                             <td>{{ order.quantity }}</td>
