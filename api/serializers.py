@@ -17,6 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+
     class Meta:
         model = Customer
         fields = ('id', 'user', 'name', 'phone', 'date_created',
@@ -30,6 +32,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Item
         fields = ('id', 'title', 'description', 'price', 'instructions',
@@ -74,3 +77,19 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = ('id', 'items', 'description')
+
+
+class RestaurantSerializer(serializers.ModelSerializer):
+    #place = PlaceSerializer(many=False)
+
+    class Meta:
+        model = Restaurant
+        fields = ('id', 'place')
+
+
+class PlaceSerializer(serializers.ModelSerializer):
+    restaurants = RestaurantSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Place
+        fields = ('id', 'name', 'address', 'restaurants')

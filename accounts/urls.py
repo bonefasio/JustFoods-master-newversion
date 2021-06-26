@@ -6,7 +6,9 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('signup/', views.signup_view, name="signup"),
+    path('internationalregister/', views.signupinternational_view, name="internationalregister"),
     path('login/', views.login_view, name="login"),
+    path('internationallogin/', views.internationallogin_view, name="internationallogin"),
     path('logout/', views.logout_view, name="logout"),
 
     # resetting of password

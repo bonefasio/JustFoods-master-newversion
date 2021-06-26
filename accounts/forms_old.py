@@ -5,10 +5,9 @@ from django.contrib.auth.models import User
 
 class NewUSerForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    phone_number = forms.CharField(required=True, max_length=10)
+    phone_number = forms.CharField(required=True)
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
-    username = forms.CharField(required=True, min_length=9, max_length=10)
    # employee_id = forms.CharField(required=True)
     #location = forms.CharField(required=True)
 
@@ -17,20 +16,7 @@ class NewUSerForm(UserCreationForm):
         fields = ("username", "email", "phone_number", "first_name",
                   "last_name", "password1", "password2")
 
-class InternationalStudentForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    phone_number = forms.CharField(required=True, max_length=10)
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
-    username = forms.CharField(required=True, min_length=11, max_length=12)
-   # employee_id = forms.CharField(required=True)
-    #location = forms.CharField(required=True)
 
-    class Meta:
-        model = User
-        fields = ("username", "phone_number", "email",  "first_name",
-                  "last_name", "password1", "password2")
-      
 '''
     def save(self, commit=True):
         user = super(NewUSerForm, self).save(commit=False)

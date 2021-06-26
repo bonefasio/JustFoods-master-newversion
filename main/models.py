@@ -42,7 +42,8 @@ class Item(models.Model):
     label_colour = models.CharField(
         max_length=15, choices=LABEL_COLOUR, blank=True)
     slug = models.SlugField(max_length=255, default="slug")
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='user_items')
     quantity_available = models.IntegerField(default=1)
     subcription_avail = models.BooleanField(default=False)
 
@@ -85,7 +86,7 @@ class Place(models.Model):
 class Restaurant(models.Model):
     place = models.OneToOneField(
         Place, on_delete=models.CASCADE, null=True, blank=True)
-    menu_available = models.ManyToManyField(Item)
+    menu_available = models.ManyToManyField(Item, related_name='restaurants')
 
     def __str__(self):
         return "%s restaurant" % self.place.name

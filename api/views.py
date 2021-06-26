@@ -47,21 +47,35 @@ class PayrollViewSet(viewsets.ModelViewSet):
     queryset = Payroll.objects.all()
     serializer_class = PayrollSerializer
     authentication_classes = (TokenAuthentication, )
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Payroll.objects.all()
     serializer_class = LocationSerializer
     authentication_classes = (TokenAuthentication, )
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
 
 class MenuViewSet(viewsets.ModelViewSet):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
     authentication_classes = (TokenAuthentication, )
+    permission_classes = (AllowAny,)
+
+
+class PlaceViewSet(viewsets.ModelViewSet):
+    queryset = Place.objects.all()
+    serializer_class = MenuSerializer
+    authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated,)
+
+
+class RestaurantViewSet(viewsets.ModelViewSet):
+    queryset = Restaurant.objects.all()
+    serializer_class = MenuSerializer
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (AllowAny,)
 
 
 ''' 
