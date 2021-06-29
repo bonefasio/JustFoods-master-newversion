@@ -4,6 +4,8 @@ from django.shortcuts import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
+from django.db.models.signals import post_save
+from django.contrib.auth.models import Group
 
 
 class Item(models.Model):
@@ -43,7 +45,7 @@ class Item(models.Model):
         max_length=15, choices=LABEL_COLOUR, blank=True)
     slug = models.SlugField(max_length=255, default="slug")
     created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user_items')
+        User, on_delete=models.CASCADE, related_name='customers')
     quantity_available = models.IntegerField(default=1)
     subcription_avail = models.BooleanField(default=False)
 
@@ -344,3 +346,17 @@ class Inventory(models.Model):
 
     def __str__(self):
         return self.item_name
+
+
+def customer_profile(sender, instance, created, **kwargs):
+    if created:  # check if user is created
+        group = Group.objects.get(name='customer')
+        instance.groups.add(group)  # add user to cutomer group
+        Customer.objects.create(  # create customer profile of the user
+            user=instance,
+            name=instance.username,
+        )
+        print('Profile created!')
+
+
+post_save.connect(customer_profile, sender=User)

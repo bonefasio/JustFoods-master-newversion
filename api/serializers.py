@@ -25,18 +25,30 @@ class CustomerSerializer(serializers.ModelSerializer):
                   'registered_payroll', 'employee_id')
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
 
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        Token.objects.create(user=user)
-        return user
+
+
+class PlaceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Place
+        fields = ('id', 'name', 'address')
+
+
+class RestaurantSerializer(serializers.ModelSerializer):
+    place = PlaceSerializer(many=False)
+
+    class Meta:
+        model = Restaurant
+        fields = ('id', 'place')
 
 
 class ItemSerializer(serializers.ModelSerializer):
+    restaurants = RestaurantSerializer(many=True, read_only=True)
 
     class Meta:
         model = Item
         fields = ('id', 'title', 'description', 'price', 'instructions',
-                  'slug', 'subcription_avail', 'quantity_available')
+                  'slug', 'subcription_avail', 'quantity_available', 'restaurants')
 
 
 class PayrollSerializer(serializers.ModelSerializer):
@@ -77,19 +89,3 @@ class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = ('id', 'items', 'description')
-
-
-class RestaurantSerializer(serializers.ModelSerializer):
-    #place = PlaceSerializer(many=False)
-
-    class Meta:
-        model = Restaurant
-        fields = ('id', 'place')
-
-
-class PlaceSerializer(serializers.ModelSerializer):
-    restaurants = RestaurantSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Place
-        fields = ('id', 'name', 'address', 'restaurants')

@@ -27,9 +27,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # rest api urls
-    path('api/', include('api.urls')),
     path('auth/', obtain_auth_token),
+    path('api/', include('api.urls')),
 
+
+    # web applications urls
     path('', include('main.urls')),
     path('accounts/', include('accounts.urls')),
     path('mealsubscription/', include('mealsubscription.urls')),
