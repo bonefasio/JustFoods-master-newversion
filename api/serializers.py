@@ -3,6 +3,8 @@ from main.models import *
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
+#session_id = 'xxyljpas861cd7gd7s8llnwusboexk96'
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,7 +26,6 @@ class CustomerSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'name', 'phone', 'date_created',
                   'registered_payroll', 'employee_id')
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
-
 
 
 class PlaceSerializer(serializers.ModelSerializer):
@@ -59,10 +60,14 @@ class PayrollSerializer(serializers.ModelSerializer):
 
 
 class OrderItemsSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = OrderItems
-        fields = ('id', 'customer_acc', 'item', 'delivery_location',
+        fields = ('id', 'customer', 'item', 'delivery_location',
                   'ordered', 'quantity', 'ordered_date', 'payment_method', 'status', 'delivery_date', 'delivery_mode', 'isPaid', 'paidAt', 'isDelivered', 'subscription_order')
+
+    def get_item(self, obj):
+        return ItemSerializer(obj.item).data
 
 
 class MealSubscriptionSerializer(serializers.ModelSerializer):

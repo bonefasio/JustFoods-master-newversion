@@ -13,8 +13,8 @@ router.register('orders', OrderItemsViewSet, basename='orders')
 router.register('locations', LocationViewSet, basename='locations')
 router.register('payrolls', PayrollViewSet, basename='payrolls')
 router.register('menus', MenuViewSet, basename='menus')
-router.register('place', PlaceViewSet, basename='menus')
-router.register('restaurant', RestaurantViewSet, basename='menus')
+router.register('place', PlaceViewSet, basename='place')
+router.register('restaurant', RestaurantViewSet, basename='restaurant')
 
 
 urlpatterns = [

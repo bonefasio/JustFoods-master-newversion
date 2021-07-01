@@ -31,7 +31,14 @@ class ItemViewSet(viewsets.ModelViewSet):
 
 class OrderItemsViewSet(viewsets.ModelViewSet):
     queryset = OrderItems.objects.all()
-    serializer_class = OrderItems
+    serializer_class = OrderItemsSerializer
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (AllowAny,)
+
+
+class PaidOrderItemsViewSet(viewsets.GenericViewSet):
+    queryset = OrderItems.objects.all()
+    serializer_class = OrderItemsSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (AllowAny,)
 
@@ -51,7 +58,7 @@ class PayrollViewSet(viewsets.ModelViewSet):
 
 
 class LocationViewSet(viewsets.ModelViewSet):
-    queryset = Payroll.objects.all()
+    queryset = Location.objects.all()
     serializer_class = LocationSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (AllowAny,)
@@ -66,14 +73,14 @@ class MenuViewSet(viewsets.ModelViewSet):
 
 class PlaceViewSet(viewsets.ModelViewSet):
     queryset = Place.objects.all()
-    serializer_class = MenuSerializer
+    serializer_class = PlaceSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated,)
 
 
 class RestaurantViewSet(viewsets.ModelViewSet):
     queryset = Restaurant.objects.all()
-    serializer_class = MenuSerializer
+    serializer_class = RestaurantSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (AllowAny,)
 
