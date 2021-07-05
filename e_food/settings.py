@@ -102,7 +102,7 @@ DATABASES = {
     'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'releasethreedb',
+    #     'NAME': 'finaldb',
     #     'USER': 'postgres',
     #     'PASSWORD': '1234',
     #     'HOST': '127.0.0.1',
