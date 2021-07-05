@@ -259,9 +259,18 @@ def delivery_details(request):
     # customer=customer, ordered=True, status="Active").order_by('-ordered_date')
     order_items = OrderItems.objects.filter(
         customer=customer, ordered=True, isPaid=True).order_by('-ordered_date')
-    bill = order_items.aggregate(Sum('item__price'))
+
+    total = 0
+    total_list = []  # list of total of each subscription order
+    for orders in order_items:
+        totals = orders.get_total
+        total_list.append(totals)
+
+    # Iterate each element in list and add them in variable total
+    for ele in range(0, len(total_list)):
+        total = total + total_list[ele]
+
     number = order_items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
     count = number.get("quantity__sum")  # sum of quantity
     # count = OrderItems.objects.filter()
     context = {

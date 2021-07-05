@@ -225,7 +225,6 @@ class OrderItems(models.Model):
         verbose_name = 'Food Order Item'
         verbose_name_plural = 'Food Order Items'
 
-    @property
     def __str__(self):
 
         return self.status

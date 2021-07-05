@@ -29,7 +29,7 @@
                       <tr>
                           <th scope="col">Name</th>
                           <th scope="col">Description</th>
-                          <th scope="col">Specification</th>
+                          <th scope="col">Quantity</th>
                           <th scope="col">Price</th>
                          <!-- <th scope="col">Customer Name</th>
                           <th scope="col">Email</th>
@@ -44,7 +44,7 @@
                       <tr>
                           <td>{{ order.item.title }} <span class="badge badge-{{ order.item.label_colour }}">{{ order.item.labels }}</span></td>
                           <td>{{ order.item.description }}</td>
-                          <td>{{ order.item.instructions }}</td>
+                          <td>{{ order.quantity }}</td>
                           <td>{{ order.item.price }}</td>
                          <!-- <td>{{ order.item.customer.name }}</td>
                           <td>{{ order.item.customer.user.email }}</td>
@@ -66,7 +66,7 @@
               <div class="content-section">
                   <h3 class="text-center">Order Summary</h3>
                     <ul class="list-group">
-                      <li class="list-group-item list-group-item-light text-center text-dark">Customer Order Total: <b>{{ cust_total }}</b></li>
+                      <li class="list-group-item list-group-item-light text-center text-dark">Customer Order Total: <b>{{ total }}</b></li>
                       <li class="list-group-item list-group-item-light text-center text-dark">Number of Serve: <b>{{ count }} </b>🍽️</li>
                     <!--  <li class="list-group-item list-group-item-light text-center text-dark">Payroll Account Balance: <b> {{ payroll_acc }} </b></li> -->
                       <li class="list-group-item list-group-item-light text-center text-dark"><a class="btn btn-info text-dark" href="{% url 'orders:delivery_details' %}">Delivery Details🚚</a></li>

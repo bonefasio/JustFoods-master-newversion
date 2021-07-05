@@ -12,8 +12,8 @@
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Specification</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
                            <!-- <th scope="col">Customer Name</th> -->
                            <!-- <th scope="col">Email</th>-->
                             <th scope="col">Paid Date</th>
@@ -29,8 +29,8 @@
                         <tr>
                             <td>{{ order.item.title }} <span class="badge badge-{{ order.item.label_colour }}">{{ order.item.labels }}</span></td>
                             <td>{{ order.item.description }}</td>
-                            <td>{{ order.item.instructions }}</td>
-                            <td>{{ order.item.price }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.get_total }}</td>
                            <!-- <td>{{ order.item.customer.name }}</td> -->
                            <!-- <td>{{ order.item.customer.user.email }}</td> -->
                             <td>{{ order.paidAt }}</td>

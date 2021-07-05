@@ -39,10 +39,20 @@ def charge(request):
     customer = request.user.customer
     items = OrderItems.objects.filter(
         customer=customer,  ordered=False, status="Active", isPaid=False).order_by('-ordered_date')  # not yet been delivered
-    bill = items.aggregate(Sum('item__price'))
+
+    total = 0
+    total_list = []  # list of total of each subscription order
+    for orders in items:
+        totals = orders.get_total
+        total_list.append(totals)
+
+    # Iterate each element in list and add them in variable total
+    for ele in range(0, len(total_list)):
+        total = total + total_list[ele]
+
     number = items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")  # order total
     count = number.get("quantity__sum")  # sum of quantity
+
     total = round(total)
     print(total)
     if request.method == 'POST':
@@ -74,9 +84,18 @@ def success(request):
     restaurants = Restaurant.objects.all()
     items = OrderItems.objects.filter(
         customer=customer, ordered=True, status="Active", isPaid=True).order_by('-ordered_date')  # not yet been delivered
-    bill = items.aggregate(Sum('item__price'))
+
+    total = 0
+    total_list = []  # list of total of each subscription order
+    for orders in items:
+        totals = orders.get_total
+        total_list.append(totals)
+
+    # Iterate each element in list and add them in variable total
+    for ele in range(0, len(total_list)):
+        total = total + total_list[ele]
+
     number = items.aggregate(Sum('quantity'))
-    total = bill.get("item__price__sum")
     count = number.get("quantity__sum")  # sum of quantity
 
     context = {
