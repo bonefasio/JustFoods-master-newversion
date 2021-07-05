@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['just-foods.herokuapp.com', '192.168.56.1', '127.0.0.1']
+ALLOWED_HOSTS = ['just-foods.herokuapp.com']
 
 
 # Application definition
@@ -95,19 +95,19 @@ WSGI_APPLICATION = 'e_food.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-#default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
 
-    # 'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'releasethreedb',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'releasethreedb',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '1234',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432',
+    # }
 }
 
 
