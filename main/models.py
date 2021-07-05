@@ -351,6 +351,7 @@ class Inventory(models.Model):
         return self.item_name
 
 
+'''
 def customer_profile(sender, instance, created, **kwargs):
     if created:  # check if user is created
         group = Group.objects.get(name='customer')
@@ -363,3 +364,4 @@ def customer_profile(sender, instance, created, **kwargs):
 
 
 post_save.connect(customer_profile, sender=User)
+'''
