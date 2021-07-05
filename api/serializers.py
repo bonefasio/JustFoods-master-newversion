@@ -44,12 +44,18 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-    restaurants = RestaurantSerializer(many=True, read_only=True)
+    # restaurants = RestaurantSerializer(many=True, read_only=True)
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, instance):
+        request = self.context.get("request")
+
+        return request.build_absolute_uri(instance.get_image())
 
     class Meta:
         model = Item
-        fields = ('id', 'title', 'description', 'price', 'instructions',
-                  'slug', 'subcription_avail', 'quantity_available', 'restaurants')
+        fields = ('id', 'title', 'description', 'price', 'instructions', 'image',
+                  'slug', 'subcription_avail', 'quantity_available')
 
 
 class PayrollSerializer(serializers.ModelSerializer):
